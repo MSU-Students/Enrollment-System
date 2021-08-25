@@ -61,7 +61,7 @@
               >
                 <div class="row">
                   <div class="col-10">
-                    <div class="text-h6">Chairperson</div>
+                    <div class="text-h6">Chairpersons</div>
                   </div>
                   <div class="col-2">
                     <q-icon size="62px" name="people" />
