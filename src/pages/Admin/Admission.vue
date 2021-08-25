@@ -131,7 +131,7 @@
             <q-input
               outlined
               v-model="text5"
-              label="Citizenship"
+              label="Citizen"
               stack-label
             />
           </div>
