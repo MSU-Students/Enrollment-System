@@ -38,7 +38,7 @@
               <q-item-section> Dashboard </q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple to="/admin/admission">
+            <q-item clickable v-ripple to="/admin/Admission">
               <q-item-section avatar>
                 <q-icon name="person" />
               </q-item-section>
