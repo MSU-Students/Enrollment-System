@@ -46,7 +46,7 @@
               <q-item-section> Admission </q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple to="/admin/account">
+            <q-item clickable v-ripple to="/admin/ManageAccount">
               <q-item-section avatar>
                 <q-icon name="how_to_reg" />
               </q-item-section>

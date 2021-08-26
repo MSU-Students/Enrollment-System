@@ -21,6 +21,10 @@ const routes: RouteRecordRaw[] = [
         path: 'dashboard',
         component: () => import('src/pages/Admin/Dashboard.vue'),
       },
+      {
+        path: 'ManageAccount',
+        component: () => import('src/pages/Admin/Manage Account.vue'),
+      },
     ],
   },
 
