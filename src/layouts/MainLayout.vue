@@ -43,7 +43,8 @@
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component';
 
-@Options({})
+@Options({
+})
 export default class Dashboard extends Vue {}
 </script>
 
