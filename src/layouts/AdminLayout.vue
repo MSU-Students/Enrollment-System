@@ -2,28 +2,27 @@
   <div class="q-pa-md">
     <q-layout view="hHh lpR lFf">
       <q-header elevated class="q-px-lg q-py-md">
-      <q-toolbar>
-        <q-img src="~assets/logo.png" style="width: 110px"></q-img>
-        <q-space />
-        <q-card flat class="bg-transparent">
-          <div class="font1 text-h3 flex flex-center">
-            Enrollment Management System
-          </div>
-          <div class="font2 text-h6 flex flex-center">
-            Mindanao State University Lanao National College of Arts and Trades
-          </div>
-        </q-card>
+        <q-toolbar>
+          <q-img src="~assets/logo.png" style="width: 110px"></q-img>
+          <q-space />
+          <q-card flat class="bg-transparent">
+            <div class="font2 text-h3 flex flex-center">
+              Administration Module
+            </div>
+            <div class="font2 text-h6 flex flex-center">
+              ______________________________________________________________________________________________
+            </div>
+          </q-card>
 
-        <q-space />
+          <q-space />
 
-        <q-img src="~assets/msulogo.png" style="width: 110px"></q-img>
-      </q-toolbar>
-    </q-header>
+          <q-img src="~assets/msulogo.png" style="width: 110px"></q-img>
+        </q-toolbar>
+      </q-header>
 
       <q-drawer
         v-model="drawer"
         show-if-above
-        
         :width="200"
         :breakpoint="500"
         bordered
@@ -39,7 +38,7 @@
               <q-item-section> Dashboard </q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple to="/admin/manage">
+            <q-item clickable v-ripple to="/admin/admission">
               <q-item-section avatar>
                 <q-icon name="person" />
               </q-item-section>
@@ -47,7 +46,7 @@
               <q-item-section> Admission </q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple to="/admin/POS">
+            <q-item clickable v-ripple to="/admin/account">
               <q-item-section avatar>
                 <q-icon name="how_to_reg" />
               </q-item-section>
@@ -57,7 +56,7 @@
 
             <q-separator />
 
-            <q-item clickable v-ripple to="/login">
+            <q-item clickable v-ripple to="/">
               <q-item-section avatar>
                 <q-icon name="logout" />
               </q-item-section>
