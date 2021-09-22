@@ -3,7 +3,7 @@
     <q-card class="q-pa-xl my-card bg-blue-1 text-white-2">
       <q-form class="q-gutter-md" style="max-width: 300px">
         <div class="text-h5 text-center text-bold text-black q-pt-xl">
-          Log-in as Admistrator
+          Log-in as Chairperson
         </div>
 
     <q-card-section>
