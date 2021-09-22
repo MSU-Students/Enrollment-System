@@ -7,6 +7,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', component: () => import('src/pages/Dashboard.vue') },
       { path: 'login', component: () => import('src/pages/Login.vue') },
+      { path: 'login2', component: () => import('src/pages/Chairperson/Login2.vue')},
     ],
   },
   {
@@ -25,6 +26,25 @@ const routes: RouteRecordRaw[] = [
         path: 'ManageAccount',
         component: () => import('src/pages/Admin/Manage Account.vue'),
       },
+    ],
+  },
+  {
+    path: '/chairperson',
+    component: () => import('layouts/ChairpersonLayout.vue'),
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('src/pages/Chairperson/Dashboard.vue'),
+      },
+      {
+        path: 'assign',
+        component: () => import('src/pages/Chairperson/Assign.vue'),
+      },
+      {
+        path: 'manage',
+        component: () => import('src/pages/Chairperson/Manage.vue'),
+      },
+      
     ],
   },
 
