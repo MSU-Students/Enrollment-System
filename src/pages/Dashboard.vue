@@ -53,7 +53,7 @@
               flex-center
               clickable
               v-ripple
-              @click="() => $router.replace('/login')"
+              @click="() => $router.replace('/login2')"
             >
               <q-card-section
                 :class="$q.dark.isActive ? 'blue_dark' : 'bg-blue-8'"
@@ -61,7 +61,7 @@
               >
                 <div class="row">
                   <div class="col-10">
-                    <div class="text-h6">Chairpersons</div>
+                    <div class="text-h6">Chairperson</div>
                   </div>
                   <div class="col-2">
                     <q-icon size="62px" name="people" />
