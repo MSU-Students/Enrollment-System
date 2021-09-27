@@ -7,9 +7,9 @@
           <q-space />
           <q-card flat class="bg-transparent">
             <div class="font2 text-h3 flex flex-center">Chairperson Module</div>
-            <div class="font2 text-h6 flex flex-center">
+            <!-- <div class="font2 text-h6 flex flex-center">
               ______________________________________________________________________________________________
-            </div>
+            </div> -->
           </q-card>
 
           <q-space />
