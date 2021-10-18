@@ -23,7 +23,7 @@
       <router-view />
     </q-page-container>
 
-    <q-footer elevated class="bg-blue-8 text-white">
+    <q-footer elevated class="bg-secondary text-white">
       <q-toolbar>
         <div class="font2 text-substitle1">
           <div>
