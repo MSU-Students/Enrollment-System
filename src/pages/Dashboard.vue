@@ -10,7 +10,7 @@
               @click="() => $router.replace('/login')"
             >
               <q-card-section
-                :class="$q.dark.isActive ? 'blue_dark' : 'bg-blue-8'"
+                :class="$q.dark.isActive ? 'blue_dark' : 'bg-secondary'"
                 class="text-white"
               >
                 <div class="row">
@@ -30,10 +30,10 @@
               flex-center
               clickable
               v-ripple
-              @click="() => $router.replace('/login')"
+              @click="() => $router.replace('/login3')"
             >
               <q-card-section
-                :class="$q.dark.isActive ? 'blue_dark' : 'bg-blue-8'"
+                :class="$q.dark.isActive ? 'blue_dark' : 'bg-secondary'"
                 class="text-white"
               >
                 <div class="row">
@@ -56,7 +56,7 @@
               @click="() => $router.replace('/login2')"
             >
               <q-card-section
-                :class="$q.dark.isActive ? 'blue_dark' : 'bg-blue-8'"
+                :class="$q.dark.isActive ? 'blue_dark' : 'bg-secondary'"
                 class="text-white"
               >
                 <div class="row">
