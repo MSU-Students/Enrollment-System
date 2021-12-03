@@ -17,6 +17,44 @@
           <q-img src="~assets/msulogo.png" style="width: 110px"></q-img>
         </q-toolbar>
       </q-header>
+      <q-drawer
+        v-model="drawer"
+        show-if-above
+        :width="200"
+        :breakpoint="400"
+        bordered
+        content-class="bg-grey-3"
+      >
+        <q-scroll-area class="fit">
+          <q-list padding>
+            <q-item clickable v-ripple to="/Registrar/Enrollment">
+              <q-item-section avatar>
+                <q-icon name="dashboard" />
+              </q-item-section>
+
+              <q-item-section> Enrollment </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple to="/Registrar/Cancellation">
+              <q-item-section avatar>
+                <q-icon name="how_to_reg" />
+              </q-item-section>
+
+              <q-item-section> Cancellation </q-item-section>
+            </q-item>
+
+            <q-separator />
+
+            <q-item clickable v-ripple to="/">
+              <q-item-section avatar>
+                <q-icon name="logout" />
+              </q-item-section>
+
+              <q-item-section> Logout </q-item-section>
+            </q-item>
+          </q-list>
+        </q-scroll-area>
+      </q-drawer>
 
       <q-page-container>
         <router-view />

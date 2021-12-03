@@ -38,7 +38,7 @@
                   label="Login"
                   color="secondary"
                   size="lg"
-                  @click="registrardashboard()"
+                  @click="registrarenroll()"
                 />
               </div>
             </q-form>
@@ -56,9 +56,9 @@ export default class Login extends Vue {
   password = '';
   isPwd = true;
 
-  async registrardashboard() {
+  async registrarenroll() {
     if (this.username == 'Admin' && this.password == 'Admin') {
-      await this.$router.replace('/Registrar/dashboard');
+      await this.$router.replace('/Registrar/enrollment');
     } else {
       alert(' Try Agains  ');
     }

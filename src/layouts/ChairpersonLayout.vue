@@ -7,9 +7,9 @@
           <q-space />
           <q-card flat class="bg-transparent">
             <div class="font2 text-h3 flex flex-center">Chairperson Module</div>
-            <!-- <div class="font2 text-h6 flex flex-center">
+            <div class="font2 text-h6 flex flex-center">
               ______________________________________________________________________________________________
-            </div> -->
+            </div>
           </q-card>
 
           <q-space />
@@ -17,11 +17,11 @@
           <q-img src="~assets/msulogo.png" style="width: 110px"></q-img>
         </q-toolbar>
       </q-header>
-       <q-drawer
+      <q-drawer
         v-model="drawer"
         show-if-above
         :width="200"
-        :breakpoint="500"
+        :breakpoint="400"
         bordered
         content-class="bg-grey-3"
       >
@@ -35,20 +35,20 @@
               <q-item-section> Dashboard </q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple to="/chairperson/assign">
-              <q-item-section avatar>
-                <q-icon name="person" />
-              </q-item-section>
-
-              <q-item-section> Assigning </q-item-section>
-            </q-item>
-
             <q-item clickable v-ripple to="/chairperson/manage">
               <q-item-section avatar>
                 <q-icon name="how_to_reg" />
               </q-item-section>
 
               <q-item-section> Managing </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple to="/chairperson/assign">
+              <q-item-section avatar>
+                <q-icon name="person" />
+              </q-item-section>
+
+              <q-item-section> Assigning </q-item-section>
             </q-item>
 
             <q-separator />

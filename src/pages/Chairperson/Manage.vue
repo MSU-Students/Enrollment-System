@@ -7,6 +7,7 @@
         inline-label
         :breakpoint="0"
         align="justify"
+        narrow-indicator
         class="text-primary"
       >
         <q-tab
@@ -31,8 +32,7 @@
           label="Manage Schedule"
         />
       </q-tabs>
-      <!-- 
-manage teacher -->
+
       <q-tab-panels v-model="tab" animated class="text-black">
         <q-tab-panel name="teacher">
           <q-table
@@ -46,7 +46,7 @@ manage teacher -->
             bordered
           >
             <template v-slot:top-right>
-              <div class="q-pa-md q-gutter-sm row">
+              <div class="q-gutter-sm row">
                 <q-input
                   outlined
                   rounded
@@ -262,10 +262,9 @@ manage teacher -->
             </template>
           </q-table>
         </q-tab-panel>
+
       </q-tab-panels>
-      <!-- 
-manage subject -->
-      <q-tab-panels v-model="tab" animated class="text-white">
+      <q-tab-panels v-model="tab" animated class="text-white q-pa-sm">
         <q-tab-panel name="subject">
           <q-table
             class="my-sticky-header-table"
@@ -278,7 +277,7 @@ manage subject -->
             bordered
           >
             <template v-slot:top-right>
-              <div class="q-pa-md q-gutter-sm row">
+              <div class="q-gutter-sm row">
                 <q-input
                   outlined
                   rounded
@@ -473,8 +472,7 @@ manage subject -->
           </q-table>
         </q-tab-panel>
       </q-tab-panels>
-      <!-- 
-manage schedule -->
+
       <q-tab-panels v-model="tab" animated class="text-black">
         <q-tab-panel name="schedule">
           <q-card-section class="q-gutter-md row">
@@ -685,7 +683,12 @@ manage room -->
                         />
                       </div>
                       <div class="col">
-                        <q-select outlined v-model="name35" :options="options6" label="Status" />
+                        <q-select
+                          outlined
+                          v-model="name35"
+                          :options="options6"
+                          label="Status"
+                        />
                       </div>
                     </q-card-section>
                     <q-card-actions align="right">
