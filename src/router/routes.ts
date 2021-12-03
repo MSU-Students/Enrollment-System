@@ -39,7 +39,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: 'assign',
-        component: () => import('src/pages/Chairperson/Assign.vue'),
+        component: () => import('src/pages/Chairperson/Assigning.vue'),
       },
       {
         path: 'manage',
@@ -53,8 +53,12 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/RegistrarLayout.vue'),
     children: [
       {
-        path: 'dashboard',
-        component: () => import('src/pages/Registrar/Dashboard.vue'),
+        path: 'enrollment',
+        component: () => import('src/pages/Registrar/Enrollment.vue'),
+      },
+      {
+        path: 'cancellation',
+        component: () => import('src/pages/Registrar/Cancellation.vue'),
       },
     ],
   },
