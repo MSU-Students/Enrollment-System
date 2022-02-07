@@ -57,7 +57,7 @@ export default class Login extends Vue {
   isPwd = true;
 
   async admindashboard() {
-    if (this.username == 'Admin' && this.password == 'Admin') {
+    if (this.username == '' && this.password == '') {
       await this.$router.replace('/admin/dashboard');
     } else {
       alert('Wrong Username and Password!!');
