@@ -57,7 +57,7 @@ export default class Login extends Vue {
   isPwd = true;
 
   async chairpersondashboard() {
-    if (this.username == '' && this.password == '') {
+    if (this.username == 'wewe' && this.password == 'wewe') {
       await this.$router.replace('/Chairperson/dashboard');
     } else {
       alert(' Try Agains  ');
