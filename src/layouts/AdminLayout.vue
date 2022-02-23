@@ -1,12 +1,12 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-pa-sm">
     <q-layout view="hHh lpR lFf">
-      <q-header elevated class="q-px-lg q-py-md">
+      <q-header elevated class="q-px-lg q-py-md bg-image1">
         <q-toolbar>
           <q-img src="~assets/logo.png" style="width: 110px"></q-img>
           <q-space />
           <q-card flat class="bg-transparent">
-            <div class="font2 text-h3 flex flex-center">
+            <div class="font1 text-h3 flex flex-center">
               Administration Module
             </div>
             <div class="font2 text-h6 flex flex-center">
@@ -16,13 +16,16 @@
 
           <q-space />
 
-          <q-img src="~assets/msulogo.png" style="width: 110px"></q-img>
+          <q-img src="~assets/msulogo.png" style="width: 130px"></q-img>
         </q-toolbar>
       </q-header>
 
       <q-drawer
         v-model="drawer"
         show-if-above
+        :mini="miniState"
+        @mouseover="miniState = false"
+        @mouseout="miniState = true"
         :width="200"
         :breakpoint="500"
         bordered
@@ -32,15 +35,14 @@
           <q-list padding>
             <q-item clickable v-ripple to="/admin/dashboard">
               <q-item-section avatar>
-                <q-icon name="dashboard" />
+                <q-icon name="dashboard" color="blue-2" />
               </q-item-section>
-
               <q-item-section> Dashboard </q-item-section>
             </q-item>
 
             <q-item clickable v-ripple to="/admin/Admission">
               <q-item-section avatar>
-                <q-icon name="person" />
+                <q-icon name="person" color="blue-2" />
               </q-item-section>
 
               <q-item-section> Admission </q-item-section>
@@ -48,7 +50,7 @@
 
             <q-item clickable v-ripple to="/admin/ManageAccount">
               <q-item-section avatar>
-                <q-icon name="how_to_reg" />
+                <q-icon name="how_to_reg" color="blue-2" />
               </q-item-section>
 
               <q-item-section> Manage Account </q-item-section>
@@ -58,7 +60,7 @@
 
             <q-item clickable v-ripple to="/">
               <q-item-section avatar>
-                <q-icon name="logout" />
+                <q-icon name="logout" color="red" />
               </q-item-section>
 
               <q-item-section> Logout </q-item-section>
@@ -74,15 +76,11 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Mylayout',
-
-  data() {
-    return {
-      drawer: false,
-      miniState: true,
-    };
-  },
-};
+<script lang="ts">
+import { Vue, Options } from 'vue-class-component';
+@Options({})
+export default class MainLayout extends Vue {
+  drawer = false;
+  miniState = true;
+}
 </script>

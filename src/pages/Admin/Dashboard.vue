@@ -1,6 +1,6 @@
 <template>
-  <q-page>
-    <div class="row q-gutter-sm">
+  <q-page class="q-pa-md">
+    <div class="row q-pb-lg q-gutter-sm">
       <div class="col">
         <q-card>
           <q-card-section
@@ -54,10 +54,10 @@
             </div>
           </q-card-section>
         </q-card>
-        </div>
       </div>
-     
-      <q-table
+    </div>
+
+    <q-table
       :rows="rows"
       :columns="columns"
       row-key="name"
@@ -111,7 +111,7 @@
                 dense
                 @click="editRow = true"
               />
-      
+
               <q-btn
                 color="red-10"
                 icon="delete"
@@ -167,13 +167,13 @@ interface IRow {
 @Options({})
 export default class ManageAccount extends Vue {
   columns = [
-     {
+    {
       name: 'studentid',
       align: 'center',
       label: 'Student ID',
       field: 'studentid',
     },
-     {
+    {
       name: 'lrn',
       align: 'center',
       label: 'LRN',
@@ -195,7 +195,6 @@ export default class ManageAccount extends Vue {
     },
     { name: 'status', align: 'center', label: 'Status', field: 'status' },
     { name: 'aycode', align: 'center', label: 'AY Code', field: 'aycode' },
-    
   ];
   rows = [
     {
@@ -222,7 +221,6 @@ export default class ManageAccount extends Vue {
       status: 'NOT ENROLLED',
       aycode: '2021-2022 1st TERM',
     },
-    
   ];
   dialog = false;
   cancelEnabled = true;

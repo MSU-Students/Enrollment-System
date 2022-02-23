@@ -8,7 +8,7 @@
         :breakpoint="0"
         align="justify"
         narrow-indicator
-        class="text-primary"
+        class="text-white"
       >
         <q-tab
           :ripple="false"
@@ -28,127 +28,47 @@
         <q-tab
           :ripple="false"
           name="schedule"
-          icon="clock"
+          icon="watch"
           label="Manage Schedule"
         />
       </q-tabs>
 
-      <q-tab-panels v-model="tab" animated class="text-black">
-        <q-tab-panel name="teacher">
-          <q-table
-            class="my-sticky-header-table"
-            title="Teachers"
-            :rows="rows"
-            :columns="columns"
-            row-key="name"
-            :separator="separator"
-            flat
-            bordered
-          >
-            <template v-slot:top-right>
-              <div class="q-gutter-sm row">
-                <q-input
-                  outlined
-                  rounded
-                  dense
-                  debounce="300"
-                  v-model="filters"
-                  placeholder="Search"
-                >
-                  <template v-slot:append>
-                    <q-icon name="search" />
-                  </template>
-                </q-input>
-                <q-btn
-                  label="Add Teacher"
-                  color="black"
-                  dense
-                  flat
-                  icon="add"
-                  @click="addTeacher = true"
-                />
-                <q-dialog v-model="addTeacher" full-width>
-                  <q-card>
-                    <q-card-section class="row">
-                      <div class="text-h6">Add Teacher</div>
-                      <q-space />
-                      <q-btn flat round dense icon="close" v-close-popup />
-                    </q-card-section>
-
-                    <q-card-section class="q-gutter-md row">
-                      <div class="col">
-                        <q-input
-                          outlined
-                          dense
-                          v-model="name1"
-                          label="Teacher ID"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          dense
-                          v-model="name2"
-                          label="Last Name"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          dense
-                          v-model="name3"
-                          label="First Name"
-                        />
-                      </div>
-                    </q-card-section>
-                    <q-card-section class="q-gutter-md row">
-                      <div class="col">
-                        <q-input
-                          outlined
-                          dense
-                          v-model="name4"
-                          label="Middle Name"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          dense
-                          v-model="name5"
-                          label="Degree"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          dense
-                          v-model="name6"
-                          label="Specialization"
-                        />
-                      </div>
-                    </q-card-section>
-                    <q-card-actions align="right">
-                      <q-btn flat label="Cancel" color="red-10" v-close-popup />
-                      <q-btn flat label="Add" color="primary" v-close-popup />
-                    </q-card-actions>
-                  </q-card>
-                </q-dialog>
-              </div>
-            </template>
-
-            <template v-slot:body-cell-action="props">
-              <q-td :props="props">
-                <div class="q-gutter-sm">
-                  <q-btn
-                    round
-                    color="blue"
-                    icon="edit"
-                    size="sm"
-                    flat
+      <div>
+        <q-tab-panels v-model="tab" animated class="text-black">
+          <q-tab-panel name="teacher">
+            <q-table
+              class="my-sticky-header-table"
+              title="Teachers"
+              :rows="rows"
+              :columns="columns"
+              row-key="name"
+              :separator="separator"
+              flat
+              bordered
+            >
+              <template v-slot:top-right>
+                <div class="q-gutter-sm row">
+                  <q-input
+                    outlined
+                    rounded
                     dense
-                    @click="editTeacher = true"
+                    debounce="300"
+                    v-model="filters"
+                    placeholder="Search"
+                  >
+                    <template v-slot:append>
+                      <q-icon name="search" />
+                    </template>
+                  </q-input>
+                  <q-btn
+                    label="Add Teacher"
+                    color="black"
+                    dense
+                    flat
+                    icon="add"
+                    @click="addTeacher = true"
                   />
-                  <q-dialog v-model="editTeacher" full-width>
+                  <q-dialog v-model="addTeacher" full-width>
                     <q-card>
                       <q-card-section class="row">
                         <div class="text-h6">Add Teacher</div>
@@ -219,160 +139,177 @@
                       </q-card-actions>
                     </q-card>
                   </q-dialog>
-                  <q-btn
-                    color="red-10"
-                    icon="delete"
-                    size="sm"
-                    class="q-ml-sm"
-                    flat
-                    round
-                    dense
-                    @click="dialog = true"
-                  />
-                  <q-dialog v-model="dialog" persistent>
-                    <q-card>
-                      <q-card-section class="row items-center">
-                        <q-avatar
-                          size="sm"
-                          icon="warning"
-                          color="red-10"
-                          text-color="white"
-                        />
-                        <span class="q-ml-sm">Confirm Delete?</span>
-                      </q-card-section>
-                      <q-card-actions align="right">
-                        <q-btn
-                          flat
-                          label="Cancel"
-                          color="primary"
-                          v-close-popup="cancelEnabled"
-                          :disable="!cancelEnabled"
-                        />
-                        <q-btn
-                          flat
-                          label="Confirm"
-                          color="primary"
-                          v-close-popup
-                        />
-                      </q-card-actions>
-                    </q-card>
-                  </q-dialog>
                 </div>
-              </q-td>
-            </template>
-          </q-table>
-        </q-tab-panel>
+              </template>
 
-      </q-tab-panels>
-      <q-tab-panels v-model="tab" animated class="text-white q-pa-sm">
-        <q-tab-panel name="subject">
-          <q-table
-            class="my-sticky-header-table"
-            title="Subjects"
-            :rows="rows1"
-            :columns="columns1"
-            row-key="name"
-            :separator="separator"
-            flat
-            bordered
-          >
-            <template v-slot:top-right>
-              <div class="q-gutter-sm row">
-                <q-input
-                  outlined
-                  rounded
-                  dense
-                  debounce="300"
-                  v-model="filters"
-                  placeholder="Search"
-                >
-                  <template v-slot:append>
-                    <q-icon name="search" />
-                  </template>
-                </q-input>
-                <q-btn
-                  label="Add New"
-                  color="black"
-                  dense
-                  flat
-                  icon="add"
-                  @click="addSubject = true"
-                />
-                <q-dialog v-model="addSubject" full-width>
-                  <q-card>
-                    <q-card-section class="row">
-                      <div class="text-h6">Add Subject</div>
-                      <q-space />
-                      <q-btn flat round dense icon="close" v-close-popup />
-                    </q-card-section>
+              <template v-slot:body-cell-action="props">
+                <q-td :props="props">
+                  <div class="q-gutter-sm">
+                    <q-btn
+                      round
+                      color="blue"
+                      icon="edit"
+                      size="sm"
+                      flat
+                      dense
+                      @click="editTeacher = true"
+                    />
+                    <q-dialog v-model="editTeacher" full-width>
+                      <q-card>
+                        <q-card-section class="row">
+                          <div class="text-h6">Add Teacher</div>
+                          <q-space />
+                          <q-btn flat round dense icon="close" v-close-popup />
+                        </q-card-section>
 
-                    <q-card-section class="q-gutter-md row">
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="name13"
-                          :options="options3"
-                          label="AY Code"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="name14"
-                          :options="options4"
-                          label="Year Level"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="name15"
-                          label="Subject Code"
-                        />
-                      </div>
-                    </q-card-section>
-                    <q-card-section class="q-gutter-md row">
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="name16"
-                          label="Descriptive Title"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="name39"
-                          :options="options5"
-                          label="Prerequisite"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input outlined v-model="name17" label="Units" />
-                      </div>
-                    </q-card-section>
-                    <q-card-actions align="right">
-                      <q-btn flat label="Cancel" color="red-10" v-close-popup />
-                      <q-btn flat label="Add" color="primary" v-close-popup />
-                    </q-card-actions>
-                  </q-card>
-                </q-dialog>
-              </div>
-            </template>
+                        <q-card-section class="q-gutter-md row">
+                          <div class="col">
+                            <q-input
+                              outlined
+                              dense
+                              v-model="name1"
+                              label="Teacher ID"
+                            />
+                          </div>
+                          <div class="col">
+                            <q-input
+                              outlined
+                              dense
+                              v-model="name2"
+                              label="Last Name"
+                            />
+                          </div>
+                          <div class="col">
+                            <q-input
+                              outlined
+                              dense
+                              v-model="name3"
+                              label="First Name"
+                            />
+                          </div>
+                        </q-card-section>
+                        <q-card-section class="q-gutter-md row">
+                          <div class="col">
+                            <q-input
+                              outlined
+                              dense
+                              v-model="name4"
+                              label="Middle Name"
+                            />
+                          </div>
+                          <div class="col">
+                            <q-input
+                              outlined
+                              dense
+                              v-model="name5"
+                              label="Degree"
+                            />
+                          </div>
+                          <div class="col">
+                            <q-input
+                              outlined
+                              dense
+                              v-model="name6"
+                              label="Specialization"
+                            />
+                          </div>
+                        </q-card-section>
+                        <q-card-actions align="right">
+                          <q-btn
+                            flat
+                            label="Cancel"
+                            color="red-10"
+                            v-close-popup
+                          />
+                          <q-btn
+                            flat
+                            label="Add"
+                            color="primary"
+                            v-close-popup
+                          />
+                        </q-card-actions>
+                      </q-card>
+                    </q-dialog>
+                    <q-btn
+                      color="red-10"
+                      icon="delete"
+                      size="sm"
+                      class="q-ml-sm"
+                      flat
+                      round
+                      dense
+                      @click="dialog = true"
+                    />
+                    <q-dialog v-model="dialog" persistent>
+                      <q-card>
+                        <q-card-section class="row items-center">
+                          <q-avatar
+                            size="sm"
+                            icon="warning"
+                            color="red-10"
+                            text-color="white"
+                          />
+                          <span class="q-ml-sm">Confirm Delete?</span>
+                        </q-card-section>
+                        <q-card-actions align="right">
+                          <q-btn
+                            flat
+                            label="Cancel"
+                            color="primary"
+                            v-close-popup="cancelEnabled"
+                            :disable="!cancelEnabled"
+                          />
+                          <q-btn
+                            flat
+                            label="Confirm"
+                            color="primary"
+                            v-close-popup
+                          />
+                        </q-card-actions>
+                      </q-card>
+                    </q-dialog>
+                  </div>
+                </q-td>
+              </template>
+            </q-table>
+          </q-tab-panel>
+        </q-tab-panels>
 
-            <template v-slot:body-cell-action="props">
-              <q-td :props="props">
-                <div class="q-gutter-sm">
-                  <q-btn
-                    round
-                    color="blue"
-                    icon="edit"
-                    size="sm"
-                    flat
+        <q-tab-panels v-model="tab" animated class="text-white q-pa-sm">
+          <q-tab-panel name="subject">
+            <q-table
+              class="my-sticky-header-table"
+              title="Subjects"
+              :rows="rows1"
+              :columns="columns1"
+              row-key="name"
+              :separator="separator"
+              flat
+              bordered
+            >
+              <template v-slot:top-right>
+                <div class="q-gutter-sm row">
+                  <q-input
+                    outlined
+                    rounded
                     dense
-                    @click="editRow = true"
+                    debounce="300"
+                    v-model="filters"
+                    placeholder="Search"
+                  >
+                    <template v-slot:append>
+                      <q-icon name="search" />
+                    </template>
+                  </q-input>
+                  <q-btn
+                    label="Add New"
+                    color="black"
+                    dense
+                    flat
+                    icon="add"
+                    @click="addSubject = true"
                   />
-                  <q-dialog v-model="editRow" full-width>
+                  <q-dialog v-model="addSubject" full-width>
                     <q-card>
                       <q-card-section class="row">
                         <div class="text-h6">Add Subject</div>
@@ -406,11 +343,19 @@
                         </div>
                       </q-card-section>
                       <q-card-section class="q-gutter-md row">
-                        <div class="col-8">
+                        <div class="col">
                           <q-input
                             outlined
                             v-model="name16"
                             label="Descriptive Title"
+                          />
+                        </div>
+                        <div class="col">
+                          <q-select
+                            outlined
+                            v-model="name39"
+                            :options="options5"
+                            label="Prerequisite"
                           />
                         </div>
                         <div class="col">
@@ -428,311 +373,343 @@
                       </q-card-actions>
                     </q-card>
                   </q-dialog>
-                  <q-btn
-                    color="red-10"
-                    icon="delete"
-                    size="sm"
-                    class="q-ml-sm"
-                    flat
-                    round
-                    dense
-                    @click="dialog = true"
-                  />
-                  <q-dialog v-model="dialog" persistent>
-                    <q-card>
-                      <q-card-section class="row items-center">
-                        <q-avatar
-                          size="sm"
-                          icon="warning"
-                          color="red-10"
-                          text-color="white"
-                        />
-                        <span class="q-ml-sm">Confirm Delete?</span>
-                      </q-card-section>
-                      <q-card-actions align="right">
-                        <q-btn
-                          flat
-                          label="Cancel"
-                          color="primary"
-                          v-close-popup="cancelEnabled"
-                          :disable="!cancelEnabled"
-                        />
-                        <q-btn
-                          flat
-                          label="Confirm"
-                          color="primary"
-                          v-close-popup
-                        />
-                      </q-card-actions>
-                    </q-card>
-                  </q-dialog>
                 </div>
-              </q-td>
-            </template>
-          </q-table>
-        </q-tab-panel>
-      </q-tab-panels>
+              </template>
 
-      <q-tab-panels v-model="tab" animated class="text-black">
-        <q-tab-panel name="schedule">
-          <q-card-section class="q-gutter-md row">
-            <div class="col">
-              <q-select
-                outlined
-                dense
-                v-model="name23"
-                :options="options1"
-                label="AY Code"
-              />
-            </div>
+              <template v-slot:body-cell-action="props">
+                <q-td :props="props">
+                  <div class="q-gutter-sm">
+                    <q-btn
+                      round
+                      color="blue"
+                      icon="edit"
+                      size="sm"
+                      flat
+                      dense
+                      @click="editRow = true"
+                    />
+                    <q-dialog v-model="editRow" full-width>
+                      <q-card>
+                        <q-card-section class="row">
+                          <div class="text-h6">Add Subject</div>
+                          <q-space />
+                          <q-btn flat round dense icon="close" v-close-popup />
+                        </q-card-section>
 
-            <div class="col">
-              <q-select
-                outlined
-                dense
-                v-model="name24"
-                :options="options2"
-                label="Year Level"
-              />
-            </div>
-            <div class="col">
-              <q-input outlined dense v-model="name25" label="Room" />
-            </div>
-          </q-card-section>
-          <q-card-section class="q-gutter-md row">
-            <div class="col">
-              <q-input
-                outlined
-                dense
-                v-model="subjectcode"
-                label="Subject Code"
-              />
-            </div>
-            <div class="col">
-              <q-input
-                outlined
-                dense
-                v-model="name28"
-                label="Descripstive Title"
-              />
-            </div>
-            <div class="col">
-              <q-input outlined dense v-model="name29" label="Unit/s" />
-            </div>
-            <div class="col">
-              <q-input outlined dense v-model="name30" label="Teacher ID" />
-            </div>
-            <div class="col">
-              <q-input outlined dense v-model="name31" label="Teacher" />
-            </div>
-          </q-card-section>
-          <q-card-section class="q-gutter-md row">
-            <div class="col">
-              <q-checkbox v-model="teal" label="Monday" />
-              <q-checkbox v-model="orange" label="Tuesday" />
-              <q-checkbox v-model="red" label="Wednessday" />
-              <q-checkbox v-model="pink" label="Thursday" />
-              <q-checkbox v-model="black" label="Friday" />
-            </div>
-            <q-input dense v-model="time" filled type="time" label="time" />
-            <div>=</div>
-            <q-input dense v-model="time1" filled type="time" label="time" />
-            <q-card-actions align="right">
-              <q-btn flat label="Cancel" color="red-10" v-close-popup />
-              <q-btn flat label="Add" color="primary" v-close-popup />
-            </q-card-actions>
-          </q-card-section>
+                        <q-card-section class="q-gutter-md row">
+                          <div class="col">
+                            <q-select
+                              outlined
+                              v-model="name13"
+                              :options="options3"
+                              label="AY Code"
+                            />
+                          </div>
+                          <div class="col">
+                            <q-select
+                              outlined
+                              v-model="name14"
+                              :options="options4"
+                              label="Year Level"
+                            />
+                          </div>
+                          <div class="col">
+                            <q-input
+                              outlined
+                              v-model="name15"
+                              label="Subject Code"
+                            />
+                          </div>
+                        </q-card-section>
+                        <q-card-section class="q-gutter-md row">
+                          <div class="col-8">
+                            <q-input
+                              outlined
+                              v-model="name16"
+                              label="Descriptive Title"
+                            />
+                          </div>
+                          <div class="col">
+                            <q-input outlined v-model="name17" label="Units" />
+                          </div>
+                        </q-card-section>
+                        <q-card-actions align="right">
+                          <q-btn
+                            flat
+                            label="Cancel"
+                            color="red-10"
+                            v-close-popup
+                          />
+                          <q-btn
+                            flat
+                            label="Add"
+                            color="primary"
+                            v-close-popup
+                          />
+                        </q-card-actions>
+                      </q-card>
+                    </q-dialog>
+                    <q-btn
+                      color="red-10"
+                      icon="delete"
+                      size="sm"
+                      class="q-ml-sm"
+                      flat
+                      round
+                      dense
+                      @click="dialog = true"
+                    />
+                    <q-dialog v-model="dialog" persistent>
+                      <q-card>
+                        <q-card-section class="row items-center">
+                          <q-avatar
+                            size="sm"
+                            icon="warning"
+                            color="red-10"
+                            text-color="white"
+                          />
+                          <span class="q-ml-sm">Confirm Delete?</span>
+                        </q-card-section>
+                        <q-card-actions align="right">
+                          <q-btn
+                            flat
+                            label="Cancel"
+                            color="primary"
+                            v-close-popup="cancelEnabled"
+                            :disable="!cancelEnabled"
+                          />
+                          <q-btn
+                            flat
+                            label="Confirm"
+                            color="primary"
+                            v-close-popup
+                          />
+                        </q-card-actions>
+                      </q-card>
+                    </q-dialog>
+                  </div>
+                </q-td>
+              </template>
+            </q-table>
+          </q-tab-panel>
+        </q-tab-panels>
 
-          <q-table
-            class="my-sticky-header-table"
-            title="Subjects"
-            :rows="rows2"
-            :columns="columns2"
-            row-key="name"
-            :separator="separator"
-            flat
-            bordered
-          >
-            <template v-slot:top-right>
-              <div class="q-pa-md q-gutter-sm row">
-                <q-input
+        <q-tab-panels v-model="tab" animated class="text-black">
+          <q-tab-panel name="schedule">
+            <q-card-section class="q-gutter-md row">
+              <div class="col">
+                <q-select
                   outlined
-                  rounded
                   dense
-                  debounce="300"
-                  v-model="filters"
-                  placeholder="Search"
-                >
-                  <template v-slot:append>
-                    <q-icon name="search" />
-                  </template>
-                </q-input>
-              </div>
-            </template>
-
-            <template v-slot:body-cell-action="props">
-              <q-td :props="props">
-                <div class="q-gutter-sm">
-                  <q-btn
-                    round
-                    color="blue"
-                    icon="edit"
-                    size="sm"
-                    flat
-                    dense
-                    @click="editRow = true"
-                  />
-
-                  <q-btn
-                    color="red-10"
-                    icon="delete"
-                    size="sm"
-                    class="q-ml-sm"
-                    flat
-                    round
-                    dense
-                    @click="dialog = true"
-                  />
-                  <q-dialog v-model="dialog" persistent>
-                    <q-card>
-                      <q-card-section class="row items-center">
-                        <q-avatar
-                          size="sm"
-                          icon="warning"
-                          color="red-10"
-                          text-color="white"
-                        />
-                        <span class="q-ml-sm">Confirm Delete?</span>
-                      </q-card-section>
-                      <q-card-actions align="right">
-                        <q-btn
-                          flat
-                          label="Cancel"
-                          color="primary"
-                          v-close-popup="cancelEnabled"
-                          :disable="!cancelEnabled"
-                        />
-                        <q-btn
-                          flat
-                          label="Confirm"
-                          color="primary"
-                          v-close-popup
-                        />
-                      </q-card-actions>
-                    </q-card>
-                  </q-dialog>
-                </div>
-              </q-td>
-            </template>
-          </q-table>
-        </q-tab-panel>
-      </q-tab-panels>
-      <!-- 
-manage room -->
-      <q-tab-panels v-model="tab" animated class="text-white">
-        <q-tab-panel name="room">
-          <q-table
-            class="my-sticky-header-table"
-            title="Rooms"
-            :rows="rows3"
-            :columns="columns3"
-            row-key="name"
-            :separator="separator"
-            flat
-            bordered
-          >
-            <template v-slot:top-right>
-              <div class="q-pa-md q-gutter-sm row">
-                <q-input
-                  outlined
-                  rounded
-                  dense
-                  debounce="300"
-                  v-model="filters"
-                  placeholder="Search"
-                >
-                  <template v-slot:append>
-                    <q-icon name="search" />
-                  </template>
-                </q-input>
-                <q-btn
-                  label="Add New"
-                  color="black"
-                  dense
-                  flat
-                  icon="add"
-                  @click="addRoom = true"
+                  v-model="name23"
+                  :options="options1"
+                  label="AY Code"
                 />
-                <q-dialog v-model="addRoom" full-width>
-                  <q-card>
-                    <q-card-section class="row">
-                      <div class="text-h6">Add Room</div>
-                      <q-space />
-                      <q-btn flat round dense icon="close" v-close-popup />
-                    </q-card-section>
-
-                    <q-card-section class="q-gutter-md row">
-                      <div class="col">
-                        <q-input outlined v-model="name33" label="Room" />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="name34"
-                          label="Description"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="name35"
-                          :options="options6"
-                          label="Status"
-                        />
-                      </div>
-                    </q-card-section>
-                    <q-card-actions align="right">
-                      <q-btn flat label="Cancel" color="red-10" v-close-popup />
-                      <q-btn flat label="Add" color="primary" v-close-popup />
-                    </q-card-actions>
-                  </q-card>
-                </q-dialog>
               </div>
-            </template>
 
-            <template v-slot:body-cell-action="props">
-              <q-td :props="props">
-                <div class="q-gutter-sm">
-                  <q-btn
-                    round
-                    color="blue"
-                    icon="edit"
-                    size="sm"
-                    flat
+              <div class="col">
+                <q-select
+                  outlined
+                  dense
+                  v-model="name24"
+                  :options="options2"
+                  label="Year Level"
+                />
+              </div>
+              <div class="col">
+                <q-input outlined dense v-model="name25" label="Room" />
+              </div>
+            </q-card-section>
+            <q-card-section class="q-gutter-md row">
+              <div class="col">
+                <q-input
+                  outlined
+                  dense
+                  v-model="subjectcode"
+                  label="Subject Code"
+                />
+              </div>
+              <div class="col">
+                <q-input
+                  outlined
+                  dense
+                  v-model="name28"
+                  label="Descripstive Title"
+                />
+              </div>
+              <div class="col">
+                <q-input outlined dense v-model="name29" label="Unit/s" />
+              </div>
+              <div class="col">
+                <q-input outlined dense v-model="name30" label="Teacher ID" />
+              </div>
+              <div class="col">
+                <q-input outlined dense v-model="name31" label="Teacher" />
+              </div>
+            </q-card-section>
+            <q-card-section class="q-gutter-md row">
+              <div class="col">
+                <q-checkbox v-model="teal" label="Monday" />
+                <q-checkbox v-model="orange" label="Tuesday" />
+                <q-checkbox v-model="red" label="Wednessday" />
+                <q-checkbox v-model="pink" label="Thursday" />
+                <q-checkbox v-model="black" label="Friday" />
+              </div>
+              <q-input dense v-model="time" filled type="time" label="time" />
+              <div>=</div>
+              <q-input dense v-model="time1" filled type="time" label="time" />
+              <q-card-actions align="right">
+                <q-btn flat label="Cancel" color="red-10" v-close-popup />
+                <q-btn flat label="Add" color="primary" v-close-popup />
+              </q-card-actions>
+            </q-card-section>
+
+            <q-table
+              class="my-sticky-header-table"
+              title="Subjects"
+              :rows="rows2"
+              :columns="columns2"
+              row-key="name"
+              :separator="separator"
+              flat
+              bordered
+            >
+              <template v-slot:top-right>
+                <div class="q-pa-md q-gutter-sm row">
+                  <q-input
+                    outlined
+                    rounded
                     dense
-                    @click="editRoom = true"
+                    debounce="300"
+                    v-model="filters"
+                    placeholder="Search"
+                  >
+                    <template v-slot:append>
+                      <q-icon name="search" />
+                    </template>
+                  </q-input>
+                </div>
+              </template>
+
+              <template v-slot:body-cell-action="props">
+                <q-td :props="props">
+                  <div class="q-gutter-sm">
+                    <q-btn
+                      round
+                      color="blue"
+                      icon="edit"
+                      size="sm"
+                      flat
+                      dense
+                      @click="editRow = true"
+                    />
+
+                    <q-btn
+                      color="red-10"
+                      icon="delete"
+                      size="sm"
+                      class="q-ml-sm"
+                      flat
+                      round
+                      dense
+                      @click="dialog = true"
+                    />
+                    <q-dialog v-model="dialog" persistent>
+                      <q-card>
+                        <q-card-section class="row items-center">
+                          <q-avatar
+                            size="sm"
+                            icon="warning"
+                            color="red-10"
+                            text-color="white"
+                          />
+                          <span class="q-ml-sm">Confirm Delete?</span>
+                        </q-card-section>
+                        <q-card-actions align="right">
+                          <q-btn
+                            flat
+                            label="Cancel"
+                            color="primary"
+                            v-close-popup="cancelEnabled"
+                            :disable="!cancelEnabled"
+                          />
+                          <q-btn
+                            flat
+                            label="Confirm"
+                            color="primary"
+                            v-close-popup
+                          />
+                        </q-card-actions>
+                      </q-card>
+                    </q-dialog>
+                  </div>
+                </q-td>
+              </template>
+            </q-table>
+          </q-tab-panel>
+        </q-tab-panels>
+                  <!-- 
+          manage room -->
+        <q-tab-panels v-model="tab" animated class="text-white">
+          <q-tab-panel name="room">
+            <q-table
+              class="my-sticky-header-table"
+              title="Rooms"
+              :rows="rows3"
+              :columns="columns3"
+              row-key="name"
+              :separator="separator"
+              flat
+              bordered
+            >
+              <template v-slot:top-right>
+                <div class="q-pa-md q-gutter-sm row">
+                  <q-input
+                    outlined
+                    rounded
+                    dense
+                    debounce="300"
+                    v-model="filters"
+                    placeholder="Search"
+                  >
+                    <template v-slot:append>
+                      <q-icon name="search" />
+                    </template>
+                  </q-input>
+                  <q-btn
+                    label="Add New"
+                    color="black"
+                    dense
+                    flat
+                    icon="add"
+                    @click="addRoom = true"
                   />
-                  <q-dialog v-model="editRoom" full-width>
+                  <q-dialog v-model="addRoom" full-width>
                     <q-card>
                       <q-card-section class="row">
-                        <div class="text-h6">Edit Room</div>
+                        <div class="text-h6">Add Room</div>
                         <q-space />
                         <q-btn flat round dense icon="close" v-close-popup />
                       </q-card-section>
 
                       <q-card-section class="q-gutter-md row">
                         <div class="col">
-                          <q-input outlined v-model="name36" label="Room" />
+                          <q-input outlined v-model="name33" label="Room" />
                         </div>
                         <div class="col">
                           <q-input
                             outlined
-                            v-model="name37"
+                            v-model="name34"
                             label="Description"
                           />
                         </div>
                         <div class="col">
-                          <q-input outlined v-model="name38" label="Status" />
+                          <q-select
+                            outlined
+                            v-model="name35"
+                            :options="options6"
+                            label="Status"
+                          />
                         </div>
                       </q-card-section>
                       <q-card-actions align="right">
@@ -746,50 +723,105 @@ manage room -->
                       </q-card-actions>
                     </q-card>
                   </q-dialog>
-                  <q-btn
-                    color="red-10"
-                    icon="delete"
-                    size="sm"
-                    class="q-ml-sm"
-                    flat
-                    round
-                    dense
-                    @click="dialog = true"
-                  />
-                  <q-dialog v-model="dialog" persistent>
-                    <q-card>
-                      <q-card-section class="row items-center">
-                        <q-avatar
-                          size="sm"
-                          icon="warning"
-                          color="red-10"
-                          text-color="white"
-                        />
-                        <span class="q-ml-sm">Confirm Delete?</span>
-                      </q-card-section>
-                      <q-card-actions align="right">
-                        <q-btn
-                          flat
-                          label="Cancel"
-                          color="primary"
-                          v-close-popup="cancelEnabled"
-                          :disable="!cancelEnabled"
-                        />
-                        <q-btn
-                          flat
-                          label="Confirm"
-                          color="primary"
-                          v-close-popup
-                        />
-                      </q-card-actions>
-                    </q-card>
-                  </q-dialog>
                 </div>
-              </q-td>
-            </template>
-          </q-table>
-        </q-tab-panel>
-      </q-tab-panels>
+              </template>
+
+              <template v-slot:body-cell-action="props">
+                <q-td :props="props">
+                  <div class="q-gutter-sm">
+                    <q-btn
+                      round
+                      color="blue"
+                      icon="edit"
+                      size="sm"
+                      flat
+                      dense
+                      @click="editRoom = true"
+                    />
+                    <q-dialog v-model="editRoom" full-width>
+                      <q-card>
+                        <q-card-section class="row">
+                          <div class="text-h6">Edit Room</div>
+                          <q-space />
+                          <q-btn flat round dense icon="close" v-close-popup />
+                        </q-card-section>
+
+                        <q-card-section class="q-gutter-md row">
+                          <div class="col">
+                            <q-input outlined v-model="name36" label="Room" />
+                          </div>
+                          <div class="col">
+                            <q-input
+                              outlined
+                              v-model="name37"
+                              label="Description"
+                            />
+                          </div>
+                          <div class="col">
+                            <q-input outlined v-model="name38" label="Status" />
+                          </div>
+                        </q-card-section>
+                        <q-card-actions align="right">
+                          <q-btn
+                            flat
+                            label="Cancel"
+                            color="red-10"
+                            v-close-popup
+                          />
+                          <q-btn
+                            flat
+                            label="Add"
+                            color="primary"
+                            v-close-popup
+                          />
+                        </q-card-actions>
+                      </q-card>
+                    </q-dialog>
+                    <q-btn
+                      color="red-10"
+                      icon="delete"
+                      size="sm"
+                      class="q-ml-sm"
+                      flat
+                      round
+                      dense
+                      @click="dialog = true"
+                    />
+                    <q-dialog v-model="dialog" persistent>
+                      <q-card>
+                        <q-card-section class="row items-center">
+                          <q-avatar
+                            size="sm"
+                            icon="warning"
+                            color="red-10"
+                            text-color="white"
+                          />
+                          <span class="q-ml-sm">Confirm Delete?</span>
+                        </q-card-section>
+                        <q-card-actions align="right">
+                          <q-btn
+                            flat
+                            label="Cancel"
+                            color="primary"
+                            v-close-popup="cancelEnabled"
+                            :disable="!cancelEnabled"
+                          />
+                          <q-btn
+                            flat
+                            label="Confirm"
+                            color="primary"
+                            v-close-popup
+                          />
+                        </q-card-actions>
+                      </q-card>
+                    </q-dialog>
+                  </div>
+                </q-td>
+              </template>
+            </q-table>
+          </q-tab-panel>
+        </q-tab-panels>
+      </div>
     </div>
   </div>
 </template>

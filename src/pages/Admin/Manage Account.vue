@@ -1,12 +1,19 @@
 <template>
-  <div class="q-pa-md">
-    <div class="text-h4 text-bold flex flex-center">Manage Account</div>
+  <q-page class="q-pa-lg">
+    <div class="text-h4 text-bold">
+      <q-icon
+        name="account_circle"
+        color="light-blue-6"
+        style="font-size: 4rem"
+      />
+      Account Management
+    </div>
 
     <br />
 
     <q-table
       title="Account List"
-      :rows="account"
+      :rows="allAccount"
       :columns="columns"
       row-key="name"
       :rows-per-page-options="[0]"
@@ -29,255 +36,253 @@
           <q-btn
             label="Add User"
             color="primary"
+            e
             dense
             flat
             icon="add"
-            @click="onNewAccount()"
+            @click="addNewAccount = true"
           />
-          <q-dialog v-model="activeUser">
-            <q-card style="width: 600px">
+          <q-dialog v-model="addNewAccount" persistent>
+            <q-card style="width: 800px; max-width: 100vw" class="q-pa-sm">
               <q-card-section class="row">
                 <div class="text-h6">Add User</div>
                 <q-space />
-                <q-btn flat round dense icon="close" v-close-popup />
-              </q-card-section>
-
-              <q-card-section class="q-gutter-md">
-                <div class="row q-col-gutter-sm q-ma-xs q-mr-sm">
-                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <q-input
-                      outlined
-                      v-model="presentAccount.fName"
-                      label="First Name"
-                    />
-                  </div>
-                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <q-input
-                      outlined
-                      v-model="presentAccount.mInitial"
-                      label="Middle Initial"
-                    />
-                  </div>
-                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <q-input
-                      outlined
-                      v-model="presentAccount.lName"
-                      label="Last Name"
-                    />
-                  </div>
-                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <q-input
-                      outlined
-                      v-model="presentAccount.username"
-                      label="Username"
-                    />
-                  </div>
-                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <q-input
-                      outlined
-                      v-model="presentAccount.password"
-                      label="Password"
-                    />
-                  </div>
-                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <q-select
-                      outlined
-                      v-model="presentAccount.designation"
-                      :options="options"
-                      label="Designation"
-                    />
-                  </div>
-                </div>
-              </q-card-section>
-
-              <q-card-actions align="right">
-                <q-btn flat label="Cancel" color="red-10" v-close-popup />
                 <q-btn
                   flat
-                  label="Add"
-                  color="primary"
-                  @click="onSaveAccount"
+                  round
+                  dense
+                  icon="close"
                   v-close-popup
+                  @click="resetModel()"
                 />
-              </q-card-actions>
+              </q-card-section>
+
+              <q-card-section>
+                <q-form @submit="onaddAccount">
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        outlined
+                        v-model="inputAccount.FName"
+                        label="First Name"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputAccount.MName"
+                        label="Middle Initial"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputAccount.LName"
+                        label="Last Name"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputAccount.username"
+                        label="Username"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputAccount.password"
+                        label="Password"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-select
+                        outlined
+                        v-model="inputAccount.designation"
+                        :options="options"
+                        label="Designation"
+                      />
+                    </div>
+                  </div>
+                  <div align="right">
+                    <q-btn
+                      flat
+                      label="Cancel"
+                      color="red-10"
+                      v-close-popup
+                      @click="resetModel()"
+                    />
+                    <q-btn flat label="Save" color="primary" type="submit" />
+                  </div>
+                </q-form>
+              </q-card-section>
             </q-card>
           </q-dialog>
         </div>
       </template>
-      <template v-slot:header="props">
-        <q-tr :props="props">
-          <q-th auto-width />
-          <q-th v-for="col in props.cols" :key="col.name" :props="props">
-            {{ col.label }}
-          </q-th>
-        </q-tr>
-      </template>
 
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <div>
-            <q-td>
-              <q-btn
-                round
-                color="blue"
-                icon="edit"
-                size="sm"
-                flat
-                dense
-                @click="onEditAccount(props.row)"
-              />
-              <q-dialog v-model="editRow">
-                <q-card style="width: 600px">
-                  <q-card-section class="row">
-                    <div class="text-h6">Edit User</div>
-                    <q-space />
-                    <q-btn flat round dense icon="close" v-close-popup />
-                  </q-card-section>
+      <template v-slot:body-cell-action="props">
+        <q-td :props="props">
+          <div class="q-gutter-sm">
+            <q-btn
+              round
+              color="blue"
+              icon="edit"
+              size="sm"
+              flat
+              dense
+              @click="openEditDialog(props.row)"
+            />
+            <q-dialog v-model="updateAccount" persistent>
+              <q-card style="width: 800px; max-width: 100vw" class="q-pa-sm">
+                <q-card-section class="row">
+                  <div class="text-h6">Edit User</div>
+                  <q-space />
+                  <q-btn
+                    flat
+                    round
+                    dense
+                    icon="close"
+                    v-close-popup
+                    @click="resetModel()"
+                  />
+                </q-card-section>
 
-                  <q-card-section class="q-gutter-md">
-                    <div class="row q-col-gutter-sm q-ma-xs q-mr-sm">
-                      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <q-card-section>
+                  <q-form @submit="oneditAccount">
+                    <div class="row q-gutter-md q-py-sm">
+                      <div class="col">
                         <q-input
+                          autofocus
                           outlined
-                          v-model="presentAccount.fName"
+                          v-model="inputAccount.FName"
                           label="First Name"
                         />
                       </div>
-                      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="col">
                         <q-input
                           outlined
-                          v-model="presentAccount.mInitial"
+                          v-model="inputAccount.MName"
                           label="Middle Initial"
                         />
                       </div>
-                      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="col">
                         <q-input
                           outlined
-                          v-model="presentAccount.lName"
+                          v-model="inputAccount.LName"
                           label="Last Name"
                         />
                       </div>
-                      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    </div>
+                    <div class="row q-gutter-md q-py-sm">
+                      <div class="col">
                         <q-input
                           outlined
-                          v-model="presentAccount.username"
+                          v-model="inputAccount.username"
                           label="Username"
                         />
                       </div>
-                      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="col">
                         <q-input
                           outlined
-                          v-model="presentAccount.password"
+                          v-model="inputAccount.password"
                           label="Password"
                         />
                       </div>
-                      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    </div>
+                    <div class="row q-gutter-md q-py-sm">
+                      <div class="col">
                         <q-select
                           outlined
-                          v-model="presentAccount.designation"
+                          v-model="inputAccount.designation"
                           :options="options"
-                          label="Roles"
+                          label="Designation"
                         />
                       </div>
                     </div>
-                  </q-card-section>
-
-                  <q-card-actions align="right">
-                    <q-btn flat label="Cancel" color="red-10" v-close-popup />
-                    <q-btn
-                      flat
-                      label="Add"
-                      color="primary"
-                      @click="onEditAccount"
-                      v-close-popup
-                    />
-                  </q-card-actions>
-                </q-card>
-              </q-dialog>
-              <q-btn
-                color="red-10"
-                icon="delete"
-                size="sm"
-                class="q-ml-sm"
-                flat
-                round
-                dense
-                @click="onDeleteAccount(props.row)"
-              />
-              <q-dialog v-model="confirmDelete" persistent>
-                <q-card>
-                  <q-card-section class="row items-center">
-                    <q-avatar
-                      size="sm"
-                      icon="warning"
-                      color="red-10"
-                      text-color="white"
-                    />
-                    <span class="q-ml-sm"
-                      >Confirm Delete {{ presentAccount.fName }}?</span
-                    >
-                  </q-card-section>
-                  <q-card-actions align="right">
-                    <q-btn
-                      flat
-                      label="Cancel"
-                      color="primary"
-                      v-close-popup="cancelEnabled"
-                      :disable="!cancelEnabled"
-                    />
-                    <q-btn
-                      flat
-                      label="Delete"
-                      color="primary"
-                      @click="onConfirmDelete"
-                      v-close-popup
-                    />
-                  </q-card-actions>
-                </q-card>
-              </q-dialog>
-            </q-td>
+                    <div align="right">
+                      <q-btn
+                        flat
+                        label="Cancel"
+                        color="red-10"
+                        @click="resetModel()"
+                        v-close-popup
+                      />
+                      <q-btn flat label="Save" color="primary" type="submit" />
+                    </div>
+                  </q-form>
+                </q-card-section>
+              </q-card>
+            </q-dialog>
+            <q-btn
+              color="red-10"
+              icon="delete"
+              size="sm"
+              class="q-ml-sm"
+              flat
+              round
+              dense
+              @click="deleteSpecificAccount(props.row)"
+            />
           </div>
-
-          <q-td v-for="col in props.cols" :key="col.name" :props="props">
-            {{ col.value }}
-          </q-td>
-        </q-tr>
+        </q-td>
       </template>
     </q-table>
-  </div>
+  </q-page>
 </template>
 
 <script lang="ts">
-import { AccountInfo } from 'src/store/account/state';
 import { Vue, Options } from 'vue-class-component';
+import { IAccountInfo } from 'src/store/account/state';
 import { mapActions, mapState } from 'vuex';
 
 @Options({
   computed: {
-    ...mapState('account', ['account', 'activeAccount']),
+    ...mapState('account', ['allAccount']),
   },
   methods: {
-    ...mapActions('account', ['newAccount', 'editAccount', 'deleteAccount']),
+    ...mapActions('account', ['addAccount', 'editAccount', 'deleteAccount']),
   },
 })
 export default class ManageAccount extends Vue {
-  account!: AccountInfo[];
-  newAccount!: (account: AccountInfo) => Promise<void>;
-  editAccount!: (account: AccountInfo) => Promise<void>;
-  deleteAccount!: (account: AccountInfo) => Promise<void>;
+  addAccount!: (payload: IAccountInfo) => Promise<void>;
+  editAccount!: (payload: IAccountInfo) => Promise<void>;
+  deleteAccount!: (payload: IAccountInfo) => Promise<void>;
+  allAccount!: IAccountInfo[];
 
   columns = [
     {
       name: 'name',
       required: true,
-      label: 'Full Name',
+      label: 'Name',
       align: 'left',
-      field: (row: AccountInfo) =>
-        row.fName + ' ' + row.mInitial + ' ' + row.lName,
+      field: (row: IAccountInfo) =>
+        row.FName + ' ' + row.MName + '. ' + row.LName,
       format: (val: string) => `${val}`,
     },
-    { name: 'username', align: 'left', label: 'Username', field: 'username' },
-    { name: 'password', align: 'left', label: 'Password', field: 'password' },
+    {
+      name: 'username',
+      align: 'center',
+      label: 'Username',
+      field: 'username',
+    },
+    {
+      name: 'password',
+      align: 'center',
+      label: 'Password',
+      field: 'password',
+    },
+    {
+      name: 'dateCreated',
+      align: 'center',
+      label: 'Date Created',
+      field: 'dateCreated',
+    },
     {
       name: 'designation',
       align: 'center',
@@ -285,52 +290,76 @@ export default class ManageAccount extends Vue {
       field: 'designation',
     },
     { name: 'status', align: 'center', label: 'Status', field: 'status' },
+    { name: 'action', align: 'center', label: 'Action', field: 'action' },
   ];
-  confirmDelete = false;
-  cancelEnabled = true;
-  activeUser = false;
-  editRow = false;
-  defaultAccount: AccountInfo = {
-    fName: '',
-    mInitial: '',
-    lName: '',
-    designation: '',
+  addNewAccount = false;
+  updateAccount = false;
+  filter = '';
+  options = ['Admin', 'Chairperson', 'Registrar'];
+
+  inputAccount: IAccountInfo = {
+    FName: '',
+    MName: '',
+    LName: '',
     username: '',
     password: '',
+    designation: '',
+    dateCreated: '',
     status: 'Active',
   };
-  presentAccount = { ...this.defaultAccount };
-  filter = '';
-  options = ['Admin', 'Registrar', 'Chairperson'];
 
-  onNewAccount() {
-    this.presentAccount = { ...this.defaultAccount };
-    this.editRow = false;
-    this.activeUser = true;
+  async onaddAccount() {
+    await this.addAccount(this.inputAccount);
+    this.addNewAccount = false;
+    this.resetModel();
+    this.$q.notify({
+      type: 'positive',
+      message: 'Successfully Adeded.',
+    });
   }
 
-  onEditAccount(account: AccountInfo) {
-    this.presentAccount = { ...account };
-    this.editRow = true;
-    this.confirmDelete = false;
+  async oneditAccount() {
+    await this.editAccount(this.inputAccount);
+    this.updateAccount = false;
+    this.resetModel();
+    this.$q.notify({
+      type: 'positive',
+      message: 'Successfully Edit.',
+    });
   }
 
-  onDeleteAccount(account: AccountInfo) {
-    this.presentAccount = { ...account };
-    this.confirmDelete = true;
+  deleteSpecificAccount(val: IAccountInfo) {
+    this.$q
+      .dialog({
+        message: 'Confirm to delete?',
+        cancel: true,
+        persistent: true,
+      })
+      .onOk(async () => {
+        await this.deleteAccount(val);
+        this.$q.notify({
+          type: 'warning',
+          message: 'Successfully deleted',
+        });
+      });
   }
 
-  async onSaveAccount() {
-    if (!this.editRow) {
-      await this.newAccount(this.presentAccount);
-    } else {
-      await this.editAccount(this.presentAccount);
-    }
+  openEditDialog(val: IAccountInfo) {
+    this.updateAccount = true;
+    this.inputAccount = { ...val };
   }
 
-  async onConfirmDelete() {
-    await this.deleteAccount(this.presentAccount);
-    this.confirmDelete = true;
+  resetModel() {
+    this.inputAccount = {
+      FName: '',
+      MName: '',
+      LName: '',
+      username: '',
+      password: '',
+      designation: '',
+      dateCreated: '',
+      status: 'Active',
+    };
   }
 }
 </script>

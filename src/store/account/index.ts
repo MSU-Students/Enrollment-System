@@ -5,12 +5,12 @@ import actions from './actions';
 import getters from './getters';
 import mutations from './mutations';
 
-const accountModule: Module<AccountStateInterface, StateInterface> = {
+const exampleModule: Module<AccountStateInterface, StateInterface> = {
   namespaced: true,
   actions,
   getters,
   mutations,
-  state
+  state,
 };
 
-export default accountModule;
+export default exampleModule;

@@ -6,51 +6,53 @@
           Log-in as Chairperson
         </div>
 
-    <q-card-section>
-            <q-form class="q-gutter-md">
-              <q-input v-model="username" label="Username">
-                
-                <template v-slot:prepend>
-                  <q-icon name="people" />
-                </template>
-              </q-input>
+        <q-card-section>
+          <q-form class="q-gutter-md">
+            <q-input v-model="username" label="Username">
+              <template v-slot:prepend>
+                <q-icon name="people" />
+              </template>
+            </q-input>
 
-              <q-input
-                v-model="password"
-                label="Password"
-                :type="isPwd ? 'password' : 'text'"
-              >
-                <template v-slot:append>
-                  <q-icon
-                    :name="isPwd ? 'visibility_off' : 'visibility'"
-                    class="cursor-pointer"
-                    @click="isPwd = !isPwd"
-                  />
-                </template>
-                <template v-slot:prepend>
-                  <q-icon name="lock" />
-                </template>
-              </q-input>
-
-              <div>
-                <q-btn
-                  class="full-width"
-                  label="Login"
-                  color="secondary"
-                  size="lg"
-                  @click="chairpersondashboard()"
+            <q-input
+              v-model="password"
+              label="Password"
+              :type="isPwd ? 'password' : 'text'"
+            >
+              <template v-slot:append>
+                <q-icon
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
                 />
-              </div>
-            </q-form>
-          </q-card-section>
+              </template>
+              <template v-slot:prepend>
+                <q-icon name="lock" />
+              </template>
+            </q-input>
+
+            <div>
+              <q-btn
+                :ripple="false"
+                unelevated
+                class="full-width"
+                label="Login"
+                color="primary"
+                size="lg"
+                type="submit"
+                @click="chairpersondashboard()"
+              />
+            </div>
+          </q-form>
+        </q-card-section>
       </q-form>
-        </q-card>
-      </q-page>
+    </q-card>
+  </q-page>
 </template>
 
 <script lang="ts">
-import { Vue } from 'vue-class-component';
-
+import { Vue, Options } from 'vue-class-component';
+@Options({})
 export default class Login extends Vue {
   username = '';
   password = '';
@@ -58,9 +60,21 @@ export default class Login extends Vue {
 
   async chairpersondashboard() {
     if (this.username == 'Admin' && this.password == 'Admin') {
-      await this.$router.replace('/Chairperson/dashboard');
+      await this.$router.replace('/chairperson/dashboard');
+      this.$q.notify({
+        color: 'positive',
+        icon: 'cloud_done',
+        textColor: 'white',
+        position: 'bottom',
+        message: 'You are Logged In!',
+      });
     } else {
-      alert(' Try Agains  ');
+      this.username = '';
+      this.password = '';
+      this.$q.notify({
+        type: 'negative',
+        message: 'Wrong Username and Password!!',
+      });
     }
   }
 }

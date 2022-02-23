@@ -1,12 +1,12 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-pa-sm bg-image2">
     <q-layout view="hHh lpR lFf">
-      <q-header elevated class="q-px-lg q-py-md">
+      <q-header elevated class="q-px-lg q-py-md bg-image1">
         <q-toolbar>
           <q-img src="~assets/logo.png" style="width: 110px"></q-img>
           <q-space />
           <q-card flat class="bg-transparent">
-            <div class="font2 text-h3 flex flex-center">Chairperson Module</div>
+            <div class="font1 text-h3 flex flex-center">Chairperson Module</div>
             <div class="font2 text-h6 flex flex-center">
               ______________________________________________________________________________________________
             </div>
@@ -20,10 +20,9 @@
       <q-drawer
         v-model="drawer"
         show-if-above
-        :width="200"
+        :width="300"
         :breakpoint="400"
-        bordered
-        content-class="bg-grey-3"
+        bordered class="bg-white"
       >
         <q-scroll-area class="fit">
           <q-list padding>

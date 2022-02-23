@@ -17,3 +17,25 @@
 .font2{
     font-family: Oswald;
 }
+
+.bg-image {
+    background-image: url(../assets/logo.png);
+    background-blend-mode: overlay;
+    /* background-repeat: no-repeat; */
+    background-position: center;
+    background-color: rgb(240, 240, 239);
+    background-size: 80%;
+  }
+
+  .bg-image1 {
+    background-image: url(../assets/back1.jpg);
+  }
+
+  .bg-image2 {
+    background-image: url(../assets/back2.jpg);
+    background-blend-mode: overlay;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+  }
+
