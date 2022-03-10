@@ -38,12 +38,25 @@ const routes: RouteRecordRaw[] = [
         component: () => import('src/pages/Chairperson/Dashboard.vue'),
       },
       {
-        path: 'assign',
-        component: () => import('src/pages/Chairperson/Assigning.vue'),
-      },
-      {
         path: 'manage',
         component: () => import('src/pages/Chairperson/Manage.vue'),
+      },
+      {
+        path: 'firstyear',
+        component: () => import('src/pages/Chairperson/firstYear.vue'),
+      },
+      {
+        path: 'secondyear',
+        component: () => import('src/pages/Chairperson/secondYear.vue'),
+      },
+      {
+        path: 'thirdyear',
+        component: () => import('src/pages/Chairperson/thirdYear.vue'),
+      },
+
+      {
+        path: 'fouryear',
+        component: () => import('src/pages/Chairperson/fourYear.vue'),
       },
       
     ],

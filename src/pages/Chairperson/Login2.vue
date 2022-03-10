@@ -8,7 +8,15 @@
 
         <q-card-section>
           <q-form class="q-gutter-md">
-            <q-input v-model="username" label="Username">
+            <q-input v-model="username" 
+                label="Username"
+                 lazy-rules
+                 :rules="[
+                  (val) =>
+                  (val && val.length > 0) ||
+                  'Does not accept empty input',
+                  ]"
+                  >
               <template v-slot:prepend>
                 <q-icon name="people" />
               </template>
@@ -16,7 +24,14 @@
 
             <q-input
               v-model="password"
-              label="Password"
+               label="Password"
+               lazy-rules
+                 :rules="[
+                  (val) =>
+                  (val && val.length > 0) ||
+                  'Does not accept empty input',
+                  ]"
+                  
               :type="isPwd ? 'password' : 'text'"
             >
               <template v-slot:append>
@@ -59,7 +74,7 @@ export default class Login extends Vue {
   isPwd = true;
 
   async chairpersondashboard() {
-    if (this.username == 'Admin' && this.password == 'Admin') {
+    if (this.username == 'a' && this.password == 'a') {
       await this.$router.replace('/chairperson/dashboard');
       this.$q.notify({
         color: 'positive',

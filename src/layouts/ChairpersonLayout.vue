@@ -20,15 +20,19 @@
       <q-drawer
         v-model="drawer"
         show-if-above
-        :width="300"
-        :breakpoint="400"
-        bordered class="bg-white"
+        :mini="miniState"
+        @mouseover="miniState = false"
+        @mouseout="miniState = true"
+        :width="200"
+        :breakpoint="500"
+        bordered
+        content-class="bg-grey-3"
       >
         <q-scroll-area class="fit">
           <q-list padding>
             <q-item clickable v-ripple to="/chairperson/dashboard">
               <q-item-section avatar>
-                <q-icon name="dashboard" />
+                <q-icon name="dashboard" color="blue-2"/>
               </q-item-section>
 
               <q-item-section> Dashboard </q-item-section>
@@ -36,25 +40,60 @@
 
             <q-item clickable v-ripple to="/chairperson/manage">
               <q-item-section avatar>
-                <q-icon name="how_to_reg" />
+                <q-icon name="how_to_reg" color="blue-2" />
               </q-item-section>
-
               <q-item-section> Managing </q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple to="/chairperson/assign">
-              <q-item-section avatar>
-                <q-icon name="person" />
-              </q-item-section>
+            
 
+            <q-expansion-item>
+            <template v-slot:header>
+              <q-item-section avatar>
+                <q-icon name="analytics" color="blue-2" />
+              </q-item-section>
               <q-item-section> Assigning </q-item-section>
-            </q-item>
+            </template>
+            <q-card>
+              <q-card-section>
+                  
+                  <q-item clickable v-ripple to="/chairperson/firstyear">
+                <q-item-section avatar>
+                <q-icon name="person" color="blue-2" />
+              </q-item-section>
+                  <q-item-section> First Year </q-item-section>
+                </q-item>
+
+                <q-item clickable v-ripple to="/chairperson/secondyear">
+                <q-item-section avatar>
+                <q-icon name="person" color="blue-2" />
+              </q-item-section>
+                  <q-item-section> Second Year </q-item-section>
+                </q-item>
+
+                <q-item clickable v-ripple to="/chairperson/thirdyear">
+                <q-item-section avatar>
+                <q-icon name="person" color="blue-2" />
+              </q-item-section>
+                  <q-item-section> Third Year </q-item-section>
+                </q-item>
+
+                <q-item clickable v-ripple to="/chairperson/fouryear">
+                <q-item-section avatar>
+                <q-icon name="person" color="blue-2" />
+              </q-item-section>
+                  <q-item-section> Four Year </q-item-section>
+                </q-item>
+                
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
 
             <q-separator />
 
             <q-item clickable v-ripple to="/">
               <q-item-section avatar>
-                <q-icon name="logout" />
+                <q-icon name="logout" color="red-2"/>
               </q-item-section>
 
               <q-item-section> Logout </q-item-section>
