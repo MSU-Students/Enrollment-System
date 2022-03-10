@@ -9,6 +9,18 @@ import {
 import account from './account';
 import { AccountStateInterface } from './account/state';
 
+import ManagementSubject from './ManagementSubject';
+import { ManagementSubjectStateInterface } from './ManagementSubject/state';
+
+import ManagementTeacher from './ManagementTeacher';
+import { ManagementTeacherStateInterface } from './ManagementTeacher/state';
+
+import ManagementRoom from './ManagementRoom';
+import { ManagementRoomStateInterface } from './ManagementRoom/state';
+
+import ManagementSchedule from './ManagementSchedule';
+import { ManagementScheduleStateInterface } from './ManagementSchedule/state';
+
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation;
@@ -22,7 +34,11 @@ export interface StateInterface {
   // Define your own store structure, using submodules if needed
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
-  account: AccountStateInterface,
+  account: AccountStateInterface;
+  ManagementSubject:ManagementSubjectStateInterface;
+  ManagementTeacher:ManagementTeacherStateInterface;
+  ManagementRoom:ManagementRoomStateInterface;
+  ManagementSchedule:ManagementScheduleStateInterface;
 }
 
 // provide typings for `this.$store`
@@ -39,7 +55,11 @@ export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
       // example
-      account
+      account,
+      ManagementSubject,
+      ManagementTeacher,
+      ManagementRoom,
+      ManagementSchedule,
     },
 
     // enable strict mode (adds overhead!)
