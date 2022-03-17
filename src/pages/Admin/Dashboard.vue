@@ -1,6 +1,6 @@
 <template>
-  <q-page>
-    <div class="row q-gutter-sm">
+  <q-page class="q-pa-md">
+    <div class="row q-pb-lg q-gutter-sm">
       <div class="col">
         <q-card>
           <q-card-section
@@ -54,11 +54,12 @@
             </div>
           </q-card-section>
         </q-card>
-        </div>
       </div>
-     
-      <q-table
-      :rows="rows"
+    </div>
+
+    <q-table
+      title="Student List"
+      :rows="allStudentInfo"
       :columns="columns"
       row-key="name"
       :rows-per-page-options="[0]"
@@ -79,79 +80,536 @@
             </template>
           </q-input>
           <q-btn
-            label="Add User"
+            label="Add Student"
             color="primary"
+            e
             dense
             flat
             icon="add"
-            to="admission"
+            @click="addNewStudentInfo = true"
           />
-        </div>
-      </template>
+          <q-dialog v-model="addNewStudentInfo" persistent>
+            <q-card style="width: 800px; max-width: 100vw" class="q-pa-sm">
+              <q-card-section class="row">
+                <div class="text-h6">Add Student</div>
+                <q-space />
+                <q-btn
+                  flat
+                  round
+                  dense
+                  icon="close"
+                  v-close-popup
+                  @click="resetModel()"
+                />
+              </q-card-section>
 
-      <template v-slot:header="props">
-        <q-tr :props="props">
-          <q-th auto-width />
-          <q-th v-for="col in props.cols" :key="col.name" :props="props">
-            {{ col.label }}
-          </q-th>
-        </q-tr>
-      </template>
+              <q-card-section>
+                <q-form class="q-gutter-sm">
+                  <div class="text-h4 flex flex-center">Requirements</div>
 
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <div>
-            <q-td>
-              <q-btn
-                round
-                color="blue"
-                icon="edit"
-                size="sm"
-                flat
-                dense
-                @click="editRow = true"
-              />
-      
-              <q-btn
-                color="red-10"
-                icon="delete"
-                size="sm"
-                class="q-ml-sm"
-                flat
-                round
-                dense
-                @click="dialog = true"
-              />
-              <q-dialog v-model="dialog" persistent>
-                <q-card>
-                  <q-card-section class="row items-center">
-                    <q-avatar
-                      size="sm"
-                      icon="warning"
-                      color="red-10"
-                      text-color="white"
+                  <div class="flex flex-center">
+                    <q-checkbox
+                      v-model="inputStudentInfo.reportCard"
+                      label="Report Card"
+                      color="blue"
                     />
-                    <span class="q-ml-sm">Confirm Delete?</span>
-                  </q-card-section>
-                  <q-card-actions align="right">
+                    <q-checkbox
+                      v-model="inputStudentInfo.bCertificate"
+                      label="Birth Certificate"
+                      color="blue"
+                    />
+                    <q-checkbox
+                      v-model="inputStudentInfo.Pic"
+                      label="1x1 Picture"
+                      color="blue"
+                    />
+                    <q-checkbox
+                      v-model="inputStudentInfo.eForm"
+                      label="Enrollment Form"
+                      color="blue"
+                    />
+                  </div>
+                  <div class="row q-gutter-sm q-py-sm">
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        outlined
+                        v-model="inputStudentInfo.IdNum"
+                        label="ID number"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputStudentInfo.lrn"
+                        label="LRN"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        v-model="inputStudentInfo.ayCode"
+                        :options="options1"
+                        label="AY Code"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-gutter-sm q-py-sm">
+                    <div class="col">
+                      <q-select
+                        outlined
+                        v-model="inputStudentInfo.incomingYlevel"
+                        :options="options2"
+                        label="Year Level"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        v-model="inputStudentInfo.studentType"
+                        :options="options3"
+                        label="Student Type"
+                      />
+                    </div>
+                  </div>
+
+                  <q-separator></q-separator>
+                  <div class="text-h4 flex flex-center">Information</div>
+
+                  <div class="row q-gutter-sm q-py-sm">
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        outlined
+                        v-model="inputStudentInfo.FName"
+                        label="First Name"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputStudentInfo.MName"
+                        label="Middle Initial"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputStudentInfo.LName"
+                        label="Last Name"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-gutter-sm q-py-sm">
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        outlined
+                        v-model="inputStudentInfo.age"
+                        label="Age"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input filled mask="date" label="Date of Birth">
+                        <!-- <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                  <q-popup-proxy
+                    ref="qDateProxy"
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
+                    <q-date v-model="inputStudentInfo.dataOfBirth">
+                      <div class="row items-center justify-end">
+                        <q-btn
+                          v-close-popup
+                          label="Close"
+                          color="primary"
+                          flat
+                        />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template> -->
+                      </q-input>
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputStudentInfo.placeOfBirth"
+                        label="Place of Birth"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="row q-gutter-sm q-py-sm">
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        outlined
+                        v-model="inputStudentInfo.contactNo"
+                        label="Contact Number"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        v-model="inputStudentInfo.gender"
+                        :options="options4"
+                        label="Gender"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        v-model="inputStudentInfo.martialStatus"
+                        :options="options5"
+                        label="Martial Status"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-gutter-sm q-py-sm">
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        outlined
+                        v-model="inputStudentInfo.citizenship"
+                        label="Citizenship"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputStudentInfo.religion"
+                        label="Religion"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputStudentInfo.address"
+                        label="Address"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="flex flex-center">
                     <q-btn
                       flat
                       label="Cancel"
-                      color="primary"
-                      v-close-popup="cancelEnabled"
-                      :disable="!cancelEnabled"
+                      color="red-10"
+                      @click="resetModel()"
+                      v-close-popup
                     />
-                    <q-btn flat label="Confirm" color="primary" v-close-popup />
-                  </q-card-actions>
-                </q-card>
-              </q-dialog>
-            </q-td>
-          </div>
+                    <q-btn
+                      flat
+                      label="Save"
+                      color="primary"
+                      @click="onAddStudent()"
+                      type="submit"
+                    />
+                  </div>
+                </q-form>
+              </q-card-section>
+            </q-card>
+          </q-dialog>
+        </div>
+      </template>
 
-          <q-td v-for="col in props.cols" :key="col.name" :props="props">
-            {{ col.value }}
-          </q-td>
-        </q-tr>
+      <template v-slot:body-cell-studentDetails="props">
+        <q-td :props="props">
+          <div class="q-gutter-sm">
+            <q-btn
+              round
+              color="blue"
+              icon="more_vert"
+              size="md"
+              flat
+              dense
+              @click="studentDetails = true"
+            />
+            <q-dialog v-model="studentDetails">
+              <q-card class="my-card" flat bordered>
+                <q-card-section>
+                  <div class="text-h6">
+                    Student Details
+                    <q-btn
+                      round
+                      flat
+                      dense
+                      icon="close"
+                      class="float-right"
+                      color="grey-8"
+                      v-close-popup
+                    ></q-btn>
+                  </div>
+                </q-card-section>
+                <q-card-section horizontal>
+                  <q-card-section class="q-pt-xs col">
+                    <div class="text-overline">Padian Grocery,Marawi city</div>
+                    <div class="text-h5 q-mt-sm q-mb-xs">Basam C. Serad</div>
+                    <div class="text-caption text-grey">
+                      Padian Sales Manager/Cashier
+                    </div>
+                  </q-card-section>
+                </q-card-section>
+              </q-card>
+            </q-dialog>
+          </div>
+        </q-td>
+      </template>
+
+      <template v-slot:body-cell-action="props">
+        <q-td :props="props">
+          <div class="q-gutter-sm">
+            <q-btn
+              round
+              color="blue"
+              icon="edit"
+              size="sm"
+              flat
+              dense
+              @click="openEditDialog(props.row)"
+            />
+            <q-dialog v-model="updateAccount" persistent>
+              <q-card style="width: 800px; max-width: 100vw" class="q-pa-sm">
+                <q-card-section class="row">
+                  <div class="text-h6">Edit Student</div>
+                  <q-space />
+                  <q-btn
+                    flat
+                    round
+                    dense
+                    icon="close"
+                    v-close-popup
+                    @click="resetModel()"
+                  />
+                </q-card-section>
+
+                <q-card-section>
+                  <q-form @submit="onAddStudent()" class="q-gutter-sm">
+                    <div class="text-h4 flex flex-center">Requirements</div>
+
+                    <div class="flex flex-center">
+                      <q-checkbox
+                        v-model="inputStudentInfo.reportCard"
+                        label="Report Card"
+                        color="blue"
+                      />
+                      <q-checkbox
+                        v-model="inputStudentInfo.bCertificate"
+                        label="Birth Certificate"
+                        color="blue"
+                      />
+                      <q-checkbox
+                        v-model="inputStudentInfo.Pic"
+                        label="1x1 Picture"
+                        color="blue"
+                      />
+                      <q-checkbox
+                        v-model="inputStudentInfo.eForm"
+                        label="Enrollment Form"
+                        color="blue"
+                      />
+                    </div>
+                    <div class="row q-gutter-sm q-py-sm">
+                      <div class="col">
+                        <q-input
+                          autofocus
+                          outlined
+                          v-model="inputStudentInfo.IdNum"
+                          label="ID number"
+                        />
+                      </div>
+                      <div class="col">
+                        <q-input
+                          outlined
+                          v-model="inputStudentInfo.lrn"
+                          label="LRN"
+                        />
+                      </div>
+                      <div class="col">
+                        <q-select
+                          outlined
+                          v-model="inputStudentInfo.ayCode"
+                          :options="options1"
+                          label="AY Code"
+                        />
+                      </div>
+                    </div>
+                    <div class="row q-gutter-sm q-py-sm">
+                      <div class="col">
+                        <q-select
+                          outlined
+                          v-model="inputStudentInfo.incomingYlevel"
+                          :options="options2"
+                          label="Year Level"
+                        />
+                      </div>
+                      <div class="col">
+                        <q-select
+                          outlined
+                          v-model="inputStudentInfo.studentType"
+                          :options="options3"
+                          label="Student Type"
+                        />
+                      </div>
+                    </div>
+
+                    <q-separator></q-separator>
+                    <div class="text-h4 flex flex-center">Information</div>
+
+                    <div class="row q-gutter-sm q-py-sm">
+                      <div class="col">
+                        <q-input
+                          autofocus
+                          outlined
+                          v-model="inputStudentInfo.FName"
+                          label="First Name"
+                        />
+                      </div>
+                      <div class="col">
+                        <q-input
+                          outlined
+                          v-model="inputStudentInfo.MName"
+                          label="Middle Initial"
+                        />
+                      </div>
+                      <div class="col">
+                        <q-input
+                          outlined
+                          v-model="inputStudentInfo.LName"
+                          label="Last Name"
+                        />
+                      </div>
+                    </div>
+                    <div class="row q-gutter-sm q-py-sm">
+                      <div class="col">
+                        <q-input
+                          autofocus
+                          outlined
+                          v-model="inputStudentInfo.age"
+                          label="Age"
+                        />
+                      </div>
+                      <div class="col">
+                        <q-input filled mask="date" label="Date of Birth">
+                          <!-- <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                  <q-popup-proxy
+                    ref="qDateProxy"
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
+                    <q-date v-model="inputStudentInfo.dataOfBirth">
+                      <div class="row items-center justify-end">
+                        <q-btn
+                          v-close-popup
+                          label="Close"
+                          color="primary"
+                          flat
+                        />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template> -->
+                        </q-input>
+                      </div>
+                      <div class="col">
+                        <q-input
+                          outlined
+                          v-model="inputStudentInfo.placeOfBirth"
+                          label="Place of Birth"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="row q-gutter-sm q-py-sm">
+                      <div class="col">
+                        <q-input
+                          autofocus
+                          outlined
+                          v-model="inputStudentInfo.contactNo"
+                          label="Contact Number"
+                        />
+                      </div>
+                      <div class="col">
+                        <q-select
+                          outlined
+                          v-model="inputStudentInfo.gender"
+                          :options="options4"
+                          label="Gender"
+                        />
+                      </div>
+                      <div class="col">
+                        <q-select
+                          outlined
+                          v-model="inputStudentInfo.martialStatus"
+                          :options="options5"
+                          label="Martial Status"
+                        />
+                      </div>
+                    </div>
+                    <div class="row q-gutter-sm q-py-sm">
+                      <div class="col">
+                        <q-input
+                          autofocus
+                          outlined
+                          v-model="inputStudentInfo.citizenship"
+                          label="Citizenship"
+                        />
+                      </div>
+                      <div class="col">
+                        <q-input
+                          outlined
+                          v-model="inputStudentInfo.religion"
+                          label="Religion"
+                        />
+                      </div>
+                      <div class="col">
+                        <q-input
+                          outlined
+                          v-model="inputStudentInfo.address"
+                          label="Address"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="flex flex-center">
+                      <q-btn
+                        flat
+                        label="Cancel"
+                        color="red-10"
+                        @click="resetModel()"
+                        v-close-popup
+                      />
+                      <q-btn
+                        flat
+                        label="Save"
+                        color="primary"
+                        @click="onAddStudent()"
+                        type="submit"
+                      />
+                    </div>
+                  </q-form>
+                </q-card-section>
+              </q-card>
+            </q-dialog>
+            <q-btn
+              color="red-10"
+              icon="delete"
+              size="sm"
+              class="q-ml-sm"
+              flat
+              round
+              dense
+              @click="deleteSpecificStudent(props.row)"
+            />
+          </div>
+        </q-td>
       </template>
     </q-table>
   </q-page>
@@ -159,21 +617,35 @@
 
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component';
+import { IStudentInfo } from 'src/store/Admission/state';
+import { mapActions, mapState } from 'vuex';
 
-interface IRow {
-  name: string;
-}
+@Options({
+  computed: {
+    ...mapState('Admission', ['allStudentInfo']),
+  },
+  methods: {
+    ...mapActions('Admission', [
+      'addNewStudent',
+      'ediStudentInfo',
+      'deleteStudent',
+    ]),
+  },
+})
+export default class ManageStudentInfo extends Vue {
+  addNewStudent!: (payload: IStudentInfo) => Promise<void>;
+  ediStudentInfo!: (payload: IStudentInfo) => Promise<void>;
+  deleteStudent!: (payload: IStudentInfo) => Promise<void>;
+  allStudentInfo!: IStudentInfo[];
 
-@Options({})
-export default class ManageAccount extends Vue {
   columns = [
-     {
-      name: 'studentid',
+    {
+      name: 'IdNum',
       align: 'center',
       label: 'Student ID',
-      field: 'studentid',
+      field: 'IdNum',
     },
-     {
+    {
       name: 'lrn',
       align: 'center',
       label: 'LRN',
@@ -184,54 +656,124 @@ export default class ManageAccount extends Vue {
       required: true,
       label: 'Full Name',
       align: 'left',
-      field: (row: IRow) => row.name,
+      field: (row: IStudentInfo) =>
+        row.FName + ' ' + row.MName + '. ' + row.LName,
       format: (val: string) => `${val}`,
     },
     {
-      name: 'yearlevel',
+      name: 'incomingYlevel',
       align: 'center',
       label: 'Year Level',
-      field: 'yearlevel',
+      field: 'incomingYlevel',
     },
-    { name: 'status', align: 'center', label: 'Status', field: 'status' },
-    { name: 'aycode', align: 'center', label: 'AY Code', field: 'aycode' },
-    
+    { name: 'ayCode', align: 'center', label: 'AY Code', field: 'ayCode' },
+    {
+      name: 'studentDetails',
+      align: 'center',
+      label: 'studentDetails',
+      field: 'studentDetails',
+    },
+    { name: 'action', align: 'center', label: 'Action', field: 'action' },
   ];
-  rows = [
-    {
-      studentid: '201810757',
-      lrn: '335573655382',
-      name: 'NAEEM M. MANGCOL',
-      yearlevel: '1ST YEAR',
-      status: 'ENROLLED',
-      aycode: '2021-2022 1st TERM',
-    },
-    {
-      studentid: '201823445',
-      lrn: '232454657767',
-      name: 'MUAMMAR A. ALIB',
-      yearlevel: '1ST YEAR',
-      status: 'ENROLLED',
-      aycode: '2021-2022 1st TERM',
-    },
-    {
-      studentid: '201855343',
-      lrn: '535565743435',
-      name: 'JAMAEL B. POONADATU',
-      yearlevel: '1ST YEAR',
-      status: 'NOT ENROLLED',
-      aycode: '2021-2022 1st TERM',
-    },
-    
-  ];
-  dialog = false;
-  cancelEnabled = true;
-  addUser = false;
-  editRow = false;
-  filter = '';
 
-  onItemClick() {
-    console.log('Clicked!');
+  updateAccount = false;
+  filter = '';
+  addNewStudentInfo = false;
+  studentDetails = false;
+  options1 = ['First Semester', 'Second Semester'];
+  options2 = ['First Year', 'Second Year', 'Third Year', 'Forth Year'];
+  options3 = ['New Student', 'Tranceferee'];
+  options4 = ['Male', 'Female'];
+  options5 = ['Single', 'Merried'];
+
+  inputStudentInfo: IStudentInfo = {
+    reportCard: false,
+    bCertificate: false,
+    Pic: false,
+    eForm: false,
+    IdNum: '',
+    lrn: '',
+    ayCode: '',
+    incomingYlevel: '',
+    studentType: '',
+    FName: '',
+    MName: '',
+    LName: '',
+    age: '',
+    dataOfBirth: '',
+    placeOfBirth: '',
+    contactNo: '',
+    gender: '',
+    martialStatus: '',
+    citizenship: '',
+    religion: '',
+    address: '',
+  };
+
+  async onAddStudent() {
+    await this.addNewStudent(this.inputStudentInfo);
+    this.resetModel();
+    this.$q.notify({
+      type: 'positive',
+      message: 'Successfully Adeded.',
+    });
+  }
+
+  async oneditStudent() {
+    await this.ediStudentInfo(this.inputStudentInfo);
+    this.updateAccount = false;
+    this.resetModel();
+    this.$q.notify({
+      type: 'positive',
+      message: 'Successfully Edit.',
+    });
+  }
+
+  deleteSpecificStudent(val: IStudentInfo) {
+    this.$q
+      .dialog({
+        message: 'Confirm to delete?',
+        cancel: true,
+        persistent: true,
+      })
+      .onOk(async () => {
+        await this.deleteStudent(val);
+        this.$q.notify({
+          type: 'warning',
+          message: 'Successfully deleted',
+        });
+      });
+  }
+
+  openEditDialog(val: IStudentInfo) {
+    this.updateAccount = true;
+    this.inputStudentInfo = { ...val };
+  }
+
+  resetModel() {
+    this.inputStudentInfo = {
+      reportCard: false,
+      bCertificate: false,
+      Pic: false,
+      eForm: false,
+      IdNum: '',
+      lrn: '',
+      ayCode: '',
+      incomingYlevel: '',
+      studentType: '',
+      FName: '',
+      MName: '',
+      LName: '',
+      age: '',
+      dataOfBirth: '',
+      placeOfBirth: '',
+      contactNo: '',
+      gender: '',
+      martialStatus: '',
+      citizenship: '',
+      religion: '',
+      address: '',
+    };
   }
 }
 </script>

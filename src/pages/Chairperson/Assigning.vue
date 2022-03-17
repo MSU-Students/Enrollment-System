@@ -7,7 +7,7 @@
         inline-label
         :breakpoint="0"
         align="justify"
-        class="text-primary"
+        class="text-white"
       >
         <q-tab
           :ripple="false"
@@ -30,7 +30,7 @@
         <q-tab
           :ripple="false"
           name="forthyear"
-          icon="alarm"
+          icon="people"
           label="Fourth Year"
         />
       </q-tabs>

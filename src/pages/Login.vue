@@ -1,67 +1,134 @@
 <template>
-  <q-page class="flex flex-center bg-image">
-    <q-card class="q-pa-xl text-white-2">
-      <q-form class="q-gutter-md" style="max-width: 300px">
-        <div class="text-h5 text-center text-bold text-black q-pt-xl">
-          Log-in as Admistrator
+  <q-page>
+    <q-img class="wave" src="../assets/back2.jpg" />
+
+    <q-card class="shadow-20 absolute-center">
+      <q-card-section>
+        <div class="q-pt-lg">
+          <div class="col text-h6 ellipsis flex justify-center">
+            <div class="text-h3 text-primary q-my-none text-weight-bold">
+              Administration
+            </div>
+          </div>
+          <div class="col text-h6 ellipsis flex justify-center">
+            <div class="text-h4 text-primary q-my-none text-weight-bold">
+              MSU-LNCAT
+            </div>
+          </div>
         </div>
+      </q-card-section>
+      <q-card-section>
+        <q-form @submit="loginUser">
+          <div class="q-pl-xl q-pr-xl">
+            <q-input
+              v-model="username"
+              dense
+              label="Username"
+              lazy-rules
+              :rules="[
+                (val) => (val && val.length > 0) || 'Input your Username',
+              ]"
+            >
+              <template v-slot:prepend>
+                <q-icon name="person" />
+              </template>
+            </q-input>
 
-    <q-card-section>
-            <q-form class="q-gutter-md">
-              <q-input v-model="username" label="Username">
-                
-                <template v-slot:prepend>
-                  <q-icon name="people" />
-                </template>
-              </q-input>
-
-              <q-input
-                v-model="password"
-                label="Password"
-                :type="isPwd ? 'password' : 'text'"
-              >
-                <template v-slot:append>
-                  <q-icon
-                    :name="isPwd ? 'visibility_off' : 'visibility'"
-                    class="cursor-pointer"
-                    @click="isPwd = !isPwd"
-                  />
-                </template>
-                <template v-slot:prepend>
-                  <q-icon name="lock" />
-                </template>
-              </q-input>
-
-              <div>
-                <q-btn
-                  class="full-width"
-                  label="Login"
-                  color="secondary"
-                  size="lg"
-                  @click="admindashboard()"
+            <q-input
+              v-model="password"
+              dense
+              label="Password"
+              :type="isPwd ? 'password' : 'text'"
+              lazy-rules
+              :rules="[
+                (val) => (val && val.length > 0) || 'Input your password',
+              ]"
+            >
+              <template v-slot:append>
+                <q-icon
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
                 />
-              </div>
-            </q-form>
-          </q-card-section>
-      </q-form>
-        </q-card>
-      </q-page>
+              </template>
+              <template v-slot:prepend>
+                <q-icon name="lock" />
+              </template>
+            </q-input>
+
+            <div class="flex justify-center">
+              <q-btn
+                :ripple="false"
+                unelevated
+                rounded
+                dense
+                class="glossy q-mt-xs full-width"
+                label="Login"
+                color="primary"
+                type="submit"
+              />
+            </div>
+            <div
+              class="
+                q-mt-md
+                text-center text-caption text-weight-medium text-primary
+                absolute-center-right
+              "
+            >
+              *To register your account and retrieve the password, proceed to
+              Administration office.
+            </div>
+          </div>
+        </q-form>
+      </q-card-section>
+    </q-card>
+  </q-page>
 </template>
 
 <script lang="ts">
-import { Vue } from 'vue-class-component';
-
+import { Vue, Options } from 'vue-class-component';
+@Options({})
 export default class Login extends Vue {
   username = '';
   password = '';
   isPwd = true;
+  adminLogin = false;
 
-  async admindashboard() {
-    if (this.username == '' && this.password == '') {
+  async loginUser() {
+    if (this.username == 'admin' && this.password == 'admin') {
       await this.$router.replace('/admin/dashboard');
+      this.$q.notify({
+        color: 'positive',
+        icon: 'cloud_done',
+        textColor: 'white',
+        position: 'top',
+        message: 'You are Logged In!.',
+      });
     } else {
-      alert('Wrong Username and Password!!');
+      this.username = '';
+      this.password = '';
+      this.$q.notify({
+        color: 'negative',
+        type: 'negative',
+        textColor: 'white',
+        position: 'top',
+        message: 'Incorrect username or password.',
+      });
     }
   }
 }
 </script>
+
+<style>
+.head {
+  background-color: transparent;
+}
+.wave {
+  background-color: #e6ddd3;
+  position: fixed;
+  height: 100%;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+}
+</style>

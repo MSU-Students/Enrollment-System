@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header elevated class="q-px-lg q-py-md">
+    <q-header elevated class="bg-image1 q-px-lg q-py-md">
       <q-toolbar>
         <q-img src="~assets/logo.png" style="width: 150px"></q-img>
         <q-space />
@@ -48,13 +48,5 @@ import { Vue, Options } from 'vue-class-component';
 export default class Dashboard extends Vue {}
 </script>
 
-<style>
-.bg-image {
-  background-image: url(../assets/logo.png);
-  background-blend-mode: overlay;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: rgb(240, 240, 239);
-  background-size: 80%;
-}
-</style>
+
+

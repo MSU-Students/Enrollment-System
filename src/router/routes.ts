@@ -7,18 +7,20 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', component: () => import('src/pages/Dashboard.vue') },
       { path: 'login', component: () => import('src/pages/Login.vue') },
-      { path: 'login2', component: () => import('src/pages/Chairperson/Login2.vue')},
-      { path: 'login3', component: () => import('src/pages/Registrar/Login3.vue')},
+      {
+        path: 'login2',
+        component: () => import('src/pages/Chairperson/Login2.vue'),
+      },
+      {
+        path: 'login3',
+        component: () => import('src/pages/Registrar/Login3.vue'),
+      },
     ],
   },
   {
     path: '/admin',
     component: () => import('layouts/AdminLayout.vue'),
     children: [
-      {
-        path: 'Admission',
-        component: () => import('src/pages/Admin/Admission.vue'),
-      },
       {
         path: 'dashboard',
         component: () => import('src/pages/Admin/Dashboard.vue'),
@@ -42,10 +44,38 @@ const routes: RouteRecordRaw[] = [
         component: () => import('src/pages/Chairperson/Assigning.vue'),
       },
       {
-        path: 'manage',
-        component: () => import('src/pages/Chairperson/Manage.vue'),
+        path: 'teacher',
+        component: () => import('src/pages/Chairperson/Teacher.vue'),
       },
-      
+      {
+        path: 'subject',
+        component: () => import('src/pages/Chairperson/Subject.vue'),
+      },
+      {
+        path: 'room',
+        component: () => import('src/pages/Chairperson/Room.vue'),
+      },
+      {
+        path: 'schedule',
+        component: () => import('src/pages/Chairperson/Schedule.vue'),
+      },
+      {
+        path: 'firstyear',
+        component: () => import('src/pages/Chairperson/firstyear.vue'),
+      },
+      {
+        path: 'secondyear',
+        component: () => import('src/pages/Chairperson/secondyear.vue'),
+      },
+      {
+        path: 'thirdyear',
+        component: () => import('src/pages/Chairperson/thirdyear.vue'),
+      },
+
+      {
+        path: 'forthyear',
+        component: () => import('src/pages/Chairperson/forthyear.vue'),
+      },
     ],
   },
   {
