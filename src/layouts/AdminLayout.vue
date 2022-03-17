@@ -37,15 +37,7 @@
               <q-item-section avatar>
                 <q-icon name="dashboard" color="blue-2" />
               </q-item-section>
-              <q-item-section> Dashboard </q-item-section>
-            </q-item>
-
-            <q-item clickable v-ripple to="/admin/Admission">
-              <q-item-section avatar>
-                <q-icon name="person" color="blue-2" />
-              </q-item-section>
-
-              <q-item-section> Admission </q-item-section>
+              <q-item-section> Enrollment List </q-item-section>
             </q-item>
 
             <q-item clickable v-ripple to="/admin/ManageAccount">

@@ -404,8 +404,8 @@
 
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component';
-import { IFourYear1stSemInfo } from 'src/store/ForthYear1stSem/state';
-import { IFourYear2ndSemInfo } from 'src/store/ForthYear2ndSem/state';
+import { IFourYear1stSemInfo } from 'src/store/Forthyear1stSem/state';
+import { IFourYear2ndSemInfo } from 'src/store/Forthyear2ndSem/state';
 import { mapActions, mapState } from 'vuex';
 @Options({
   computed: {

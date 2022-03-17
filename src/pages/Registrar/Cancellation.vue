@@ -1,63 +1,83 @@
 <template>
-  <q-card-section class="q-gutter-md row">
-    <div class="col-4">
-      <q-input outlined dense label="ID Number" />
-    </div>
-    <q-btn push color="cyan" label="Enter" text-color="dark" />
-  </q-card-section>
-
-  <div class="row">
-    <div class="col-8 q-pa-sm">
-      <q-banner inline-actions rounded class="bg-cyan text-white">
-        STUDENT INFORMATION
-      </q-banner>
-    </div>
-    <div class="col-4 q-pa-sm">
-      <q-banner inline-actions rounded class="bg-cyan text-white">
-        Enrolled Subjects
-      </q-banner>
-    </div>
-    <div class="col-8">
-      <q-card-section rounded class="bg-blue-1">
-        <div class="text-subtitle2 text-cyan-8">NAME:</div>
-        <div class="text-subtitle2 text-cyan-8">ADDRESS:</div>
-        <div class="text-subtitle2 text-cyan-8">YEAR:</div>
-        <div class="text-subtitle2 text-cyan-8">COURSE:</div>
-        <div class="text-subtitle2 text-cyan-8">SCHOLARSHIP:</div>
-        <div class="text-subtitle2 text-cyan-8">YEAR ADMITTED:</div>
-        <div class="text-subtitle2 text-cyan-8">UNITS:</div>
-      </q-card-section>
-    </div>
-    
-    <div class="col-4">
-      <q-card flat bordered class="my-card q-pa-md">
-        <q-card-section>
-          <div class="text-subtitle2">CCC 101</div>
-          <div class="text-subtitle2">CsC 102</div>
-          <div class="text-subtitle2">IT 151</div>
-          <div class="text-subtitle2">IT 181</div>
-          <div class="text-subtitle2">CCC 101</div>
-          <div class="text-subtitle2">IT 101</div>
-          <div class="text-subtitle2">ISY 101</div>
-        </q-card-section>
-        <q-btn color="cyan" label="REFRESH" size="15px" />
-      </q-card>
-    </div>
-  </div>
+  <q-page>
+    <q-card style="width: 1200px" class="absolute-center bg-grey-2">
+      <div class="q-pa-lg">
+        <q-input
+          style="max-width: 300px"
+          dense
+          filled
+          bottom-slots
+          v-model="text"
+          label="ID NUMBER"
+        >
+          <template v-slot:after>
+            <q-btn color="primary" label="Enter" />
+          </template>
+        </q-input>
+        <q-card class="q-pa-md">
+          <div class="row">
+            <div class="col">Name:</div>
+            <div class="col">ID Number:</div>
+          </div>
+          <div class="row">
+            <div class="col">Year & Course:</div>
+            <div class="col">Year Admitted:</div>
+          </div>
+          <div class="row">
+            <div class="col">Gender:</div>
+            <div class="col">Civil Status:</div>
+          </div>
+          <div class="row">
+            <div class="col">Religion:</div>
+            <div class="col">ID NUmber:</div>
+          </div>
+        </q-card>
+      </div>
+      <div class="row q-px-lg q-gutter-md q-pb-lg">
+        <q-card class="col">
+          <div class="q-pa-md text-h4 flex justify-center">
+            ENROLLED SUBJECT
+          </div>
+          <div class="col">
+            <q-checkbox v-model="val" />
+          </div>
+          <div class="col">
+            <q-checkbox v-model="val" />
+          </div>
+          <div class="col">
+            <q-checkbox v-model="val" />
+          </div>
+          <div class="col">
+            <q-checkbox v-model="val" />
+          </div>
+          <div class="col">
+            <q-checkbox v-model="val" />
+          </div>
+          <div class="col">
+            <q-checkbox v-model="val" />
+          </div>
+          <div class="col">
+            <q-checkbox v-model="val" />
+          </div>
+          <div class="col">
+            <q-checkbox v-model="val" />
+          </div>
+        </q-card>
+      </div>
+      <div class="q-pa-md flex justify-center">
+        <q-btn color="primary" label="Refresh" />
+      </div>
+    </q-card>
+  </q-page>
 </template>
 
-<script>
-import { ref } from 'vue';
+<script lang="ts">
+import { Vue } from 'vue-class-component';
 
-export default {
-  setup() {
-    return {
-      IDno: ref(''),
-      lorem: 'ENTREP, PED001',
-      model: '',
-      model2: '',
-      model3: '',
-    };
-  },
-};
+export default class Enrollment extends Vue {
+  text = '';
+  ph = '';
+  dense = false;
+  val = true;
+}
 </script>
