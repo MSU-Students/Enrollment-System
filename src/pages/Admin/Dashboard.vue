@@ -210,7 +210,12 @@
                       />
                     </div>
                     <div class="col">
-                      <q-input filled mask="date" label="Date of Birth">
+                      <q-input
+                        filled
+                        type="date"
+                        label="Date of Birth"
+                        v-model="inputStudentInfo.dataOfBirth"
+                      >
                         <!-- <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
                   <q-popup-proxy
@@ -316,7 +321,7 @@
           </q-dialog>
         </div>
       </template>
-
+      <!------------------------------------Student Details--------------------------------------------->
       <template v-slot:body-cell-studentDetails="props">
         <q-td :props="props">
           <div class="q-gutter-sm">
@@ -327,38 +332,248 @@
               size="md"
               flat
               dense
-              @click="studentDetails = true"
+              @click="openDialog(props.row)"
             />
-            <q-dialog v-model="studentDetails">
-              <q-card class="my-card" flat bordered>
-                <q-card-section>
-                  <div class="text-h6">
-                    Student Details
-                    <q-btn
-                      round
-                      flat
-                      dense
-                      icon="close"
-                      class="float-right"
-                      color="grey-8"
-                      v-close-popup
-                    ></q-btn>
-                  </div>
+            <q-dialog v-model="studentDetails" persistent>
+              <q-card style="width: 800px; max-width: 100vw" class="q-pa-sm">
+                <q-card-section class="row">
+                  <div class="text-h6">Student Info</div>
+                  <q-space />
+                  <q-btn
+                    flat
+                    round
+                    dense
+                    icon="close"
+                    v-close-popup
+                    @click="resetModel()"
+                  />
                 </q-card-section>
-                <q-card-section horizontal>
-                  <q-card-section class="q-pt-xs col">
-                    <div class="text-overline">Padian Grocery,Marawi city</div>
-                    <div class="text-h5 q-mt-sm q-mb-xs">Basam C. Serad</div>
-                    <div class="text-caption text-grey">
-                      Padian Sales Manager/Cashier
+
+                <q-card-section>
+                  <q-form @submit="onAddStudent()" class="q-gutter-sm">
+                    <div class="text-h4 flex flex-center">Requirements</div>
+
+                    <div class="flex flex-center">
+                      <q-checkbox
+                        v-model="inputStudentInfo.reportCard"
+                        label="Report Card"
+                        color="blue"
+                        disable
+                      />
+                      <q-checkbox
+                        v-model="inputStudentInfo.bCertificate"
+                        label="Birth Certificate"
+                        color="blue"
+                        disable
+                      />
+                      <q-checkbox
+                        v-model="inputStudentInfo.Pic"
+                        label="1x1 Picture"
+                        color="blue"
+                        disable
+                      />
+                      <q-checkbox
+                        v-model="inputStudentInfo.eForm"
+                        label="Enrollment Form"
+                        color="blue"
+                        disable
+                      />
                     </div>
-                  </q-card-section>
+                    <div class="row q-gutter-sm q-py-sm">
+                      <div class="col">
+                        <q-input
+                          autofocus
+                          outlined
+                          v-model="inputStudentInfo.IdNum"
+                          label="ID number"
+                          disable
+                        />
+                      </div>
+                      <div class="col">
+                        <q-input
+                          outlined
+                          v-model="inputStudentInfo.lrn"
+                          label="LRN"
+                          disable
+                        />
+                      </div>
+                      <div class="col">
+                        <q-select
+                          outlined
+                          v-model="inputStudentInfo.ayCode"
+                          :options="options1"
+                          label="AY Code"
+                          disable
+                        />
+                      </div>
+                    </div>
+                    <div class="row q-gutter-sm q-py-sm">
+                      <div class="col">
+                        <q-select
+                          outlined
+                          v-model="inputStudentInfo.incomingYlevel"
+                          :options="options2"
+                          label="Year Level"
+                          disable
+                        />
+                      </div>
+                      <div class="col">
+                        <q-select
+                          outlined
+                          v-model="inputStudentInfo.studentType"
+                          :options="options3"
+                          label="Student Type"
+                          disable
+                        />
+                      </div>
+                    </div>
+
+                    <q-separator></q-separator>
+                    <div class="text-h4 flex flex-center">Information</div>
+
+                    <div class="row q-gutter-sm q-py-sm">
+                      <div class="col">
+                        <q-input
+                          autofocus
+                          outlined
+                          v-model="inputStudentInfo.FName"
+                          label="First Name"
+                          disable
+                        />
+                      </div>
+                      <div class="col">
+                        <q-input
+                          outlined
+                          v-model="inputStudentInfo.MName"
+                          label="Middle Initial"
+                          disable
+                        />
+                      </div>
+                      <div class="col">
+                        <q-input
+                          outlined
+                          v-model="inputStudentInfo.LName"
+                          label="Last Name"
+                          disable
+                        />
+                      </div>
+                    </div>
+                    <div class="row q-gutter-sm q-py-sm">
+                      <div class="col">
+                        <q-input
+                          autofocus
+                          outlined
+                          v-model="inputStudentInfo.age"
+                          label="Age"
+                          disable
+                        />
+                      </div>
+                      <div class="col">
+                        <q-input
+                          filled
+                          type="date"
+                          label="Date of Birth"
+                          v-model="inputStudentInfo.dataOfBirth"
+                          disable
+                        >
+                          <!-- <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                  <q-popup-proxy
+                    ref="qDateProxy"
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
+                    <q-date v-model="inputStudentInfo.dataOfBirth">
+                      <div class="row items-center justify-end">
+                        <q-btn
+                          v-close-popup
+                          label="Close"
+                          color="primary"
+                          flat
+                        />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template> -->
+                        </q-input>
+                      </div>
+                      <div class="col">
+                        <q-input
+                          outlined
+                          v-model="inputStudentInfo.placeOfBirth"
+                          label="Place of Birth"
+                          disable
+                        />
+                      </div>
+                    </div>
+
+                    <div class="row q-gutter-sm q-py-sm">
+                      <div class="col">
+                        <q-input
+                          autofocus
+                          outlined
+                          v-model="inputStudentInfo.contactNo"
+                          label="Contact Number"
+                          disable
+                        />
+                      </div>
+                      <div class="col">
+                        <q-select
+                          outlined
+                          v-model="inputStudentInfo.gender"
+                          :options="options4"
+                          label="Gender"
+                          disable
+                        />
+                      </div>
+                      <div class="col">
+                        <q-select
+                          outlined
+                          v-model="inputStudentInfo.martialStatus"
+                          :options="options5"
+                          label="Martial Status"
+                          disable
+                        />
+                      </div>
+                    </div>
+                    <div class="row q-gutter-sm q-py-sm">
+                      <div class="col">
+                        <q-input
+                          autofocus
+                          outlined
+                          v-model="inputStudentInfo.citizenship"
+                          label="Citizenship"
+                          disable
+                        />
+                      </div>
+                      <div class="col">
+                        <q-input
+                          outlined
+                          v-model="inputStudentInfo.religion"
+                          label="Religion"
+                          disable
+                        />
+                      </div>
+                      <div class="col">
+                        <q-input
+                          outlined
+                          v-model="inputStudentInfo.address"
+                          label="Address"
+                          disable
+                        />
+                      </div>
+                    </div>
+                  </q-form>
                 </q-card-section>
               </q-card>
             </q-dialog>
           </div>
         </q-td>
       </template>
+
+      <!------------------------------------Edit--------------------------------------------->
 
       <template v-slot:body-cell-action="props">
         <q-td :props="props">
@@ -494,7 +709,12 @@
                         />
                       </div>
                       <div class="col">
-                        <q-input filled mask="date" label="Date of Birth">
+                        <q-input
+                          filled
+                          type="date"
+                          label="Date of Birth"
+                          v-model="inputStudentInfo.dataOfBirth"
+                        >
                           <!-- <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
                   <q-popup-proxy
@@ -617,8 +837,8 @@
 
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component';
-import { IStudentInfo } from 'src/store/Admission/state';
 import { mapActions, mapState } from 'vuex';
+import { AdmissionDto } from 'src/services/restapi';
 
 @Options({
   computed: {
@@ -629,14 +849,20 @@ import { mapActions, mapState } from 'vuex';
       'addNewStudent',
       'ediStudentInfo',
       'deleteStudent',
+      'getAllAdmission',
     ]),
   },
 })
 export default class ManageStudentInfo extends Vue {
-  addNewStudent!: (payload: IStudentInfo) => Promise<void>;
-  ediStudentInfo!: (payload: IStudentInfo) => Promise<void>;
-  deleteStudent!: (payload: IStudentInfo) => Promise<void>;
-  allStudentInfo!: IStudentInfo[];
+  allStudentInfo!: AdmissionDto[];
+  addNewStudent!: (payload: AdmissionDto) => Promise<void>;
+  editStudentInfo!: (payload: AdmissionDto) => Promise<void>;
+  deleteStudent!: (payload: AdmissionDto) => Promise<void>;
+  getAllAdmission!: () => Promise<void>;
+
+  async mounted() {
+    await this.getAllAdmission();
+  }
 
   columns = [
     {
@@ -656,7 +882,7 @@ export default class ManageStudentInfo extends Vue {
       required: true,
       label: 'Full Name',
       align: 'left',
-      field: (row: IStudentInfo) =>
+      field: (row: AdmissionDto) =>
         row.FName + ' ' + row.MName + '. ' + row.LName,
       format: (val: string) => `${val}`,
     },
@@ -682,15 +908,15 @@ export default class ManageStudentInfo extends Vue {
   studentDetails = false;
   options1 = ['First Semester', 'Second Semester'];
   options2 = ['First Year', 'Second Year', 'Third Year', 'Forth Year'];
-  options3 = ['New Student', 'Tranceferee'];
+  options3 = ['New Student', 'Transferee'];
   options4 = ['Male', 'Female'];
   options5 = ['Single', 'Merried'];
 
-  inputStudentInfo: IStudentInfo = {
-    reportCard: false,
-    bCertificate: false,
-    Pic: false,
-    eForm: false,
+  inputStudentInfo: AdmissionDto = {
+    reportCard: '',
+    bCertificate: '',
+    Pic: '',
+    eForm: '',
     IdNum: '',
     lrn: '',
     ayCode: '',
@@ -712,6 +938,7 @@ export default class ManageStudentInfo extends Vue {
 
   async onAddStudent() {
     await this.addNewStudent(this.inputStudentInfo);
+    this.addNewStudentInfo = false;
     this.resetModel();
     this.$q.notify({
       type: 'positive',
@@ -720,7 +947,7 @@ export default class ManageStudentInfo extends Vue {
   }
 
   async oneditStudent() {
-    await this.ediStudentInfo(this.inputStudentInfo);
+    await this.editStudentInfo(this.inputStudentInfo);
     this.updateAccount = false;
     this.resetModel();
     this.$q.notify({
@@ -729,7 +956,7 @@ export default class ManageStudentInfo extends Vue {
     });
   }
 
-  deleteSpecificStudent(val: IStudentInfo) {
+  deleteSpecificStudent(val: AdmissionDto) {
     this.$q
       .dialog({
         message: 'Confirm to delete?',
@@ -745,17 +972,21 @@ export default class ManageStudentInfo extends Vue {
       });
   }
 
-  openEditDialog(val: IStudentInfo) {
+  openEditDialog(val: AdmissionDto) {
     this.updateAccount = true;
+    this.inputStudentInfo = { ...val };
+  }
+  openDialog(val: AdmissionDto) {
+    this.studentDetails = true;
     this.inputStudentInfo = { ...val };
   }
 
   resetModel() {
     this.inputStudentInfo = {
-      reportCard: false,
-      bCertificate: false,
-      Pic: false,
-      eForm: false,
+      reportCard: '',
+      bCertificate: '',
+      Pic: '',
+      eForm: '',
       IdNum: '',
       lrn: '',
       ayCode: '',
