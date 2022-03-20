@@ -3,24 +3,23 @@ import { IStudentInfo } from './state';
 import { AdmissionStateInterface } from './state';
 
 const mutation: MutationTree<AdmissionStateInterface> = {
-  setStudentInfo(state, payload: IStudentInfo) {
+  setNewStudent(state, payload: IStudentInfo) {
+    state.NewStudent = payload;
+  },
+  updateStudent(state, payload: IStudentInfo) {
+    state.NewStudent = payload;
+  },
+  deleteStudent(state, payload: any) {
     state.allStudentInfo.push(payload);
   },
-  setNewStudentInfo(state, payload: IStudentInfo) {
-    const index = state.allStudentInfo.findIndex(
-      (s) => s.admissionID === payload.admissionID,
-    );
-    if (index >= 0) {
-      state.allStudentInfo.splice(index, 1, payload);
-    }
+
+  getAllStudent(state, payload) {
+    state.allStudentInfo = [];
+    state.allStudentInfo.push(...payload);
   },
-  deleteAccount(state, payload: IStudentInfo) {
-    const index = state.allStudentInfo.findIndex(
-      (s) => s.admissionID === payload.admissionID,
-    );
-    if (index >= 0) {
-      state.allStudentInfo.splice(index, 1);
-    }
+
+  getOneStudent(state, payload) {
+    state.allStudentInfo = payload;
   },
 };
 
