@@ -1,35 +1,23 @@
 export interface IAccountInfo {
-  accountID?: string;
+  id?: number;
   FName: string;
-  MName: string;
+  MName?: string;
   LName: string;
-  username: string;
-  password: string;
-  designation: string;
-  dateCreated: string;
-  status: 'Active' | 'Inactive';
+  username?: string;
+  password?: string;
+  userType?: 'admin' | 'chairperson' | 'registrar';
+  contact?: string;
+  email?: string;
 }
 
 export interface AccountStateInterface {
-  allAccount: IAccountInfo[];
-  activeAccount?: IAccountInfo;
+  allAccountUser: IAccountInfo[];
+  newAccount?: IAccountInfo;
 }
 
 function state(): AccountStateInterface {
   return {
-    allAccount: [
-      {
-        accountID: '01',
-        FName: 'Naeem',
-        MName: 'M.',
-        LName: 'Mangcol Jr',
-        username: 'Admin',
-        password: 'Admin',
-        designation: 'Admin',
-        dateCreated: '12/17/2021',
-        status: 'Active',
-      },
-    ],
+    allAccountUser: [],
   };
 }
 
