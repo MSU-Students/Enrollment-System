@@ -9,7 +9,7 @@
 
     <q-table
       title="Subject List"
-      :rows="manageSubject"
+      :rows="AllSubject"
       :columns="columns"
       row-key="name"
       :rows-per-page-options="[0]"
@@ -235,16 +235,18 @@
 import { Vue, Options } from 'vue-class-component';
 import { ManagementSubject } from 'src/store/ManagementSubject/state';
 import { mapActions, mapState } from 'vuex';
+import { SubjectDto } from 'src/services/restapi';
 
 @Options({
   computed: {
-    ...mapState('ManagementSubject', ['manageSubject']),
+    ...mapState('ManagementSubject', ['AllSubject']),
   },
   methods: {
     ...mapActions('ManagementSubject', [
       'addSubject',
       'editSubject',
       'deleteSubject',
+      'getAllSubjects',
     ]),
   },
 })
@@ -252,15 +254,19 @@ export default class ManageSubject extends Vue {
   addSubject!: (payload: ManagementSubject) => Promise<void>;
   editSubject!: (payload: ManagementSubject) => Promise<void>;
   deleteSubject!: (payload: ManagementSubject) => Promise<void>;
-  manageSubject!: ManagementSubject[];
+  AllSubject!: ManagementSubject[];
+  getAllSubjects!: () => Promise<void>;
 
+  async mounted() {
+    await this.getAllSubjects();
+  }
   columns = [
     {
       name: 'AYCode',
       required: true,
       label: 'AY Code',
       align: 'left',
-      field: (row: ManagementSubject) => row.AYCode,
+      field: (row: SubjectDto) => row.AYCode,
       format: (val: string) => `${val}`,
     },
     {
@@ -296,8 +302,7 @@ export default class ManageSubject extends Vue {
   filter = '';
   options = ['First Year', 'Second Year', 'Third Year', 'Fourth Year'];
 
-  inputSubject: ManagementSubject = {
-    subjectID: '',
+  inputSubject: SubjectDto = {
     AYCode: '',
     YearLevel: '',
     SubjectCode: '',
@@ -326,7 +331,7 @@ export default class ManageSubject extends Vue {
     });
   }
 
-  deleteSpecificSubject(val: ManagementSubject) {
+  deleteSpecificSubject(val: SubjectDto) {
     this.$q
       .dialog({
         message: 'Confirm to delete?',
@@ -342,14 +347,13 @@ export default class ManageSubject extends Vue {
       });
   }
 
-  openEditDialog(val: ManagementSubject) {
+  openEditDialog(val: SubjectDto) {
     this.updateSubject = true;
     this.inputSubject = { ...val };
   }
 
   resetModel() {
     this.inputSubject = {
-      subjectID: '',
       AYCode: '',
       YearLevel: '',
       SubjectCode: '',

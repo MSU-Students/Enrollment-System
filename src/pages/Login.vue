@@ -7,7 +7,7 @@
         <div class="q-pt-lg">
           <div class="col text-h6 ellipsis flex justify-center">
             <div class="text-h3 text-primary q-my-none text-weight-bold">
-              Administration
+              Log-In
             </div>
           </div>
           <div class="col text-h6 ellipsis flex justify-center">
@@ -87,32 +87,57 @@
 
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component';
-@Options({})
+import { AUser } from 'src/store/auth/state';
+import { mapActions, mapState } from 'vuex';
+
+@Options({
+  methods: {
+    ...mapActions('auth', ['login', 'authUser']),
+  },
+  computed: {
+    ...mapState('auth', ['currentUser']),
+  },
+})
 export default class Login extends Vue {
+  login!: (auth: { userName: string; password: string }) => Promise<AUser>;
+  currentUser!: AUser;
+
   username = '';
   password = '';
   isPwd = true;
-  adminLogin = false;
 
   async loginUser() {
-    if (this.username == 'admin' && this.password == 'admin') {
-      await this.$router.replace('/admin/dashboard');
-      this.$q.notify({
-        color: 'positive',
-        icon: 'cloud_done',
-        textColor: 'white',
-        position: 'top',
-        message: 'You are Logged In!.',
+    try {
+      await this.login({
+        userName: this.username,
+        password: this.password,
       });
-    } else {
-      this.username = '';
-      this.password = '';
+      if (this.currentUser.userType == 'admin') {
+        await this.$router.replace('/admin/dashboard');
+        this.$q.notify({
+          position: 'center',
+          type: 'positive',
+          message: 'You are logged in',
+        });
+      } else if (this.currentUser.userType == 'chairperson') {
+        await this.$router.replace('/chairperson/dashboard');
+        this.$q.notify({
+          position: 'center',
+          type: 'positive',
+          message: 'You are logged in',
+        });
+      } else if (this.currentUser.userType == 'registrar') {
+        await this.$router.replace('/registrar/enrollment');
+        this.$q.notify({
+          position: 'center',
+          type: 'positive',
+          message: 'You are logged in',
+        });
+      }
+    } catch (error) {
       this.$q.notify({
-        color: 'negative',
         type: 'negative',
-        textColor: 'white',
-        position: 'top',
-        message: 'Incorrect username or password.',
+        message: 'Wrong Username or Password!',
       });
     }
   }

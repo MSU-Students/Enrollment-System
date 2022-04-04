@@ -101,9 +101,25 @@
                   </div>
                   <div class="row q-gutter-md q-py-sm">
                     <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputAccount.email"
+                        label="Email"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputAccount.contact"
+                        label="Contact Number"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
                       <q-select
                         outlined
-                        v-model="inputAccount.designation"
+                        v-model="inputAccount.userType"
                         :options="options"
                         label="Designation"
                       />
@@ -199,7 +215,7 @@
                       <div class="col">
                         <q-select
                           outlined
-                          v-model="inputAccount.designation"
+                          v-model="inputAccount.userType"
                           :options="options"
                           label="Designation"
                         />
@@ -238,31 +254,39 @@
 
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component';
-import { IAccountInfo } from 'src/store/account/state';
 import { mapActions, mapState } from 'vuex';
+import { UserDto } from 'src/services/restapi';
 
 @Options({
   computed: {
     ...mapState('account', ['allAccount']),
   },
   methods: {
-    ...mapActions('account', ['addAccount', 'editAccount', 'deleteAccount']),
+    ...mapActions('account', [
+      'addAccount',
+      'editAccount',
+      'deleteAccount',
+      'getAllUser',
+    ]),
   },
 })
 export default class ManageAccount extends Vue {
-  addAccount!: (payload: IAccountInfo) => Promise<void>;
-  editAccount!: (payload: IAccountInfo) => Promise<void>;
-  deleteAccount!: (payload: IAccountInfo) => Promise<void>;
-  allAccount!: IAccountInfo[];
+  addAccount!: (payload: UserDto) => Promise<void>;
+  editAccount!: (payload: UserDto) => Promise<void>;
+  deleteAccount!: (payload: UserDto) => Promise<void>;
+  getAllUser!: () => Promise<void>;
+  allAccount!: UserDto[];
 
+  async mounted() {
+    await this.getAllUser();
+  }
   columns = [
     {
       name: 'name',
       required: true,
       label: 'Name',
       align: 'left',
-      field: (row: IAccountInfo) =>
-        row.FName + ' ' + row.MName + '. ' + row.LName,
+      field: (row: UserDto) => row.FName + ' ' + row.MName + '. ' + row.LName,
       format: (val: string) => `${val}`,
     },
     {
@@ -278,34 +302,29 @@ export default class ManageAccount extends Vue {
       field: 'password',
     },
     {
-      name: 'dateCreated',
-      align: 'center',
-      label: 'Date Created',
-      field: 'dateCreated',
-    },
-    {
-      name: 'designation',
+      name: 'userType',
       align: 'center',
       label: 'Designation',
-      field: 'designation',
+      field: 'userType',
     },
-    { name: 'status', align: 'center', label: 'Status', field: 'status' },
+    { name: 'contact', align: 'center', label: 'Contact', field: 'contact' },
+    { name: 'email', align: 'center', label: 'Email', field: 'email' },
     { name: 'action', align: 'center', label: 'Action', field: 'action' },
   ];
   addNewAccount = false;
   updateAccount = false;
   filter = '';
-  options = ['Admin', 'Chairperson', 'Registrar'];
+  options = ['admin', 'chairperson', 'registrar'];
 
-  inputAccount: IAccountInfo = {
-    FName: '',
+  inputAccount: UserDto = {
     MName: '',
+    contact: '',
+    email: '',
+    FName: '',
     LName: '',
+    userType: '',
     username: '',
     password: '',
-    designation: '',
-    dateCreated: '',
-    status: 'Active',
   };
 
   async onaddAccount() {
@@ -328,7 +347,7 @@ export default class ManageAccount extends Vue {
     });
   }
 
-  deleteSpecificAccount(val: IAccountInfo) {
+  deleteSpecificAccount(val: UserDto) {
     this.$q
       .dialog({
         message: 'Confirm to delete?',
@@ -344,21 +363,21 @@ export default class ManageAccount extends Vue {
       });
   }
 
-  openEditDialog(val: IAccountInfo) {
+  openEditDialog(val: UserDto) {
     this.updateAccount = true;
     this.inputAccount = { ...val };
   }
 
   resetModel() {
     this.inputAccount = {
-      FName: '',
       MName: '',
+      contact: '',
+      email: '',
+      FName: '',
       LName: '',
+      userType: '',
       username: '',
       password: '',
-      designation: '',
-      dateCreated: '',
-      status: 'Active',
     };
   }
 }

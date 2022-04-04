@@ -1,4 +1,4 @@
-export interface IAccountInfo {
+export interface Users {
   id?: number;
   FName: string;
   MName?: string;
@@ -11,13 +11,13 @@ export interface IAccountInfo {
 }
 
 export interface AccountStateInterface {
-  allAccountUser: IAccountInfo[];
-  newAccount?: IAccountInfo;
+  allAccount: Users[];
+  newUser?: Users;
 }
 
 function state(): AccountStateInterface {
   return {
-    allAccountUser: [],
+    allAccount: [],
   };
 }
 

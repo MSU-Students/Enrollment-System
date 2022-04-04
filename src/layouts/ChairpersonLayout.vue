@@ -109,11 +109,11 @@
                     <q-item-section> Third Year </q-item-section>
                   </q-item>
 
-                  <q-item clickable v-ripple to="/chairperson/fouryear">
+                  <q-item clickable v-ripple to="/chairperson/fourthyear">
                     <q-item-section avatar>
                       <q-icon name="person" color="blue-2" />
                     </q-item-section>
-                    <q-item-section> Four Year </q-item-section>
+                    <q-item-section> Fourth Year </q-item-section>
                   </q-item>
                 </q-card-section>
               </q-card>

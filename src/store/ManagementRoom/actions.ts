@@ -1,18 +1,34 @@
 import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
-import { ManagementRoomStateInterface, ManagementRoom } from './state';
+import { ManagementRoomStateInterface } from './state';
+import roomService from 'src/services/room.service';
 
 const actions: ActionTree<ManagementRoomStateInterface, StateInterface> = {
-  addRoom(context, payload: ManagementRoom) {
-    context.commit('setRoom', payload);
+  async addRoom(context, payload: any): Promise<any> {
+    const result = await roomService.create(payload);
+    context.commit('setRoom', result);
+    await context.dispatch('getAllRoom');
   },
 
-  editRoom(context, payload: ManagementRoom) {
-    context.commit('setNewRoom', payload);
+  async editRoom(context, payload: any): Promise<any> {
+    const result = await roomService.update(payload.id, payload);
+    context.commit('updateRoom', result);
+    await context.dispatch('getAllRoom');
   },
 
-  deleteRoom(context, payload: ManagementRoom) {
-    context.commit('deleteRoom', payload);
+  async deleteRoom(context, roomID: number): Promise<any> {
+    const result = await roomService.delete(roomID);
+    context.commit('deleteRoom', result);
+  },
+
+  async getAllRoom(context): Promise<any> {
+    const res = await roomService.getAll();
+    context.commit('getAllRoom', res);
+  },
+
+  async getOneRoom(context, roomID: number): Promise<any> {
+    const res = await roomService.getOne(roomID);
+    context.commit('getOneRoom', res);
   },
 };
 

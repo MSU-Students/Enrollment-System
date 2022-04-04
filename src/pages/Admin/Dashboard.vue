@@ -587,7 +587,7 @@
               dense
               @click="openEditDialog(props.row)"
             />
-            <q-dialog v-model="updateAccount" persistent>
+            <q-dialog v-model="updateStudent" persistent>
               <q-card style="width: 800px; max-width: 100vw" class="q-pa-sm">
                 <q-card-section class="row">
                   <div class="text-h6">Edit Student</div>
@@ -902,7 +902,7 @@ export default class ManageStudentInfo extends Vue {
     { name: 'action', align: 'center', label: 'Action', field: 'action' },
   ];
 
-  updateAccount = false;
+  updateStudent = false;
   filter = '';
   addNewStudentInfo = false;
   studentDetails = false;
@@ -913,10 +913,10 @@ export default class ManageStudentInfo extends Vue {
   options5 = ['Single', 'Merried'];
 
   inputStudentInfo: AdmissionDto = {
-    reportCard: '',
-    bCertificate: '',
-    Pic: '',
-    eForm: '',
+    reportCard: false,
+    bCertificate: false,
+    Pic: false,
+    eForm: false,
     IdNum: '',
     lrn: '',
     ayCode: '',
@@ -948,7 +948,7 @@ export default class ManageStudentInfo extends Vue {
 
   async oneditStudent() {
     await this.editStudentInfo(this.inputStudentInfo);
-    this.updateAccount = false;
+    this.updateStudent = false;
     this.resetModel();
     this.$q.notify({
       type: 'positive',
@@ -973,7 +973,7 @@ export default class ManageStudentInfo extends Vue {
   }
 
   openEditDialog(val: AdmissionDto) {
-    this.updateAccount = true;
+    this.updateStudent = true;
     this.inputStudentInfo = { ...val };
   }
   openDialog(val: AdmissionDto) {
@@ -983,10 +983,10 @@ export default class ManageStudentInfo extends Vue {
 
   resetModel() {
     this.inputStudentInfo = {
-      reportCard: '',
-      bCertificate: '',
-      Pic: '',
-      eForm: '',
+      reportCard: false,
+      bCertificate: false,
+      Pic: false,
+      eForm: false,
       IdNum: '',
       lrn: '',
       ayCode: '',

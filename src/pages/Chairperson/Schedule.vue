@@ -9,7 +9,7 @@
 
     <q-table
       title="Schedule List"
-      :rows="manageSchedule"
+      :rows="AllSchedule"
       :columns="columns"
       row-key="name"
       :rows-per-page-options="[0]"
@@ -54,74 +54,123 @@
               </q-card-section>
 
               <q-card-section>
-                <q-form @submit="onaddSchedule" class="q-gutter-md">
-                  <div class="row">
-                    <div class="col col-md-6">
+                <q-form @submit="onaddSchedule">
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
                       <q-input
                         autofocus
-                        class="q-py-md"
                         outlined
                         v-model="inputSchedule.SubjectCode"
                         label="SubjectCode"
                       />
+                    </div>
+                    <div class="col">
                       <q-input
                         outlined
-                        class="q-py-md"
                         v-model="inputSchedule.DescriptiveTitle"
                         label="Descriptive Title"
                       />
+                    </div>
+                    <div class="col">
                       <q-input
                         outlined
-                        class="q-py-md"
                         v-model="inputSchedule.Units"
                         label="Units"
                       />
-                      <q-select
-                        outlined
-                        class="q-py-md"
-                        v-model="inputSchedule.Day"
-                        :options="options"
-                        label="Day"
-                      />
-                      <q-select
-                        outlined
-                        class="q-py-md"
-                        v-model="inputSchedule.Day2"
-                        :options="options"
-                        label="Day 2"
-                      />
                     </div>
-
-                    <div class="col-md-6 q-pl-md">
-                      <q-select
-                        outlined
-                        class="q-py-md"
-                        v-model="inputSchedule.Time"
-                        :options="time"
-                        label="Time"
-                      />
-                      <q-select
-                        outlined
-                        class="q-py-md"
-                        v-model="inputSchedule.Time2"
-                        :options="time"
-                        label="Time 2"
-                      />
+                    <div class="col">
                       <q-input
                         outlined
-                        class="q-py-md"
                         v-model="inputSchedule.Teacher"
                         label="Teacher"
                       />
+                    </div>
+                    <div class="col">
                       <q-input
                         outlined
-                        class="q-py-md"
                         v-model="inputSchedule.Room"
                         label="Room"
                       />
                     </div>
                   </div>
-
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-select
+                        outlined
+                        v-model="inputSchedule.Day"
+                        :options="options"
+                        label="Day"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        v-model="inputSchedule.Day2"
+                        :options="options1"
+                        label="Day 2"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputSchedule.Time"
+                        mask="time"
+                        :rules="['time']"
+                        label="Time"
+                      >
+                        <template v-slot:append>
+                          <q-icon name="access_time" class="cursor-pointer">
+                            <q-popup-proxy
+                              cover
+                              transition-show="scale"
+                              transition-hide="scale"
+                            >
+                              <q-time v-model="inputSchedule.Time">
+                                <div class="row items-center justify-end">
+                                  <q-btn
+                                    v-close-popup
+                                    label="Close"
+                                    color="primary"
+                                    flat
+                                  />
+                                </div>
+                              </q-time>
+                            </q-popup-proxy>
+                          </q-icon>
+                        </template>
+                      </q-input>
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputSchedule.Time2"
+                        mask="time"
+                        :rules="['time']"
+                        label="Time"
+                      >
+                        <template v-slot:append>
+                          <q-icon name="access_time" class="cursor-pointer">
+                            <q-popup-proxy
+                              cover
+                              transition-show="scale"
+                              transition-hide="scale"
+                            >
+                              <q-time v-model="inputSchedule.Time2">
+                                <div class="row items-center justify-end">
+                                  <q-btn
+                                    v-close-popup
+                                    label="Close"
+                                    color="primary"
+                                    flat
+                                  />
+                                </div>
+                              </q-time>
+                            </q-popup-proxy>
+                          </q-icon>
+                        </template>
+                      </q-input>
+                    </div>
+                  </div>
                   <q-card-actions align="right">
                     <q-btn
                       label="Cancel"
@@ -171,7 +220,7 @@
                 </q-card-section>
 
                 <q-card-section>
-                  <q-form @submit="oneditSchedule" class="q-gutter-md">
+                  <q-form @submit="oneditSchedule">
                     <div class="row">
                       <div class="col col-md-6">
                         <q-input
@@ -204,26 +253,68 @@
                           outlined
                           class="q-py-md"
                           v-model="inputSchedule.Day2"
-                          :options="options"
+                          :options="options1"
                           label="Day 2"
                         />
                       </div>
 
                       <div class="col-md-6 q-pl-md">
-                        <q-select
+                        <q-input
                           outlined
-                          class="q-py-md"
                           v-model="inputSchedule.Time"
-                          :options="options"
+                          mask="time"
+                          :rules="['time']"
                           label="Time"
-                        />
-                        <q-select
+                        >
+                          <template v-slot:append>
+                            <q-icon name="access_time" class="cursor-pointer">
+                              <q-popup-proxy
+                                cover
+                                transition-show="scale"
+                                transition-hide="scale"
+                              >
+                                <q-time v-model="inputSchedule.Time">
+                                  <div class="row items-center justify-end">
+                                    <q-btn
+                                      v-close-popup
+                                      label="Close"
+                                      color="primary"
+                                      flat
+                                    />
+                                  </div>
+                                </q-time>
+                              </q-popup-proxy>
+                            </q-icon>
+                          </template>
+                        </q-input>
+                        <q-input
                           outlined
-                          class="q-py-md"
                           v-model="inputSchedule.Time2"
-                          :options="options"
-                          label="Time 2"
-                        />
+                          mask="time"
+                          :rules="['time']"
+                          label="Time"
+                        >
+                          <template v-slot:append>
+                            <q-icon name="access_time" class="cursor-pointer">
+                              <q-popup-proxy
+                                cover
+                                transition-show="scale"
+                                transition-hide="scale"
+                              >
+                                <q-time v-model="inputSchedule.Time2">
+                                  <div class="row items-center justify-end">
+                                    <q-btn
+                                      v-close-popup
+                                      label="Close"
+                                      color="primary"
+                                      flat
+                                    />
+                                  </div>
+                                </q-time>
+                              </q-popup-proxy>
+                            </q-icon>
+                          </template>
+                        </q-input>
                         <q-input
                           outlined
                           class="q-py-md"
@@ -277,32 +368,39 @@
 import { Vue, Options } from 'vue-class-component';
 import { ManagementSchedule } from 'src/store/ManagementSchedule/state';
 import { mapActions, mapState } from 'vuex';
+import { ScheduleDto } from 'src/services/restapi';
 
 @Options({
   computed: {
-    ...mapState('ManagementSchedule', ['manageSchedule']),
+    ...mapState('ManagementSchedule', ['AllSchedule']),
   },
   methods: {
     ...mapActions('ManagementSchedule', [
       'addSchedule',
       'editSchedule',
       'deleteSchedule',
+      'getAllSchedules',
     ]),
   },
 })
 export default class ManageSchedule extends Vue {
-  addSchedule!: (payload: ManagementSchedule) => Promise<void>;
-  editSchedule!: (payload: ManagementSchedule) => Promise<void>;
-  deleteSchedule!: (payload: ManagementSchedule) => Promise<void>;
-  manageSchedule!: ManagementSchedule[];
+  addSchedule!: (payload: ScheduleDto) => Promise<void>;
+  editSchedule!: (payload: ScheduleDto) => Promise<void>;
+  deleteSchedule!: (payload: ScheduleDto) => Promise<void>;
+  getAllSchedules!: () => Promise<void>;
+  AllSchedule!: ScheduleDto[];
 
+  async mounted() {
+    await this.getAllSchedules();
+    console.log(this.AllSchedule);
+  }
   columns = [
     {
       name: 'SubjectCode',
       required: true,
       label: 'Subject Code',
       align: 'left',
-      field: (row: ManagementSchedule) => row.SubjectCode,
+      field: (row: ScheduleDto) => row.SubjectCode,
       format: (val: string) => `${val}`,
     },
     {
@@ -312,21 +410,6 @@ export default class ManageSchedule extends Vue {
       field: 'DescriptiveTitle',
     },
     { name: 'Units', align: 'center', label: 'Units', field: 'Units' },
-    {
-      name: 'Day',
-      align: 'center',
-      label: 'Day',
-      field: (row: ManagementSchedule) => row.Day + ' -' + row.Day2 + ' ',
-      format: (val: string) => `${val}`,
-    },
-
-    {
-      name: 'Time',
-      align: 'center',
-      label: 'Time',
-      field: (row: ManagementSchedule) => row.Time + ' -' + row.Time2 + ' ',
-      format: (val: string) => `${val}`,
-    },
     {
       name: 'Teacher',
       align: 'center',
@@ -339,14 +422,28 @@ export default class ManageSchedule extends Vue {
       label: 'Room',
       field: 'Room',
     },
+    {
+      name: 'Day',
+      align: 'center',
+      label: 'Day',
+      field: (row: ScheduleDto) => row.Day + ' - ' + row.Day2,
+      format: (val: string) => `${val}`,
+    },
+
+    {
+      name: 'Time',
+      align: 'center',
+      label: 'Time',
+      field: (row: ScheduleDto) => row.Time + ' - ' + row.Time2,
+      format: (val: string) => `${val}`,
+    },
 
     { name: 'action', align: 'center', label: 'Action', field: 'action' },
   ];
   addNewSchedule = false;
   updateSchedule = false;
   filter = '';
-  Time = '';
-  Time2 = '';
+  time = '';
   options = [
     'Sunday',
     'Monday',
@@ -356,35 +453,17 @@ export default class ManageSchedule extends Vue {
     'Friday',
     'Saturday',
   ];
-  time = [
-    '6:00am',
-    '6:30am',
-    '7:00am',
-    '7:30am',
-    '8:00am',
-    '8:30am',
-    '9:00am',
-    '9:30am',
-    '10:00am',
-    '10:30am',
-    '11:30am',
-    '12:00am',
-    '12:30pm',
-    '1:00pm',
-    '1:30pm',
-    '2:00pm',
-    '2:30pm',
-    '3:00pm',
-    '3:30pm',
-    '4:00pm',
-    '4:30pm',
-    '5:00pm',
-    '5:30pm',
-    '6:00pm',
+  options1 = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
   ];
 
-  inputSchedule: ManagementSchedule = {
-    scheduleID: '',
+  inputSchedule: ScheduleDto = {
     SubjectCode: '',
     DescriptiveTitle: '',
     Units: '',
@@ -416,7 +495,7 @@ export default class ManageSchedule extends Vue {
     });
   }
 
-  deleteSpecificSchedule(val: ManagementSchedule) {
+  deleteSpecificSchedule(val: ScheduleDto) {
     this.$q
       .dialog({
         message: 'Confirm to delete?',
@@ -432,14 +511,13 @@ export default class ManageSchedule extends Vue {
       });
   }
 
-  openEditDialog(val: ManagementSchedule) {
+  openEditDialog(val: ScheduleDto) {
     this.updateSchedule = true;
     this.inputSchedule = { ...val };
   }
 
   resetModel() {
     this.inputSchedule = {
-      scheduleID: '',
       SubjectCode: '',
       DescriptiveTitle: '',
       Units: '',

@@ -1,4 +1,3 @@
-import { AdmissionDto } from './../../services/restapi/api';
 export interface IStudentInfo {
   admissionID?: number;
   reportCard: boolean;

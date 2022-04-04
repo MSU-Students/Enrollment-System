@@ -7,14 +7,6 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', component: () => import('src/pages/Dashboard.vue') },
       { path: 'login', component: () => import('src/pages/Login.vue') },
-      {
-        path: 'login2',
-        component: () => import('src/pages/Chairperson/Login2.vue'),
-      },
-      {
-        path: 'login3',
-        component: () => import('src/pages/Registrar/Login3.vue'),
-      },
     ],
   },
   {
@@ -73,8 +65,8 @@ const routes: RouteRecordRaw[] = [
       },
 
       {
-        path: 'forthyear',
-        component: () => import('src/pages/Chairperson/forthyear.vue'),
+        path: 'fourthyear',
+        component: () => import('src/pages/Chairperson/fourthyear.vue'),
       },
     ],
   },

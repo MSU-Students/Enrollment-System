@@ -7,27 +7,27 @@ const actions: ActionTree<AccountStateInterface, StateInterface> = {
   async addAccount(context, payload: any): Promise<any> {
     const result = await userService.create(payload);
     context.commit('setNewAccount', result);
-    await context.dispatch('getAllAccount');
+    await context.dispatch('getAllUser');
   },
 
   async editAccount(context, payload: any): Promise<any> {
     const result = await userService.update(payload.id, payload);
     context.commit('updateAccount', result);
-    await context.dispatch('getAllAccount');
+    await context.dispatch('getAllUser');
   },
 
-  async deleteAccount(context, id: number): Promise<any> {
-    const result = await userService.delete(id);
+  async deleteAccount(context, user_id: number): Promise<any> {
+    const result = await userService.delete(user_id);
     context.commit('deleteAccount', result);
   },
 
-  async getAllAccount(context): Promise<any> {
+  async getAllUser(context): Promise<any> {
     const res = await userService.getAll();
     context.commit('getAllUser', res);
   },
 
-  async getOneAccount(context, id: number): Promise<any> {
-    const res = await userService.getOne(id);
+  async getOneUser(context, user_id: number): Promise<any> {
+    const res = await userService.getOne(user_id);
     context.commit('getOneUser', res);
   },
 

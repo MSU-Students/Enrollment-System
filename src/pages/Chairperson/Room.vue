@@ -9,7 +9,7 @@
 
     <q-table
       title="Room List"
-      :rows="manageRoom"
+      :rows="AllRoom"
       :columns="columns"
       row-key="name"
       :rows-per-page-options="[0]"
@@ -197,28 +197,38 @@
 import { Vue, Options } from 'vue-class-component';
 import { ManagementRoom } from 'src/store/ManagementRoom/state';
 import { mapActions, mapState } from 'vuex';
+import { RoomDto } from 'src/services/restapi';
 
 @Options({
   computed: {
-    ...mapState('ManagementRoom', ['manageRoom']),
+    ...mapState('ManagementRoom', ['AllRoom']),
   },
   methods: {
-    ...mapActions('ManagementRoom', ['addRoom', 'editRoom', 'deleteRoom']),
+    ...mapActions('ManagementRoom', [
+      'addRoom',
+      'editRoom',
+      'deleteRoom',
+      'getAllRoom',
+    ]),
   },
 })
 export default class ManageRoom extends Vue {
   addRoom!: (payload: ManagementRoom) => Promise<void>;
   editRoom!: (payload: ManagementRoom) => Promise<void>;
   deleteRoom!: (payload: ManagementRoom) => Promise<void>;
-  manageRoom!: ManagementRoom[];
+  getAllRoom!: () => Promise<void>;
+  AllRoom!: ManagementRoom[];
 
+  async mounted() {
+    await this.getAllRoom();
+  }
   columns = [
     {
       name: 'Room',
       required: true,
       label: 'Room',
       align: 'left',
-      field: (row: ManagementRoom) => row.Room,
+      field: (row: RoomDto) => row.Room,
       format: (val: string) => `${val}`,
     },
     {
@@ -240,8 +250,7 @@ export default class ManageRoom extends Vue {
   updateRoom = false;
   filter = '';
 
-  inputRoom: ManagementRoom = {
-    roomID: '',
+  inputRoom: RoomDto = {
     Room: '',
     Description: '',
     Status: '',
@@ -267,7 +276,7 @@ export default class ManageRoom extends Vue {
     });
   }
 
-  deleteSpecificRoom(val: ManagementRoom) {
+  deleteSpecificRoom(val: RoomDto) {
     this.$q
       .dialog({
         message: 'Confirm to delete?',
@@ -283,14 +292,13 @@ export default class ManageRoom extends Vue {
       });
   }
 
-  openEditDialog(val: ManagementRoom) {
+  openEditDialog(val: RoomDto) {
     this.updateRoom = true;
     this.inputRoom = { ...val };
   }
 
   resetModel() {
     this.inputRoom = {
-      roomID: '',
       Room: '',
       Description: '',
       Status: '',

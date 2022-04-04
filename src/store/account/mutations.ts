@@ -3,26 +3,26 @@ import { AccountStateInterface } from './state';
 
 const mutation: MutationTree<AccountStateInterface> = {
   setAccount(state, payload) {
-    state.newAccount = payload;
+    state.newUser = payload;
   },
   updateAccount(state, payload) {
-    state.allAccountUser.push(payload);
+    state.newUser = payload;
   },
   deleteAccount(state, payload) {
-    state.allAccountUser.push(payload);
+    state.allAccount.push(payload);
   },
 
   getAllUser(state, payload) {
-    state.allAccountUser = [];
-    state.allAccountUser.push(...payload);
+    state.allAccount = [];
+    state.allAccount.push(...payload);
   },
 
   getOneUser(state, payload) {
-    state.allAccountUser = payload;
+    state.allAccount = payload;
   },
 
   getProfile(state, payload) {
-    state.allAccountUser = payload;
+    state.allAccount = payload;
   },
 };
 export default mutation;

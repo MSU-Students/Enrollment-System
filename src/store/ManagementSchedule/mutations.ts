@@ -1,25 +1,24 @@
 import { MutationTree } from 'vuex';
-import { ManagementSchedule, ManagementScheduleStateInterface } from './state';
+import { ManagementSchedule } from './state';
+import { ManagementScheduleStateInterface } from './state';
 
 const mutation: MutationTree<ManagementScheduleStateInterface> = {
-  setSchedule(state, payload: ManagementSchedule) {
-    state.manageSchedule.push(payload);
-  },
   setNewSchedule(state, payload: ManagementSchedule) {
-    const index = state.manageSchedule.findIndex(
-      (s) => s.scheduleID === payload.scheduleID  
-    );
-    if (index >= 0) {
-      state.manageSchedule.splice(index, 1, payload);
-    }
+    state.newSchedule = payload;
   },
-  deleteSchedule(state, payload: ManagementSchedule) {
-    const index = state.manageSchedule.findIndex(
-      (s) => s.scheduleID === payload.scheduleID
-    );
-    if (index >= 0) {
-      state.manageSchedule.splice(index, 1);
-    }
+  updateSchedule(state, payload: ManagementSchedule) {
+    state.newSchedule = payload;
+  },
+  deleteSchedule(state, payload: any) {
+    state.AllSchedule.push(payload);
+  },
+  getAllSchedules(state, payload) {
+    state.AllSchedule = [];
+    state.AllSchedule.push(...payload);
+  },
+
+  getOneSchedule(state, payload) {
+    state.AllSchedule = payload;
   },
 };
 

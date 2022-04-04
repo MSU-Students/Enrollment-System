@@ -1,18 +1,35 @@
+import { SubjectDto } from 'src/services/restapi';
 import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
-import { ManagementSubjectStateInterface, ManagementSubject } from './state';
+import { ManagementSubjectStateInterface } from './state';
+import subjectService from 'src/services/subject.service';
 
 const actions: ActionTree<ManagementSubjectStateInterface, StateInterface> = {
-  addSubject(context, payload: ManagementSubject) {
-    context.commit('setSubject', payload);
+  async addSubjects(context, payload: SubjectDto): Promise<void> {
+    const result = await subjectService.create(payload);
+    context.commit('setSubject', result);
+    await context.dispatch('getAllSubjects');
   },
 
-  editSubject(context, payload: ManagementSubject) {
-    context.commit('setNewSubject', payload);
+  async editSubject(context, payload: any): Promise<void> {
+    const result = await subjectService.update(payload.SubjectID, payload);
+    context.commit('updateSubject', result);
+    await context.dispatch('getAllSubjects');
   },
 
-  deleteSubject(context, payload: ManagementSubject) {
-    context.commit('deleteSubject', payload);
+  async deleteSubject(context, subjectID: number): Promise<any> {
+    const result = await subjectService.delete(subjectID);
+    context.commit('deleteSubject', result);
+  },
+
+  async getAllSubjects(context): Promise<any> {
+    const res = await subjectService.getAll();
+    context.commit('getAllSubjects', res);
+  },
+
+  async getOneSubject(context, subjectID: number): Promise<any> {
+    const res = await subjectService.getOne(subjectID);
+    context.commit('getOneSubject', res);
   },
 };
 

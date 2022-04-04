@@ -1,25 +1,24 @@
 import { MutationTree } from 'vuex';
-import { ManagementTeacher, ManagementTeacherStateInterface } from './state';
+import { ManagementTeacher } from './state';
+import { ManagementTeacherStateInterface } from './state';
 
 const mutation: MutationTree<ManagementTeacherStateInterface> = {
-  setTeacher(state, payload: ManagementTeacher) {
-    state.manageTeacher.push(payload);
-  },
   setNewTeacher(state, payload: ManagementTeacher) {
-    const index = state.manageTeacher.findIndex(
-      (s) => s.teacherID === payload.teacherID  
-    );
-    if (index >= 0) {
-      state.manageTeacher.splice(index, 1, payload);
-    }
+    state.NewTeacher = payload;
   },
-  deleteTeacher(state, payload: ManagementTeacher) {
-    const index = state.manageTeacher.findIndex(
-      (s) => s.teacherID === payload.teacherID
-    );
-    if (index >= 0) {
-      state.manageTeacher.splice(index, 1);
-    }
+  updateTeacher(state, payload: ManagementTeacher) {
+    state.NewTeacher = payload;
+  },
+  deleteTeacher(state, payload: any) {
+    state.allTeacher.push(payload);
+  },
+  getAllTeacher(state, payload) {
+    state.allTeacher = [];
+    state.allTeacher.push(...payload);
+  },
+
+  getOneTeacher(state, payload) {
+    state.allTeacher = payload;
   },
 };
 

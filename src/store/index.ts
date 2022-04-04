@@ -48,6 +48,9 @@ import { FourYear1stSemStateInterface } from './Forthyear1stSem/state';
 import Forthyear2ndSem from './Forthyear2ndSem';
 import { FourYear2ndSemStateInterface } from './Forthyear2ndSem/state';
 
+import auth from './auth';
+import { IAuthState } from './auth/state';
+
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation;
@@ -75,6 +78,7 @@ export interface StateInterface {
   Thirdyear2ndSem: ThirdYear2ndSemStateInterface;
   Forthyear1stSem: FourYear1stSemStateInterface;
   Forthyear2ndstSem: FourYear2ndSemStateInterface;
+  auth: IAuthState;
 }
 
 // provide typings for `this.$store`
@@ -106,6 +110,7 @@ export default store(function (/* { ssrContext } */) {
       Thirdyear2ndSem,
       Forthyear1stSem,
       Forthyear2ndSem,
+      auth,
     },
 
     // enable strict mode (adds overhead!)

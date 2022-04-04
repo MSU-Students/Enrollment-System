@@ -3,30 +3,16 @@ export interface ManagementRoom {
   Room: string;
   Description: string;
   Status: string;
-  
-  
 }
 
 export interface ManagementRoomStateInterface {
-  manageRoom: ManagementRoom[];
-  activeRoom?: ManagementRoom;
+  AllRoom: ManagementRoom[];
+  newRoom?: ManagementRoom;
 }
-  
-
 
 function state(): ManagementRoomStateInterface {
   return {
-    manageRoom: [
-      {
-        roomID: '01',
-        Room: '234',
-        Description: 'CIT BUILDING',
-        Status: 'USED',
-        
-        
-        
-      },
-    ],
+    AllRoom: [],
   };
 }
 

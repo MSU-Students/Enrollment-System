@@ -2,24 +2,22 @@ import { MutationTree } from 'vuex';
 import { ManagementSubject, ManagementSubjectStateInterface } from './state';
 
 const mutation: MutationTree<ManagementSubjectStateInterface> = {
-  setSubject(state, payload: ManagementSubject) {
-    state.manageSubject.push(payload);
-  },
   setNewSubject(state, payload: ManagementSubject) {
-    const index = state.manageSubject.findIndex(
-      (s) => s.subjectID === payload.subjectID  
-    );
-    if (index >= 0) {
-      state.manageSubject.splice(index, 1, payload);
-    }
+    state.newSubject = payload;
   },
-  deleteSubject(state, payload: ManagementSubject) {
-    const index = state.manageSubject.findIndex(
-      (s) => s.subjectID === payload.subjectID
-    );
-    if (index >= 0) {
-      state.manageSubject.splice(index, 1);
-    }
+  updateSubject(state, payload: ManagementSubject) {
+    state.newSubject = payload;
+  },
+  deleteSubject(state, payload: any) {
+    state.AllSubject.push(payload);
+  },
+  getAllSubjects(state, payload) {
+    state.AllSubject = [];
+    state.AllSubject.push(...payload);
+  },
+
+  getOneSubject(state, payload) {
+    state.AllSubject = payload;
   },
 };
 

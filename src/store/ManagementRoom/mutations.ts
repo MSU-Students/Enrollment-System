@@ -1,25 +1,24 @@
 import { MutationTree } from 'vuex';
-import { ManagementRoom, ManagementRoomStateInterface } from './state';
+import { ManagementRoomStateInterface } from './state';
 
 const mutation: MutationTree<ManagementRoomStateInterface> = {
-  setRoom(state, payload: ManagementRoom) {
-    state.manageRoom.push(payload);
+  setRoom(state, payload) {
+    state.newRoom = payload;
   },
-  setNewRoom(state, payload: ManagementRoom) {
-    const index = state.manageRoom.findIndex(
-      (s) => s.roomID === payload.roomID  
-    );
-    if (index >= 0) {
-      state.manageRoom.splice(index, 1, payload);
-    }
+  updateRoom(state, payload) {
+    state.newRoom = payload;
   },
-  deleteRoom(state, payload: ManagementRoom) {
-    const index = state.manageRoom.findIndex(
-      (s) => s.roomID === payload.roomID
-    );
-    if (index >= 0) {
-      state.manageRoom.splice(index, 1);
-    }
+  deleteRoom(state, payload) {
+    state.AllRoom.push(payload);
+  },
+
+  getAllRoom(state, payload) {
+    state.AllRoom = [];
+    state.AllRoom.push(...payload);
+  },
+
+  getOneRoom(state, payload) {
+    state.AllRoom = payload;
   },
 };
 

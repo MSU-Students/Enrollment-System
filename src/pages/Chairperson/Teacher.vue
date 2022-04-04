@@ -13,7 +13,7 @@
 
     <q-table
       title="Teacher List"
-      :rows="manageTeacher"
+      :rows="allTeacher"
       :columns="columns"
       row-key="name"
       :rows-per-page-options="[0]"
@@ -59,33 +59,25 @@
 
               <q-card-section>
                 <q-form @submit="onaddTeacher" class="q-gutter-md">
-                  <div class="row">
-                    <div class="col col-md-6">
+                  <div class="row q-gutter-sm q-py-sm">
+                    <div class="col">
                       <q-input
                         autofocus
-                        class="q-py-md"
                         outlined
-                        v-model="inputTeacher.TeacherID"
-                        label="Teacher ID"
-                      />
-                      <q-input
-                        outlined
-                        class="q-py-md"
                         v-model="inputTeacher.FullName"
                         label="Full Name"
                       />
                     </div>
-
-                    <div class="col-md-6 q-pl-md">
+                    <div class="col">
                       <q-input
                         outlined
-                        class="q-py-md"
                         v-model="inputTeacher.Degree"
                         label="Degree"
                       />
+                    </div>
+                    <div class="col">
                       <q-input
                         outlined
-                        class="q-py-md"
                         v-model="inputTeacher.Specialization"
                         label="Specialization"
                       />
@@ -142,33 +134,26 @@
 
                 <q-card-section>
                   <q-form @submit="oneditTeacher" class="q-gutter-md">
-                    <div class="row">
-                      <div class="col col-md-6">
+                    <div class="row q-gutter-sm q-py-sm">
+                      <div class="col">
                         <q-input
                           autofocus
-                          class="q-py-md"
                           outlined
-                          v-model="inputTeacher.TeacherID"
-                          label="Teacher ID"
-                        />
-                        <q-input
-                          outlined
-                          class="q-py-md"
                           v-model="inputTeacher.FullName"
                           label="Full Name"
                         />
                       </div>
 
-                      <div class="col-md-6 q-pl-md">
+                      <div class="col">
                         <q-input
                           outlined
-                          class="q-py-md"
                           v-model="inputTeacher.Degree"
                           label="Degree"
                         />
+                      </div>
+                      <div class="col">
                         <q-input
                           outlined
-                          class="q-py-md"
                           v-model="inputTeacher.Specialization"
                           label="Specialization"
                         />
@@ -213,16 +198,18 @@
 import { Vue, Options } from 'vue-class-component';
 import { ManagementTeacher } from 'src/store/ManagementTeacher/state';
 import { mapActions, mapState } from 'vuex';
+import { TeacherDto } from 'src/services/restapi';
 
 @Options({
   computed: {
-    ...mapState('ManagementTeacher', ['manageTeacher']),
+    ...mapState('ManagementTeacher', ['allTeacher']),
   },
   methods: {
     ...mapActions('ManagementTeacher', [
       'addTeacher',
       'editTeacher',
       'deleteTeacher',
+      'getAllTeacher',
     ]),
   },
 })
@@ -230,17 +217,14 @@ export default class ManageTeacher extends Vue {
   addTeacher!: (payload: ManagementTeacher) => Promise<void>;
   editTeacher!: (payload: ManagementTeacher) => Promise<void>;
   deleteTeacher!: (payload: ManagementTeacher) => Promise<void>;
-  manageTeacher!: ManagementTeacher[];
+  allTeacher!: ManagementTeacher[];
+  getAllTeacher!: () => Promise<void>;
+
+  async mounted() {
+    await this.getAllTeacher();
+  }
 
   columns = [
-    {
-      name: 'TeacherID',
-      required: true,
-      label: 'Teacher ID',
-      align: 'left',
-      field: (row: ManagementTeacher) => row.TeacherID,
-      format: (val: string) => `${val}`,
-    },
     {
       name: 'FullName',
       align: 'center',
@@ -267,9 +251,7 @@ export default class ManageTeacher extends Vue {
   updateTeacher = false;
   filter = '';
 
-  inputTeacher: ManagementTeacher = {
-    teacherID: '',
-    TeacherID: '',
+  inputTeacher: TeacherDto = {
     FullName: '',
     Degree: '',
     Specialization: '',
@@ -295,7 +277,7 @@ export default class ManageTeacher extends Vue {
     });
   }
 
-  deleteSpecificTeacher(val: ManagementTeacher) {
+  deleteSpecificTeacher(val: TeacherDto) {
     this.$q
       .dialog({
         message: 'Confirm to delete?',
@@ -311,15 +293,13 @@ export default class ManageTeacher extends Vue {
       });
   }
 
-  openEditDialog(val: ManagementTeacher) {
+  openEditDialog(val: TeacherDto) {
     this.updateTeacher = true;
     this.inputTeacher = { ...val };
   }
 
   resetModel() {
     this.inputTeacher = {
-      teacherID: '',
-      TeacherID: '',
       FullName: '',
       Degree: '',
       Specialization: '',
