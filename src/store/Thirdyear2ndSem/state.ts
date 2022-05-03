@@ -3,6 +3,9 @@ export interface IThirdYear2ndSemInfo {
   subject: string;
   description: string;
   units: string;
+  teacher: string;
+  room: string;
+  schedule: string;
 }
 
 export interface ThirdYear2ndSemStateInterface {
@@ -12,20 +15,7 @@ export interface ThirdYear2ndSemStateInterface {
 
 function state(): ThirdYear2ndSemStateInterface {
   return {
-    allThirdYear2ndSem: [
-      {
-        thirdYear2ndSemID: '01',
-        subject: 'Fil102',
-        description: 'Ekokritisismo at Pagpapahala sa kalikasan',
-        units: '3',
-      },
-      {
-        thirdYear2ndSemID: '01',
-        subject: 'ITE192',
-        description: 'Capstone',
-        units: '3',
-      },
-    ],
+    allThirdYear2ndSem: [],
   };
 }
 

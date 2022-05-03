@@ -5,21 +5,12 @@ const mutation: MutationTree<SecondYear1stSemStateInterface> = {
   setSecondYear1stSem(state, payload: ISecondYear1stSemInfo) {
     state.allSecondYear1stSem.push(payload);
   },
-  setNewSecondYear1stSem(state, payload: ISecondYear1stSemInfo) {
-    const index = state.allSecondYear1stSem.findIndex(
-      (s) => s.secondYear1stSemID === payload.secondYear1stSemID,
-    );
-    if (index >= 0) {
-      state.allSecondYear1stSem.splice(index, 1, payload);
-    }
+  getAllSecondYear(state, payload) {
+    state.allSecondYear1stSem = [];
+    state.allSecondYear1stSem.push(...payload);
   },
-  deleteSecondYear1stSem(state, payload: ISecondYear1stSemInfo) {
-    const index = state.allSecondYear1stSem.findIndex(
-      (s) => s.secondYear1stSemID === payload.secondYear1stSemID,
-    );
-    if (index >= 0) {
-      state.allSecondYear1stSem.splice(index, 1);
-    }
+  getOneSecondYear(state, payload) {
+    state.allSecondYear1stSem = payload;
   },
 };
 

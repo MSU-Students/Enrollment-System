@@ -48,10 +48,6 @@ const routes: RouteRecordRaw[] = [
         component: () => import('src/pages/Chairperson/Room.vue'),
       },
       {
-        path: 'schedule',
-        component: () => import('src/pages/Chairperson/Schedule.vue'),
-      },
-      {
         path: 'firstyear',
         component: () => import('src/pages/Chairperson/firstyear.vue'),
       },

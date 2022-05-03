@@ -1,65 +1,8 @@
 <template>
   <q-page class="q-pa-md">
-    <div class="row q-pb-lg q-gutter-sm">
-      <div class="col">
-        <q-card>
-          <q-card-section
-            :class="$q.dark.isActive ? 'blue_dark' : 'bg-blue-8'"
-            class="text-white"
-          >
-            <div class="row">
-              <div class="col-10">
-                <div class="text-h6">Total of Student</div>
-                <div class="text-h5">3</div>
-              </div>
-              <div class="col-2">
-                <q-icon size="62px" name="people" />
-              </div>
-            </div>
-          </q-card-section>
-        </q-card>
-      </div>
-      <div class="col">
-        <q-card>
-          <q-card-section
-            :class="$q.dark.isActive ? 'blue_dark' : 'bg-blue-8'"
-            class="text-white"
-          >
-            <div class="row">
-              <div class="col-10">
-                <div class="text-h6">Enrolled Student</div>
-                <div class="text-h5">2</div>
-              </div>
-              <div class="col-2">
-                <q-icon size="62px" name="person" />
-              </div>
-            </div>
-          </q-card-section>
-        </q-card>
-      </div>
-      <div class="col">
-        <q-card>
-          <q-card-section
-            :class="$q.dark.isActive ? 'blue_dark' : 'bg-blue-8'"
-            class="text-white"
-          >
-            <div class="row">
-              <div class="col-10">
-                <div class="text-h6">Academic Year</div>
-                <div class="text-h5">
-                  <q-icon name="arrow_upward" />
-                  Second Semester
-                </div>
-              </div>
-            </div>
-          </q-card-section>
-        </q-card>
-      </div>
-    </div>
-
     <q-table
       title="Student List"
-      :rows="allStudentInfo"
+      :rows="allAdmissionInfo"
       :columns="columns"
       row-key="name"
       :rows-per-page-options="[0]"
@@ -603,7 +546,7 @@
                 </q-card-section>
 
                 <q-card-section>
-                  <q-form @submit="onAddStudent()" class="q-gutter-sm">
+                  <q-form @submit="oneditStudent()" class="q-gutter-sm">
                     <div class="text-h4 flex flex-center">Requirements</div>
 
                     <div class="flex flex-center">
@@ -839,29 +782,31 @@
 import { Vue, Options } from 'vue-class-component';
 import { mapActions, mapState } from 'vuex';
 import { AdmissionDto } from 'src/services/restapi';
+import { IStudentInfo } from 'src/store/Admission/state';
 
 @Options({
   computed: {
-    ...mapState('Admission', ['allStudentInfo']),
+    ...mapState('Admission', ['allAdmissionInfo']),
   },
   methods: {
     ...mapActions('Admission', [
-      'addNewStudent',
-      'ediStudentInfo',
-      'deleteStudent',
+      'addNewAdmission',
+      'editAdmissiontInfo',
+      'deleteAdmission',
       'getAllAdmission',
     ]),
   },
 })
 export default class ManageStudentInfo extends Vue {
-  allStudentInfo!: AdmissionDto[];
-  addNewStudent!: (payload: AdmissionDto) => Promise<void>;
-  editStudentInfo!: (payload: AdmissionDto) => Promise<void>;
-  deleteStudent!: (payload: AdmissionDto) => Promise<void>;
+  allAdmissionInfo!: IStudentInfo[];
+  addNewAdmission!: (payload: IStudentInfo) => Promise<void>;
+  editAdmissionInfo!: (payload: IStudentInfo) => Promise<void>;
+  deleteAdmission!: (payload: IStudentInfo) => Promise<void>;
   getAllAdmission!: () => Promise<void>;
 
   async mounted() {
     await this.getAllAdmission();
+    console.log(this.allAdmissionInfo);
   }
 
   columns = [
@@ -907,7 +852,7 @@ export default class ManageStudentInfo extends Vue {
   addNewStudentInfo = false;
   studentDetails = false;
   options1 = ['First Semester', 'Second Semester'];
-  options2 = ['First Year', 'Second Year', 'Third Year', 'Forth Year'];
+  options2 = ['First Year', 'Second Year', 'Third Year', 'Fourth Year'];
   options3 = ['New Student', 'Transferee'];
   options4 = ['Male', 'Female'];
   options5 = ['Single', 'Merried'];
@@ -937,7 +882,7 @@ export default class ManageStudentInfo extends Vue {
   };
 
   async onAddStudent() {
-    await this.addNewStudent(this.inputStudentInfo);
+    await this.addNewAdmission(this.inputStudentInfo);
     this.addNewStudentInfo = false;
     this.resetModel();
     this.$q.notify({
@@ -947,7 +892,7 @@ export default class ManageStudentInfo extends Vue {
   }
 
   async oneditStudent() {
-    await this.editStudentInfo(this.inputStudentInfo);
+    await this.editAdmissionInfo(this.inputStudentInfo);
     this.updateStudent = false;
     this.resetModel();
     this.$q.notify({
@@ -964,7 +909,7 @@ export default class ManageStudentInfo extends Vue {
         persistent: true,
       })
       .onOk(async () => {
-        await this.deleteStudent(val);
+        await this.deleteAdmission(val);
         this.$q.notify({
           type: 'warning',
           message: 'Successfully deleted',

@@ -3,6 +3,9 @@ export interface ISecondYear1stSemInfo {
   subject: string;
   description: string;
   units: string;
+  teacher: string;
+  room: string;
+  schedule: string;
 }
 
 export interface SecondYear1stSemStateInterface {
@@ -12,20 +15,7 @@ export interface SecondYear1stSemStateInterface {
 
 function state(): SecondYear1stSemStateInterface {
   return {
-    allSecondYear1stSem: [
-      {
-        secondYear1stSemID: '01',
-        subject: 'Gec108',
-        description: 'Science, Technology and Society',
-        units: '3',
-      },
-      {
-        secondYear1stSemID: '02',
-        subject: 'CCC121',
-        description: 'Data Structure and Algorithms',
-        units: '3',
-      },
-    ],
+    allSecondYear1stSem: [],
   };
 }
 

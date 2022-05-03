@@ -24,13 +24,13 @@ export interface IStudentInfo {
 }
 
 export interface AdmissionStateInterface {
-  allStudentInfo: IStudentInfo[];
-  NewStudent?: IStudentInfo;
+  allAdmissionInfo: IStudentInfo[];
+  NewAdmission?: IStudentInfo;
 }
 
 function state(): AdmissionStateInterface {
   return {
-    allStudentInfo: [],
+    allAdmissionInfo: [],
   };
 }
 

@@ -3,6 +3,9 @@ export interface IThirdYear1stSemInfo {
   subject: string;
   description: string;
   units: string;
+  teacher: string;
+  room: string;
+  schedule: string;
 }
 
 export interface ThirdYear1stSemStateInterface {
@@ -12,20 +15,7 @@ export interface ThirdYear1stSemStateInterface {
 
 function state(): ThirdYear1stSemStateInterface {
   return {
-    allThirdYear1stSem: [
-      {
-        thirdYear1stSemID: '01',
-        subject: 'Fil101',
-        description: 'Wika at kultura sa Mapayapang Lipunan',
-        units: '3',
-      },
-      {
-        thirdYear1stSemID: '02s',
-        subject: 'CCC181',
-        description: 'Application Development and Emerging Technologies',
-        units: '3',
-      },
-    ],
+    allThirdYear1stSem: [],
   };
 }
 

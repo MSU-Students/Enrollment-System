@@ -1,18 +1,13 @@
 import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
-import { FourYear1stSemStateInterface, IFourYear1stSemInfo } from './state';
+import { FourthYear1stSemStateInterface } from './state';
+import Fourthyear1stsemService from 'src/services/fourthyear1stsem.service';
 
-const actions: ActionTree<FourYear1stSemStateInterface, StateInterface> = {
-  addFourYear1stSem(context, payload: IFourYear1stSemInfo) {
-    context.commit('setFourYear1stSem', payload);
-  },
-
-  editFourYear1stSem(context, payload: IFourYear1stSemInfo) {
-    context.commit('setNewFourYear1stSem', payload);
-  },
-
-  deleteFourYear1stSem(context, payload: IFourYear1stSemInfo) {
-    context.commit('deleteFourYear1stSem', payload);
+const actions: ActionTree<FourthYear1stSemStateInterface, StateInterface> = {
+  async addFourthyear(context, payload: any): Promise<any> {
+    const result = await Fourthyear1stsemService.create(payload);
+    context.commit('setNewFourthyear', result);
+    await context.dispatch('getAllFourthyear');
   },
 };
 

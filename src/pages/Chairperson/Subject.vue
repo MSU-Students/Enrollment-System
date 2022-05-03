@@ -76,6 +76,62 @@
                         v-model="inputSubject.DescriptiveTitle"
                         label="DescriptiveTitle"
                       />
+                      <q-input
+                        outlined
+                        v-model="inputSubject.Time"
+                        mask="time"
+                        :rules="['time']"
+                        label="Time"
+                      >
+                        <template v-slot:append>
+                          <q-icon name="access_time" class="cursor-pointer">
+                            <q-popup-proxy
+                              cover
+                              transition-show="scale"
+                              transition-hide="scale"
+                            >
+                              <q-time v-model="inputSubject.Time">
+                                <div class="row items-center justify-end">
+                                  <q-btn
+                                    v-close-popup
+                                    label="Close"
+                                    color="primary"
+                                    flat
+                                  />
+                                </div>
+                              </q-time>
+                            </q-popup-proxy>
+                          </q-icon>
+                        </template>
+                      </q-input>
+                      <q-input
+                        outlined
+                        v-model="inputSubject.Time2"
+                        mask="time"
+                        :rules="['time']"
+                        label="Time"
+                      >
+                        <template v-slot:append>
+                          <q-icon name="access_time" class="cursor-pointer">
+                            <q-popup-proxy
+                              cover
+                              transition-show="scale"
+                              transition-hide="scale"
+                            >
+                              <q-time v-model="inputSubject.Time2">
+                                <div class="row items-center justify-end">
+                                  <q-btn
+                                    v-close-popup
+                                    label="Close"
+                                    color="primary"
+                                    flat
+                                  />
+                                </div>
+                              </q-time>
+                            </q-popup-proxy>
+                          </q-icon>
+                        </template>
+                      </q-input>
                     </div>
 
                     <div class="col-md-6 q-pl-md">
@@ -98,6 +154,20 @@
                         v-model="inputSubject.Units"
                         label="Units"
                       />
+                      <q-select
+                        outlined
+                        class="q-py-md"
+                        v-model="inputSubject.Day"
+                        :options="options1"
+                        label="Day"
+                      />
+                      <q-select
+                        outlined
+                        class="q-py-md"
+                        v-model="inputSubject.Day2"
+                        :options="options2"
+                        label="Day 2"
+                      />
                     </div>
                   </div>
 
@@ -113,6 +183,7 @@
                       label="Add"
                       color="primary"
                       type="submit"
+                      @click="onaddSubject()"
                     />
                   </q-card-actions>
                 </q-form>
@@ -243,7 +314,7 @@ import { SubjectDto } from 'src/services/restapi';
   },
   methods: {
     ...mapActions('ManagementSubject', [
-      'addSubject',
+      'addSubjects',
       'editSubject',
       'deleteSubject',
       'getAllSubjects',
@@ -251,7 +322,7 @@ import { SubjectDto } from 'src/services/restapi';
   },
 })
 export default class ManageSubject extends Vue {
-  addSubject!: (payload: ManagementSubject) => Promise<void>;
+  addSubjects!: (payload: ManagementSubject) => Promise<void>;
   editSubject!: (payload: ManagementSubject) => Promise<void>;
   deleteSubject!: (payload: ManagementSubject) => Promise<void>;
   AllSubject!: ManagementSubject[];
@@ -295,12 +366,39 @@ export default class ManageSubject extends Vue {
     },
 
     { name: 'Units', align: 'center', label: 'Units', field: 'Units' },
+    {
+      name: 'Schedule',
+      required: true,
+      label: 'Schedule',
+      align: 'left',
+      field: (row: SubjectDto) =>
+        row.Day + ' -' + row.Day2 + ' /' + row.Time + ' -' + row.Time2,
+      format: (val: string) => `${val}`,
+    },
     { name: 'action', align: 'center', label: 'Action', field: 'action' },
   ];
   addNewSubject = false;
   updateSubject = false;
   filter = '';
   options = ['First Year', 'Second Year', 'Third Year', 'Fourth Year'];
+  options1 = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
+  options2 = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
 
   inputSubject: SubjectDto = {
     AYCode: '',
@@ -309,10 +407,15 @@ export default class ManageSubject extends Vue {
     DescriptiveTitle: '',
     Prerequisite: '',
     Units: '',
+    Day: '',
+    Day2: '',
+    Time: '',
+    Time2: '',
   };
 
   async onaddSubject() {
-    await this.addSubject(this.inputSubject);
+    console.log('subject here');
+    await this.addSubjects(this.inputSubject);
     this.addNewSubject = false;
     this.resetModel();
     this.$q.notify({
@@ -360,6 +463,10 @@ export default class ManageSubject extends Vue {
       DescriptiveTitle: '',
       Prerequisite: '',
       Units: '',
+      Day: '',
+      Day2: '',
+      Time: '',
+      Time2: '',
     };
   }
 }

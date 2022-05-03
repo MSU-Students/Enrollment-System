@@ -10,8 +10,8 @@ const actions: ActionTree<ManagementRoomStateInterface, StateInterface> = {
     await context.dispatch('getAllRoom');
   },
 
-  async editRoom(context, payload: any): Promise<any> {
-    const result = await roomService.update(payload.id, payload);
+  async editRoom(context, payload: any): Promise<void> {
+    const result = await roomService.update(payload.roomid, payload);
     context.commit('updateRoom', result);
     await context.dispatch('getAllRoom');
   },

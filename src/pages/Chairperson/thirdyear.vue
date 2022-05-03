@@ -55,149 +55,72 @@
                         @click="resetModel()"
                       />
                     </q-card-section>
-
-                    <q-card-section>
-                      <q-form @submit="onaddThirdYear1stSem">
-                        <div class="row q-gutter-md q-py-sm">
-                          <div class="col">
-                            <q-input
-                              autofocus
-                              outlined
-                              v-model="inputThirdYear1stSem.subject"
-                              label="Subject"
-                            />
-                          </div>
-                          <div class="col">
-                            <q-input
-                              autofocus
-                              outlined
-                              v-model="inputThirdYear1stSem.units"
-                              label="Units"
-                            />
-                          </div>
-                          <div class="col">
-                            <q-input
-                              autofocus
-                              outlined
-                              v-model="inputThirdYear1stSem.description"
-                              label="Description"
-                            />
-                          </div>
-                        </div>
-
-                        <div align="right">
-                          <q-btn
-                            flat
-                            label="Cancel"
-                            color="red-10"
-                            v-close-popup
-                            @click="resetModel()"
-                          />
-                          <q-btn
-                            flat
-                            label="Save"
-                            color="primary"
-                            type="submit"
-                          />
-                        </div>
-                      </q-form>
-                    </q-card-section>
+                    <div class="row q-gutter-md">
+                      <div class="col">
+                        <q-select
+                          label="Subject"
+                          transition-show="flip-up"
+                          transition-hide="flip-down"
+                          outlined
+                          color="secondary"
+                          :options="AllSubject"
+                          option-label="SubjectCode"
+                          option-value="subjectID"
+                          map-options
+                          emit-value
+                          v-model="inputThirdYear1stSem.subject"
+                        />
+                      </div>
+                      <div class="col">
+                        <q-select
+                          label="Teacher"
+                          transition-show="flip-up"
+                          transition-hide="flip-down"
+                          outlined
+                          color="secondary"
+                          :options="allTeacher"
+                          option-label="FullName"
+                          option-value="teacherID"
+                          map-options
+                          emit-value
+                          v-model="inputThirdYear1stSem.teacher"
+                        />
+                      </div>
+                      <div class="col">
+                        <q-select
+                          label="Room"
+                          transition-show="flip-up"
+                          transition-hide="flip-down"
+                          outlined
+                          color="secondary"
+                          :options="AllRoom"
+                          option-label="Room"
+                          option-value="roomID"
+                          map-options
+                          emit-value
+                          v-model="inputThirdYear1stSem.room"
+                        />
+                      </div>
+                    </div>
+                    <div align="right">
+                      <q-btn
+                        flat
+                        label="Cancel"
+                        color="red-10"
+                        v-close-popup
+                        @click="resetModel2()"
+                      />
+                      <q-btn
+                        flat
+                        label="Save"
+                        color="primary"
+                        type="submit"
+                        @click="onaddThirdYear1stSem()"
+                      />
+                    </div>
                   </q-card>
                 </q-dialog>
               </div>
-            </template>
-
-            <template v-slot:body-cell-action="props">
-              <q-td :props="props">
-                <div class="q-gutter-sm">
-                  <q-btn
-                    round
-                    color="blue"
-                    icon="edit"
-                    size="sm"
-                    flat
-                    dense
-                    @click="openEditDialog(props.row)"
-                  />
-                  <q-dialog v-model="updateThirdYear1stSem" persistent>
-                    <q-card
-                      style="width: 800px; max-width: 100vw"
-                      class="q-pa-sm"
-                    >
-                      <q-card-section class="row">
-                        <div class="text-h6">Edit Subject</div>
-                        <q-space />
-                        <q-btn
-                          flat
-                          round
-                          dense
-                          icon="close"
-                          v-close-popup
-                          @click="resetModel()"
-                        />
-                      </q-card-section>
-
-                      <q-card-section>
-                        <q-form @submit="oneditThirdYear1stSem">
-                          <div class="row q-gutter-md q-py-sm">
-                            <div class="col">
-                              <q-input
-                                autofocus
-                                outlined
-                                v-model="inputThirdYear1stSem.subject"
-                                label="Subject"
-                              />
-                            </div>
-                            <div class="col">
-                              <q-input
-                                autofocus
-                                outlined
-                                v-model="inputThirdYear1stSem.units"
-                                label="Units"
-                              />
-                            </div>
-
-                            <div class="col">
-                              <q-input
-                                autofocus
-                                outlined
-                                v-model="inputThirdYear1stSem.description"
-                                label="Description"
-                              />
-                            </div>
-                          </div>
-
-                          <div align="right">
-                            <q-btn
-                              flat
-                              label="Cancel"
-                              color="red-10"
-                              @click="resetModel()"
-                              v-close-popup
-                            />
-                            <q-btn
-                              flat
-                              label="Save"
-                              color="primary"
-                              type="submit"
-                            />
-                          </div>
-                        </q-form>
-                      </q-card-section>
-                    </q-card>
-                  </q-dialog>
-                  <q-btn
-                    color="red-10"
-                    icon="delete"
-                    size="sm"
-                    class="q-ml-sm"
-                    flat
-                    round
-                    dense
-                    @click="deleteSpecificThirdYear1stSem(props.row)"
-                  />
-                </div>
-              </q-td>
             </template>
           </q-table>
         </div>
@@ -251,149 +174,56 @@
                         @click="resetModel2()"
                       />
                     </q-card-section>
-
-                    <q-card-section>
-                      <q-form @submit="onaddThirdYear2ndSem">
-                        <div class="row q-gutter-md q-py-sm">
-                          <div class="col">
-                            <q-input
-                              autofocus
-                              outlined
-                              v-model="inputThirdYear2ndSem.subject"
-                              label="Subject"
-                            />
-                          </div>
-                          <div class="col">
-                            <q-input
-                              autofocus
-                              outlined
-                              v-model="inputThirdYear2ndSem.units"
-                              label="Units"
-                            />
-                          </div>
-                          <div class="col">
-                            <q-input
-                              autofocus
-                              outlined
-                              v-model="inputThirdYear2ndSem.description"
-                              label="Description"
-                            />
-                          </div>
-                        </div>
-
-                        <div align="right">
-                          <q-btn
-                            flat
-                            label="Cancel"
-                            color="red-10"
-                            v-close-popup
-                            @click="resetModel2()"
-                          />
-                          <q-btn
-                            flat
-                            label="Save"
-                            color="primary"
-                            type="submit"
-                          />
-                        </div>
-                      </q-form>
-                    </q-card-section>
+                    <div class="row q-gutter-md">
+                      <div class="col">
+                        <q-select
+                          label="Subject"
+                          transition-show="flip-up"
+                          transition-hide="flip-down"
+                          outlined
+                          color="secondary"
+                          :options="AllSubject"
+                          option-label="SubjectCode"
+                          option-value="subjectID"
+                          map-options
+                          emit-value
+                          v-model="inputThirdYear1stSem.subject"
+                        />
+                      </div>
+                      <div class="col">
+                        <q-select
+                          label="Teacher"
+                          transition-show="flip-up"
+                          transition-hide="flip-down"
+                          outlined
+                          color="secondary"
+                          :options="allTeacher"
+                          option-label="FullName"
+                          option-value="teacherID"
+                          map-options
+                          emit-value
+                          v-model="inputThirdYear1stSem.teacher"
+                        />
+                      </div>
+                      <div class="col">
+                        <q-select
+                          label="Room"
+                          transition-show="flip-up"
+                          transition-hide="flip-down"
+                          outlined
+                          color="secondary"
+                          :options="AllRoom"
+                          option-label="Room"
+                          option-value="roomID"
+                          map-options
+                          emit-value
+                          v-model="inputThirdYear1stSem.room"
+                        />
+                      </div>
+                    </div>
                   </q-card>
                 </q-dialog>
               </div>
-            </template>
-
-            <template v-slot:body-cell-action="props">
-              <q-td :props="props">
-                <div class="q-gutter-sm">
-                  <q-btn
-                    round
-                    color="blue"
-                    icon="edit"
-                    size="sm"
-                    flat
-                    dense
-                    @click="openEditDialog2(props.row)"
-                  />
-                  <q-dialog v-model="updateThirdYear2ndSem" persistent>
-                    <q-card
-                      style="width: 800px; max-width: 100vw"
-                      class="q-pa-sm"
-                    >
-                      <q-card-section class="row">
-                        <div class="text-h6">Edit Subject</div>
-                        <q-space />
-                        <q-btn
-                          flat
-                          round
-                          dense
-                          icon="close"
-                          v-close-popup
-                          @click="resetModel2()"
-                        />
-                      </q-card-section>
-
-                      <q-card-section>
-                        <q-form @submit="oneditThirdYear2ndSem">
-                          <div class="row q-gutter-md q-py-sm">
-                            <div class="col">
-                              <q-input
-                                autofocus
-                                outlined
-                                v-model="inputThirdYear2ndSem.subject"
-                                label="Subject"
-                              />
-                            </div>
-                            <div class="col">
-                              <q-input
-                                autofocus
-                                outlined
-                                v-model="inputThirdYear2ndSem.units"
-                                label="Units"
-                              />
-                            </div>
-
-                            <div class="col">
-                              <q-input
-                                autofocus
-                                outlined
-                                v-model="inputThirdYear2ndSem.description"
-                                label="Description"
-                              />
-                            </div>
-                          </div>
-
-                          <div align="right">
-                            <q-btn
-                              flat
-                              label="Cancel"
-                              color="red-10"
-                              @click="resetModel2()"
-                              v-close-popup
-                            />
-                            <q-btn
-                              flat
-                              label="Save"
-                              color="primary"
-                              type="submit"
-                            />
-                          </div>
-                        </q-form>
-                      </q-card-section>
-                    </q-card>
-                  </q-dialog>
-                  <q-btn
-                    color="red-10"
-                    icon="delete"
-                    size="sm"
-                    class="q-ml-sm"
-                    flat
-                    round
-                    dense
-                    @click="deleteSpecificThirdYear2ndSem(props.row)"
-                  />
-                </div>
-              </q-td>
             </template>
           </q-table>
         </div>
@@ -403,61 +233,103 @@
 </template>
 
 <script lang="ts">
+import {
+  Firstyear1stsemDto,
+  Firstyear2ndsemDto,
+  TeacherDto,
+} from 'src/services/restapi';
 import { Vue, Options } from 'vue-class-component';
 import { IThirdYear1stSemInfo } from 'src/store/Thirdyear1stSem/state';
 import { IThirdYear2ndSemInfo } from 'src/store/Thirdyear2ndSem/state';
 import { mapActions, mapState } from 'vuex';
+import { ManagementRoom } from 'src/store/ManagementRoom/state';
+import { ManagementSubject } from 'src/store/ManagementSubject/state';
+
 @Options({
   computed: {
     ...mapState('ThirdYear1stSem', ['allThirdYear1stSem']),
     ...mapState('ThirdYear2ndSem', ['allThirdYear2ndSem']),
+    ...mapState('ManagementSubject', ['AllSubject']),
+    ...mapState('ManagementTeacher', ['allTeacher']),
+    ...mapState('ManagementRoom', ['AllRoom']),
   },
   methods: {
-    ...mapActions('ThirdYear1stSem', [
-      'addThirdYear1stSem',
-      'editThirdYear1stSem',
-      'deleteThirdYear1stSem',
-    ]),
-    ...mapActions('ThirdYear2ndSem', [
-      'addThirdYear2ndSem',
-      'editThirdYear2ndSem',
-      'deleteThirdYear2ndSem',
-    ]),
+    ...mapActions('ThirdYear1stSem', ['addThirdYear1stSem']),
+    ...mapActions('ThirdYear2ndSem', ['addThirdYear2ndSem']),
   },
 })
 export default class ManageAccount extends Vue {
-  addThirdYear1stSem!: (payload: IThirdYear1stSemInfo) => Promise<void>;
-  editThirdYear1stSem!: (payload: IThirdYear1stSemInfo) => Promise<void>;
-  deleteThirdYear1stSem!: (payload: IThirdYear1stSemInfo) => Promise<void>;
-  allThirdYear1stSem!: IThirdYear1stSemInfo[];
+  addThirdYear1stSem!: (payload: Firstyear1stsemDto) => Promise<void>;
+  allThirdYear1stSem!: Firstyear2ndsemDto[];
+  AllSubject!: ManagementSubject[];
+  allTeacher!: TeacherDto[];
+  AllRoom!: ManagementRoom[];
+
   columns = [
     {
       name: 'name',
       required: true,
-      label: 'Subjects',
+      label: 'Subject Code',
       align: 'left',
-      field: (row: IThirdYear1stSemInfo) => row.subject + ' ',
-      format: (val: string) => `${val}`,
+      field: (row: any) => row.subject?.SubjectCode || 'None',
     },
     {
       name: 'Description',
       align: 'left',
       label: 'Description',
-      field: 'description',
+      field: (row: any) => row.subject?.DescriptiveTitle || 'None',
     },
 
-    { name: 'status', align: 'left', label: 'Units', field: 'units' },
-    { name: 'action', align: 'center', label: 'Action', field: 'action' },
+    {
+      name: 'Units',
+      align: 'left',
+      label: 'Units',
+      field: (row: any) => row.subject?.Units || 'None',
+    },
+
+    {
+      name: 'Teacher',
+      align: 'left',
+      label: 'Teacher',
+      field: (row: any) => row.Teacher?.FullName || 'None',
+    },
+
+    {
+      name: 'Room',
+      align: 'left',
+      label: 'Room',
+      field: (row: any) =>
+        row.Room?.Room + ' -' + row.Room?.Description || 'None',
+      format: (val: string) => `${val}`,
+    },
+    {
+      name: 'Schedule',
+      align: 'left',
+      label: 'Schedule',
+      field: (row: any) =>
+        row.subject?.Day +
+          ' -' +
+          row.subject?.Day2 +
+          ' /' +
+          row.subject?.Time +
+          ' -' +
+          row.subject?.Time2 || 'None',
+      format: (val: string) => `${val}`,
+    },
   ];
+
   addNewThirdYear1stSem = false;
-  updateThirdYear1stSem = false;
   filter = '';
-  options = ['Admin', 'Chairperson', 'Registrar'];
+
   inputThirdYear1stSem: IThirdYear1stSemInfo = {
     subject: '',
     description: '',
     units: ' ',
+    teacher: '',
+    room: '',
+    schedule: '',
   };
+
   async onaddThirdYear1stSem() {
     await this.addThirdYear1stSem(this.inputThirdYear1stSem);
     this.addNewThirdYear1stSem = false;
@@ -467,74 +339,84 @@ export default class ManageAccount extends Vue {
       message: 'Successfully Adeded.',
     });
   }
-  async oneditThirdYear1stSem() {
-    await this.editThirdYear1stSem(this.inputThirdYear1stSem);
-    this.updateThirdYear1stSem = false;
-    this.resetModel();
-    this.$q.notify({
-      type: 'positive',
-      message: 'Successfully Edit.',
-    });
-  }
-  deleteSpecificThirdYear1stSem(val: IThirdYear1stSemInfo) {
-    this.$q
-      .dialog({
-        message: 'Confirm to delete?',
-        cancel: true,
-        persistent: true,
-      })
-      .onOk(async () => {
-        await this.deleteThirdYear1stSem(val);
-        this.$q.notify({
-          type: 'warning',
-          message: 'Successfully deleted',
-        });
-      });
-  }
-  openEditDialog(val: IThirdYear1stSemInfo) {
-    this.updateThirdYear1stSem = true;
-    this.inputThirdYear1stSem = { ...val };
-  }
+
   resetModel() {
     this.inputThirdYear1stSem = {
       subject: '',
       description: '',
       units: ' ',
+      teacher: '',
+      room: '',
+      schedule: '',
     };
   }
   //---------------------------> Third Second Sem <----------------------------------------------
 
   addThirdYear2ndSem!: (payload: IThirdYear2ndSemInfo) => Promise<void>;
-  editThirdYear2ndSem!: (payload: IThirdYear2ndSemInfo) => Promise<void>;
-  deleteThirdYear2ndSem!: (payload: IThirdYear2ndSemInfo) => Promise<void>;
   allThirdYear2ndSem!: IThirdYear2ndSemInfo[];
   columns2 = [
     {
       name: 'name',
       required: true,
-      label: 'Subjects',
+      label: 'Subject Code',
       align: 'left',
-      field: (row: IThirdYear2ndSemInfo) => row.subject,
-      format: (val: string) => `${val}`,
+      field: (row: any) => row.subject?.SubjectCode || 'None',
     },
     {
       name: 'Description',
       align: 'left',
       label: 'Description',
-      field: 'description',
+      field: (row: any) => row.subject?.DescriptiveTitle || 'None',
     },
 
-    { name: 'status', align: 'left', label: 'Units', field: 'units' },
-    { name: 'action', align: 'center', label: 'Action', field: 'action' },
+    {
+      name: 'Units',
+      align: 'left',
+      label: 'Units',
+      field: (row: any) => row.subject?.Units || 'None',
+    },
+
+    {
+      name: 'Teacher',
+      align: 'left',
+      label: 'Teacher',
+      field: (row: any) => row.Teacher?.FullName || 'None',
+    },
+
+    {
+      name: 'Room',
+      align: 'left',
+      label: 'Room',
+      field: (row: any) =>
+        row.Room?.Room + ' -' + row.Room?.Description || 'None',
+      format: (val: string) => `${val}`,
+    },
+    {
+      name: 'Schedule',
+      align: 'left',
+      label: 'Schedule',
+      field: (row: any) =>
+        row.subject?.Day +
+          ' -' +
+          row.subject?.Day2 +
+          ' /' +
+          row.subject?.Time +
+          ' -' +
+          row.subject?.Time2 || 'None',
+      format: (val: string) => `${val}`,
+    },
   ];
+
   addNewThirdYear2ndSem = false;
-  updateThirdYear2ndSem = false;
   filter1 = '';
-  options1 = ['Admin', 'Chairperson', 'Registrar'];
+
   inputThirdYear2ndSem: IThirdYear2ndSemInfo = {
     subject: '',
     description: '',
     units: ' ',
+    teacher: '',
+    room: '',
+    schedule: '',
   };
   async onaddThirdYear2ndSem() {
     await this.addThirdYear2ndSem(this.inputThirdYear2ndSem);
@@ -545,39 +427,15 @@ export default class ManageAccount extends Vue {
       message: 'Successfully Adeded.',
     });
   }
-  async oneditThirdYear2ndSem() {
-    await this.editThirdYear2ndSem(this.inputThirdYear2ndSem);
-    this.updateThirdYear2ndSem = false;
-    this.resetModel2();
-    this.$q.notify({
-      type: 'positive',
-      message: 'Successfully Edit.',
-    });
-  }
-  deleteSpecificThirdYear2ndSem(val: IThirdYear2ndSemInfo) {
-    this.$q
-      .dialog({
-        message: 'Confirm to delete?',
-        cancel: true,
-        persistent: true,
-      })
-      .onOk(async () => {
-        await this.deleteThirdYear2ndSem(val);
-        this.$q.notify({
-          type: 'warning',
-          message: 'Successfully deleted',
-        });
-      });
-  }
-  openEditDialog2(val: IThirdYear2ndSemInfo) {
-    this.updateThirdYear2ndSem = true;
-    this.inputThirdYear2ndSem = { ...val };
-  }
+
   resetModel2() {
     this.inputThirdYear2ndSem = {
       subject: '',
       description: '',
       units: ' ',
+      teacher: '',
+      room: '',
+      schedule: '',
     };
   }
 }

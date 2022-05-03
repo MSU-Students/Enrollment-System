@@ -196,7 +196,6 @@
 
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component';
-import { ManagementTeacher } from 'src/store/ManagementTeacher/state';
 import { mapActions, mapState } from 'vuex';
 import { TeacherDto } from 'src/services/restapi';
 
@@ -214,10 +213,10 @@ import { TeacherDto } from 'src/services/restapi';
   },
 })
 export default class ManageTeacher extends Vue {
-  addTeacher!: (payload: ManagementTeacher) => Promise<void>;
-  editTeacher!: (payload: ManagementTeacher) => Promise<void>;
-  deleteTeacher!: (payload: ManagementTeacher) => Promise<void>;
-  allTeacher!: ManagementTeacher[];
+  addTeacher!: (payload: TeacherDto) => Promise<void>;
+  editTeacher!: (payload: TeacherDto) => Promise<void>;
+  deleteTeacher!: (payload: TeacherDto) => Promise<void>;
+  allTeacher!: TeacherDto[];
   getAllTeacher!: () => Promise<void>;
 
   async mounted() {

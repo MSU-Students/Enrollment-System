@@ -1,25 +1,16 @@
 import { MutationTree } from 'vuex';
-import { IFourYear2ndSemInfo, FourYear2ndSemStateInterface } from './state';
+import { IFourthYear2ndSemInfo, FourthYear2ndSemStateInterface } from './state';
 
-const mutation: MutationTree<FourYear2ndSemStateInterface> = {
-  setFourYear2ndSem(state, payload: IFourYear2ndSemInfo) {
-    state.allFourYear2ndSem.push(payload);
+const mutation: MutationTree<FourthYear2ndSemStateInterface> = {
+  setFourYear1stSem(state, payload: IFourthYear2ndSemInfo) {
+    state.allFourthYear2ndSem.push(payload);
   },
-  setNewFourYear2ndSem(state, payload: IFourYear2ndSemInfo) {
-    const index = state.allFourYear2ndSem.findIndex(
-      (s) => s.fourYear2ndSemID === payload.fourYear2ndSemID,
-    );
-    if (index >= 0) {
-      state.allFourYear2ndSem.splice(index, 1, payload);
-    }
+  getAllThirdyear1stsem(state, payload) {
+    state.allFourthYear2ndSem = [];
+    state.allFourthYear2ndSem.push(...payload);
   },
-  deleteFourYear2ndSem(state, payload: IFourYear2ndSemInfo) {
-    const index = state.allFourYear2ndSem.findIndex(
-      (s) => s.fourYear2ndSemID === payload.fourYear2ndSemID,
-    );
-    if (index >= 0) {
-      state.allFourYear2ndSem.splice(index, 1);
-    }
+  getOneThirdYear1stsem(state, payload) {
+    state.allFourthYear2ndSem = payload;
   },
 };
 

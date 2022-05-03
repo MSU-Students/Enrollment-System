@@ -5,21 +5,13 @@ const mutation: MutationTree<FirstYear2ndSemStateInterface> = {
   setFirstYear2ndSem(state, payload: IFirstYear2ndSemInfo) {
     state.allFirstYear2ndSem.push(payload);
   },
-  setNewFirstYear2ndSem(state, payload: IFirstYear2ndSemInfo) {
-    const index = state.allFirstYear2ndSem.findIndex(
-      (s) => s.firstYear2ndSemID === payload.firstYear2ndSemID,
-    );
-    if (index >= 0) {
-      state.allFirstYear2ndSem.splice(index, 1, payload);
-    }
+  getallFirstYear2ndSem(state, payload) {
+    state.allFirstYear2ndSem = [];
+    state.allFirstYear2ndSem.push(...payload);
   },
-  deleteFirstYear2ndSem(state, payload: IFirstYear2ndSemInfo) {
-    const index = state.allFirstYear2ndSem.findIndex(
-      (s) => s.firstYear2ndSemID === payload.firstYear2ndSemID,
-    );
-    if (index >= 0) {
-      state.allFirstYear2ndSem.splice(index, 1);
-    }
+
+  getOneFirstYear(state, payload) {
+    state.allFirstYear2ndSem = payload;
   },
 };
 

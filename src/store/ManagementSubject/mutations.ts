@@ -2,7 +2,7 @@ import { MutationTree } from 'vuex';
 import { ManagementSubject, ManagementSubjectStateInterface } from './state';
 
 const mutation: MutationTree<ManagementSubjectStateInterface> = {
-  setNewSubject(state, payload: ManagementSubject) {
+  setSubject(state, payload: ManagementSubject) {
     state.newSubject = payload;
   },
   updateSubject(state, payload: ManagementSubject) {

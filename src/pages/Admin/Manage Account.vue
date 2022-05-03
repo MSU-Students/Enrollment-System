@@ -296,12 +296,6 @@ export default class ManageAccount extends Vue {
       field: 'username',
     },
     {
-      name: 'password',
-      align: 'center',
-      label: 'Password',
-      field: 'password',
-    },
-    {
       name: 'userType',
       align: 'center',
       label: 'Designation',
@@ -333,7 +327,7 @@ export default class ManageAccount extends Vue {
     this.resetModel();
     this.$q.notify({
       type: 'positive',
-      message: 'Successfully Adeded.',
+      message: 'Successfully Added.',
     });
   }
 

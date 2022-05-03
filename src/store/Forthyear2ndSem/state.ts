@@ -1,25 +1,21 @@
-export interface IFourYear2ndSemInfo {
-  fourYear2ndSemID?: string;
+export interface IFourthYear2ndSemInfo {
+  fourYear1stSemID?: string;
   subject: string;
   description: string;
   units: string;
+  teacher: string;
+  room: string;
+  schedule: string;
 }
 
-export interface FourYear2ndSemStateInterface {
-  allFourYear2ndSem: IFourYear2ndSemInfo[];
-  activeAccount?: IFourYear2ndSemInfo;
+export interface FourthYear2ndSemStateInterface {
+  allFourthYear2ndSem: IFourthYear2ndSemInfo[];
+  activeAccount?: IFourthYear2ndSemInfo;
 }
 
-function state(): FourYear2ndSemStateInterface {
+function state(): FourthYear2ndSemStateInterface {
   return {
-    allFourYear2ndSem: [
-      {
-        fourYear2ndSemID: '01',
-        subject: 'ITE197',
-        description: 'On the Job Training',
-        units: '6',
-      },
-    ],
+    allFourthYear2ndSem: [],
   };
 }
 

@@ -1,5 +1,5 @@
 export interface ManagementRoom {
-  roomID?: string;
+  roomID?: number;
   Room: string;
   Description: string;
   Status: string;

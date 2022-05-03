@@ -1,8 +1,11 @@
 export interface IFirstYear2ndSemInfo {
   firstYear2ndSemID?: string;
-  subjectSecond: string;
-  descriptionSecond: string;
-  unitsSecond: string;
+  subject: string;
+  description: string;
+  units: string;
+  teacher: string;
+  room: string;
+  schedule: string;
 }
 
 export interface FirstYear2ndSemStateInterface {
@@ -12,20 +15,7 @@ export interface FirstYear2ndSemStateInterface {
 
 function state(): FirstYear2ndSemStateInterface {
   return {
-    allFirstYear2ndSem: [
-      {
-        firstYear2ndSemID: '01',
-        subjectSecond: 'Gec103',
-        descriptionSecond: 'Contemporary World',
-        unitsSecond: '3',
-      },
-      {
-        firstYear2ndSemID: '02',
-        subjectSecond: 'CCC102',
-        descriptionSecond: 'Computer Programing 2',
-        unitsSecond: '3',
-      },
-    ],
+    allFirstYear2ndSem: [],
   };
 }
 

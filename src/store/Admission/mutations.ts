@@ -3,23 +3,23 @@ import { IStudentInfo } from './state';
 import { AdmissionStateInterface } from './state';
 
 const mutation: MutationTree<AdmissionStateInterface> = {
-  setNewStudent(state, payload: IStudentInfo) {
-    state.NewStudent = payload;
+  setNewAdmission(state, payload: IStudentInfo) {
+    state.NewAdmission = payload;
   },
-  updateStudent(state, payload: IStudentInfo) {
-    state.NewStudent = payload;
+  updateAdmission(state, payload: IStudentInfo) {
+    state.NewAdmission = payload;
   },
-  deleteStudent(state, payload: any) {
-    state.allStudentInfo.push(payload);
-  },
-
-  getAllStudent(state, payload) {
-    state.allStudentInfo = [];
-    state.allStudentInfo.push(...payload);
+  deleteAdmission(state, payload: any) {
+    state.allAdmissionInfo.push(payload);
   },
 
-  getOneStudent(state, payload) {
-    state.allStudentInfo = payload;
+  getAllAdmission(state, payload) {
+    state.allAdmissionInfo = [];
+    state.allAdmissionInfo.push(...payload);
+  },
+
+  getOneAdmission(state, payload) {
+    state.allAdmissionInfo = payload;
   },
 };
 

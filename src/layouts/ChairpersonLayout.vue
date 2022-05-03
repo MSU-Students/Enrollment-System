@@ -68,13 +68,6 @@
                     </q-item-section>
                     <q-item-section> Manage Room</q-item-section>
                   </q-item>
-
-                  <q-item clickable v-ripple to="/chairperson/Schedule">
-                    <q-item-section avatar>
-                      <q-icon name="schedule" color="black" />
-                    </q-item-section>
-                    <q-item-section> Manage Schedule </q-item-section>
-                  </q-item>
                 </q-card-section>
               </q-card>
             </q-expansion-item>

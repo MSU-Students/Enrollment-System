@@ -1,3 +1,4 @@
+import { TeacherDto } from './../../services/restapi/api';
 export interface ManagementTeacher {
   teacherID?: string;
   FullName: string;
@@ -6,8 +7,8 @@ export interface ManagementTeacher {
 }
 
 export interface ManagementTeacherStateInterface {
-  allTeacher: ManagementTeacher[];
-  NewTeacher?: ManagementTeacher;
+  allTeacher: TeacherDto[];
+  NewTeacher?: TeacherDto;
 }
 
 function state(): ManagementTeacherStateInterface {

@@ -18,9 +18,6 @@ import { ManagementTeacherStateInterface } from './ManagementTeacher/state';
 import ManagementRoom from './ManagementRoom';
 import { ManagementRoomStateInterface } from './ManagementRoom/state';
 
-import ManagementSchedule from './ManagementSchedule';
-import { ManagementScheduleStateInterface } from './ManagementSchedule/state';
-
 import Admission from './Admission';
 import { AdmissionStateInterface } from './Admission/state';
 
@@ -43,10 +40,10 @@ import Thirdyear2ndSem from './Thirdyear2ndSem';
 import { ThirdYear2ndSemStateInterface } from './Thirdyear2ndSem/state';
 
 import Forthyear1stSem from './Forthyear1stSem';
-import { FourYear1stSemStateInterface } from './Forthyear1stSem/state';
+import { FourthYear1stSemStateInterface } from './Forthyear1stSem/state';
 
 import Forthyear2ndSem from './Forthyear2ndSem';
-import { FourYear2ndSemStateInterface } from './Forthyear2ndSem/state';
+import { FourthYear2ndSemStateInterface } from './Forthyear2ndSem/state';
 
 import auth from './auth';
 import { IAuthState } from './auth/state';
@@ -68,7 +65,6 @@ export interface StateInterface {
   ManagementSubject: ManagementSubjectStateInterface;
   ManagementTeacher: ManagementTeacherStateInterface;
   ManagementRoom: ManagementRoomStateInterface;
-  ManagementSchedule: ManagementScheduleStateInterface;
   admission: AdmissionStateInterface;
   Firstyear1stSem: FirstYearStateInterface;
   Firstyear2ndSem: FirstYear2ndSemStateInterface;
@@ -76,8 +72,8 @@ export interface StateInterface {
   Secondyear2ndSem: SecondYear2ndSemStateInterface;
   Thirdyear1stSem: ThirdYear1stSemStateInterface;
   Thirdyear2ndSem: ThirdYear2ndSemStateInterface;
-  Forthyear1stSem: FourYear1stSemStateInterface;
-  Forthyear2ndstSem: FourYear2ndSemStateInterface;
+  Forthyear1stSem: FourthYear1stSemStateInterface;
+  Forthyear2ndstSem: FourthYear2ndSemStateInterface;
   auth: IAuthState;
 }
 
@@ -101,7 +97,6 @@ export default store(function (/* { ssrContext } */) {
       ManagementSubject,
       ManagementTeacher,
       ManagementRoom,
-      ManagementSchedule,
       Firstyear1stSem,
       Firstyear2ndSem,
       Secondyear1stSem,

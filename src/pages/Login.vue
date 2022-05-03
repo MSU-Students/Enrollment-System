@@ -115,21 +115,18 @@ export default class Login extends Vue {
       if (this.currentUser.userType == 'admin') {
         await this.$router.replace('/admin/dashboard');
         this.$q.notify({
-          position: 'center',
           type: 'positive',
           message: 'You are logged in',
         });
       } else if (this.currentUser.userType == 'chairperson') {
         await this.$router.replace('/chairperson/dashboard');
         this.$q.notify({
-          position: 'center',
           type: 'positive',
           message: 'You are logged in',
         });
       } else if (this.currentUser.userType == 'registrar') {
         await this.$router.replace('/registrar/enrollment');
         this.$q.notify({
-          position: 'center',
           type: 'positive',
           message: 'You are logged in',
         });

@@ -5,26 +5,26 @@ import { StateInterface } from '../index';
 import { AdmissionStateInterface } from './state';
 
 const actions: ActionTree<AdmissionStateInterface, StateInterface> = {
-  async addAdmission(context, payload: AdmissionDto): Promise<void> {
+  async addNewAdmission(context, payload: AdmissionDto): Promise<void> {
     const result = await admissionService.create(payload);
-    context.commit('setNewStudent', result);
+    context.commit('setNewAdmission', result);
     await context.dispatch('getAllAdmission');
   },
 
-  async editAdmission(context, payload: any): Promise<any> {
+  async editAdmissionInfo(context, payload: any): Promise<any> {
     const result = await admissionService.update(payload.admissionID, payload);
-    context.commit('updateStudent', result);
+    context.commit('updateAdmission', result);
     await context.dispatch('getAllAdmission');
   },
 
   async deleteAdmission(context, admissionID: number): Promise<any> {
     const result = await admissionService.delete(admissionID);
-    context.commit('deleteStudent', result);
+    context.commit('deleteAdmission', result);
   },
 
   async getAllAdmission(context): Promise<any> {
     const res = await admissionService.getAll();
-    context.commit('getAllStudent', res);
+    context.commit('getAllAdmission', res);
   },
 
   async getOneAdmission(context, id: number): Promise<any> {
