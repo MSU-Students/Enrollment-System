@@ -10,7 +10,7 @@ export interface IFourthYear2ndSemInfo {
 
 export interface FourthYear2ndSemStateInterface {
   allFourthYear2ndSem: IFourthYear2ndSemInfo[];
-  activeAccount?: IFourthYear2ndSemInfo;
+  newFourthYear2ndSem?: IFourthYear2ndSemInfo;
 }
 
 function state(): FourthYear2ndSemStateInterface {

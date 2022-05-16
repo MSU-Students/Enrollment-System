@@ -3,9 +3,10 @@ import { ISecondYear1stSemInfo, SecondYear1stSemStateInterface } from './state';
 
 const mutation: MutationTree<SecondYear1stSemStateInterface> = {
   setSecondYear1stSem(state, payload: ISecondYear1stSemInfo) {
-    state.allSecondYear1stSem.push(payload);
+    state.allNewSecondYear1stSem = payload;
   },
-  getAllSecondYear(state, payload) {
+
+  getAllSecondYear1stsem(state, payload) {
     state.allSecondYear1stSem = [];
     state.allSecondYear1stSem.push(...payload);
   },

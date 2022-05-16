@@ -2,10 +2,10 @@ import { MutationTree } from 'vuex';
 import { IFourthYear1stSemInfo, FourthYear1stSemStateInterface } from './state';
 
 const mutation: MutationTree<FourthYear1stSemStateInterface> = {
-  setFourYear1stSem(state, payload: IFourthYear1stSemInfo) {
-    state.allFourthYear1stSem.push(payload);
+  setNewFourthYear1stSem(state, payload: IFourthYear1stSemInfo) {
+    state.newFourthYear1stSem = payload;
   },
-  getAllFourthyear1stsem(state, payload) {
+  getAllFourthYear1stsem(state, payload) {
     state.allFourthYear1stSem = [];
     state.allFourthYear1stSem.push(...payload);
   },

@@ -222,7 +222,6 @@
                             />
                           </div>
                         </div>
-
                         <div align="right">
                           <q-btn
                             flat
@@ -231,12 +230,7 @@
                             v-close-popup
                             @click="resetModel2()"
                           />
-                          <q-btn
-                            flat
-                            label="Save"
-                            color="primary"
-                            type="submit"
-                          />
+                          <q-btn label="Submit" color="primary" type="submit" />
                         </div>
                       </q-form>
                     </q-card-section>
@@ -255,14 +249,13 @@
 import {
   Firstyear1stsemDto,
   Firstyear2ndsemDto,
+  SubjectDto,
   TeacherDto,
 } from 'src/services/restapi';
 import { Vue, Options } from 'vue-class-component';
-import { IFirstYear2ndSemInfo } from 'src/store/Firstyear2ndSem/state';
 import { mapActions, mapState } from 'vuex';
 import { ManagementRoom } from 'src/store/ManagementRoom/state';
 import { ManagementSubject } from 'src/store/ManagementSubject/state';
-import { IFirstYearInfo } from 'src/store/Firstyear1stSem/state';
 
 @Options({
   computed: {
@@ -277,14 +270,17 @@ import { IFirstYearInfo } from 'src/store/Firstyear1stSem/state';
       'add1stSubjectfor1styear',
       'getAllFirstyear',
     ]),
-    ...mapActions('Firstyear2ndSem', ['addFirstyear2ndsem']),
+    ...mapActions('Firstyear2ndSem', [
+      'addFirstyear2ndsem',
+      'getAllFirstyear2ndsem',
+    ]),
     ...mapActions('ManagementSubject', ['getAllSubjects']),
     ...mapActions('ManagementTeacher', ['getAllTeacher']),
     ...mapActions('ManagementRoom', ['getAllRoom']),
   },
 })
 export default class Assigning extends Vue {
-  add1stSubjectfor1styear!: (payload: IFirstYearInfo) => Promise<void>;
+  add1stSubjectfor1styear!: (payload: Firstyear1stsemDto) => Promise<void>;
   getAllFirstyear!: () => Promise<void>;
   getAllSubjects!: () => Promise<void>;
   getAllRoom!: () => Promise<void>;
@@ -293,12 +289,16 @@ export default class Assigning extends Vue {
   AllSubject!: ManagementSubject[];
   allTeacher!: TeacherDto[];
   AllRoom!: ManagementRoom[];
+  addFirstyear2ndsem!: (payload: Firstyear2ndsemDto) => Promise<void>;
+  getAllFirstyear2ndsem!: () => Promise<void>;
+  allFirstYear2ndSem!: Firstyear2ndsemDto[];
 
   async mounted() {
     await this.getAllFirstyear();
     await this.getAllSubjects();
     await this.getAllRoom();
     await this.getAllTeacher();
+    await this.getAllFirstyear2ndsem();
   }
   columns = [
     {
@@ -306,39 +306,35 @@ export default class Assigning extends Vue {
       required: true,
       label: 'Subject Code',
       align: 'left',
-      field: (row: Firstyear1stsemDto) => row.subject + ' ',
-      format: (val: string) => `${val}`,
+      field: (row: any) => row.subject?.SubjectCode || 'None',
     },
     {
       name: 'description',
       align: 'left',
       label: 'Description',
-      field: (row: Firstyear1stsemDto) => row.description + ' ',
-      format: (val: string) => `${val}`,
+      field: (row: any) => row.subject?.DescriptiveTitle || 'None',
     },
 
     {
       name: 'units',
       align: 'left',
       label: 'Units',
-      field: (row: Firstyear1stsemDto) => row.units + ' ',
-      format: (val: string) => `${val}`,
+      field: (row: any) => row.subject?.Units || 'None',
     },
 
     {
       name: 'teacher',
       align: 'left',
       label: 'Teacher',
-      field: (row: Firstyear1stsemDto) => row.teacher + ' ',
-      format: (val: string) => `${val}`,
+      field: (row: any) => row.teacher?.FullName || 'None',
     },
 
     {
       name: 'room',
       align: 'left',
       label: 'Room',
-      field: (row: Firstyear1stsemDto) => row.room + ' ',
-      format: (val: string) => `${val}`,
+      field: (row: any) =>
+        row.room?.Room + ' -' + row.room?.Description || 'None',
     },
     {
       name: 'Schedule',
@@ -355,43 +351,6 @@ export default class Assigning extends Vue {
       format: (val: string) => `${val}`,
     },
   ];
-
-  addNewFirstYear = false;
-  filter = '';
-
-  inputFirstYear: Firstyear1stsemDto = {
-    subject: '',
-    description: '',
-    units: ' ',
-    teacher: '',
-    room: '',
-    schedule: '',
-  };
-  async onaddFirstYear1stSem() {
-    console.log('1');
-    await this.add1stSubjectfor1styear(this.inputFirstYear);
-    console.log('2');
-    this.addNewFirstYear = false;
-    this.resetModel();
-    this.$q.notify({
-      type: 'positive',
-      message: 'Successfully Adeded.',
-    });
-  }
-
-  resetModel() {
-    this.inputFirstYear = {
-      subject: '',
-      description: '',
-      units: '',
-      teacher: '',
-      room: '',
-      schedule: '',
-    };
-  }
-  //---------------------------> SECOND SEMESTER <----------------------------------------------
-  addFirstyear2ndsem!: (payload: Firstyear2ndsemDto) => Promise<void>;
-  allFirstYear2ndSem!: Firstyear2ndsemDto[];
 
   columns2 = [
     {
@@ -419,7 +378,7 @@ export default class Assigning extends Vue {
       name: 'Teacher',
       align: 'left',
       label: 'Teacher',
-      field: (row: any) => row.Teacher?.FullName || 'None',
+      field: (row: any) => row.teacher?.FullName || 'None',
     },
 
     {
@@ -427,8 +386,7 @@ export default class Assigning extends Vue {
       align: 'left',
       label: 'Room',
       field: (row: any) =>
-        row.Room?.Room + ' -' + row.Room?.Description || 'None',
-      format: (val: string) => `${val}`,
+        row.room?.Room + ' -' + row.room?.Description || 'None',
     },
     {
       name: 'Schedule',
@@ -446,36 +404,40 @@ export default class Assigning extends Vue {
     },
   ];
 
+  addNewFirstYear = false;
+  filter = '';
   addNewFirstYear2ndSem = false;
   filter2 = '';
 
-  inputFirstYear2ndSem: IFirstYear2ndSemInfo = {
-    subject: '',
-    description: '',
-    units: ' ',
-    teacher: '',
-    room: '',
-    schedule: '',
-  };
+  inputFirstYear: Firstyear1stsemDto = {};
+
+  inputFirstYear2ndSem: Firstyear2ndsemDto = {};
+
+  async onaddFirstYear1stSem() {
+    await this.add1stSubjectfor1styear(this.inputFirstYear);
+    this.addNewFirstYear = false;
+    this.resetModel();
+    this.$q.notify({
+      type: 'positive',
+      message: 'Successfully Adeded.',
+    });
+  }
+
   async onaddFirstYear2ndSem() {
     await this.addFirstyear2ndsem(this.inputFirstYear2ndSem);
     this.addNewFirstYear2ndSem = false;
     this.resetModel2();
     this.$q.notify({
-      position: 'center',
       type: 'positive',
       message: 'Successfully Adeded.',
     });
   }
+
+  resetModel() {
+    this.inputFirstYear = {};
+  }
   resetModel2() {
-    this.inputFirstYear2ndSem = {
-      subject: '',
-      description: '',
-      units: ' ',
-      teacher: '',
-      room: '',
-      schedule: '',
-    };
+    this.inputFirstYear2ndSem = {};
   }
 }
 </script>

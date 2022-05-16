@@ -174,53 +174,65 @@
                         @click="resetModel2()"
                       />
                     </q-card-section>
-                    <div class="row q-gutter-md">
-                      <div class="col">
-                        <q-select
-                          label="Subject"
-                          transition-show="flip-up"
-                          transition-hide="flip-down"
-                          outlined
-                          color="secondary"
-                          :options="AllSubject"
-                          option-label="SubjectCode"
-                          option-value="subjectID"
-                          map-options
-                          emit-value
-                          v-model="inputThirdYear1stSem.subject"
-                        />
+                    <q-form @submit="onaddThirdYear2ndSem">
+                      <div class="row q-gutter-md">
+                        <div class="col">
+                          <q-select
+                            label="Subject"
+                            transition-show="flip-up"
+                            transition-hide="flip-down"
+                            outlined
+                            color="secondary"
+                            :options="AllSubject"
+                            option-label="SubjectCode"
+                            option-value="subjectID"
+                            map-options
+                            emit-value
+                            v-model="inputThirdYear1stSem.subject"
+                          />
+                        </div>
+                        <div class="col">
+                          <q-select
+                            label="Teacher"
+                            transition-show="flip-up"
+                            transition-hide="flip-down"
+                            outlined
+                            color="secondary"
+                            :options="allTeacher"
+                            option-label="FullName"
+                            option-value="teacherID"
+                            map-options
+                            emit-value
+                            v-model="inputThirdYear1stSem.teacher"
+                          />
+                        </div>
+                        <div class="col">
+                          <q-select
+                            label="Room"
+                            transition-show="flip-up"
+                            transition-hide="flip-down"
+                            outlined
+                            color="secondary"
+                            :options="AllRoom"
+                            option-label="Room"
+                            option-value="roomID"
+                            map-options
+                            emit-value
+                            v-model="inputThirdYear1stSem.room"
+                          />
+                        </div>
                       </div>
-                      <div class="col">
-                        <q-select
-                          label="Teacher"
-                          transition-show="flip-up"
-                          transition-hide="flip-down"
-                          outlined
-                          color="secondary"
-                          :options="allTeacher"
-                          option-label="FullName"
-                          option-value="teacherID"
-                          map-options
-                          emit-value
-                          v-model="inputThirdYear1stSem.teacher"
+                      <div align="right">
+                        <q-btn
+                          flat
+                          label="Cancel"
+                          color="red-10"
+                          v-close-popup
+                          @click="resetModel2()"
                         />
+                        <q-btn label="Submit" color="primary" type="submit" />
                       </div>
-                      <div class="col">
-                        <q-select
-                          label="Room"
-                          transition-show="flip-up"
-                          transition-hide="flip-down"
-                          outlined
-                          color="secondary"
-                          :options="AllRoom"
-                          option-label="Room"
-                          option-value="roomID"
-                          map-options
-                          emit-value
-                          v-model="inputThirdYear1stSem.room"
-                        />
-                      </div>
-                    </div>
+                    </q-form>
                   </q-card>
                 </q-dialog>
               </div>
@@ -234,36 +246,56 @@
 
 <script lang="ts">
 import {
-  Firstyear1stsemDto,
-  Firstyear2ndsemDto,
   TeacherDto,
+  Thirdyear1stsemDto,
+  Thirdyear2ndsemDto,
 } from 'src/services/restapi';
 import { Vue, Options } from 'vue-class-component';
-import { IThirdYear1stSemInfo } from 'src/store/Thirdyear1stSem/state';
-import { IThirdYear2ndSemInfo } from 'src/store/Thirdyear2ndSem/state';
 import { mapActions, mapState } from 'vuex';
 import { ManagementRoom } from 'src/store/ManagementRoom/state';
 import { ManagementSubject } from 'src/store/ManagementSubject/state';
 
 @Options({
   computed: {
-    ...mapState('ThirdYear1stSem', ['allThirdYear1stSem']),
-    ...mapState('ThirdYear2ndSem', ['allThirdYear2ndSem']),
+    ...mapState('Thirdyear1stSem', ['allThirdYear1stSem']),
+    ...mapState('Thirdyear2ndSem', ['allThirdYear2ndSem']),
     ...mapState('ManagementSubject', ['AllSubject']),
     ...mapState('ManagementTeacher', ['allTeacher']),
     ...mapState('ManagementRoom', ['AllRoom']),
   },
   methods: {
-    ...mapActions('ThirdYear1stSem', ['addThirdYear1stSem']),
-    ...mapActions('ThirdYear2ndSem', ['addThirdYear2ndSem']),
+    ...mapActions('Thirdyear1stSem', ['addThirdyear', 'getAllThirdyear1stsem']),
+    ...mapActions('Thirdyear2ndSem', [
+      'addThirdyear2ndsem',
+      'getAllThirdyear2ndsem',
+    ]),
+    ...mapActions('ManagementSubject', ['getAllSubjects']),
+    ...mapActions('ManagementTeacher', ['getAllTeacher']),
+    ...mapActions('ManagementRoom', ['getAllRoom']),
   },
 })
 export default class ManageAccount extends Vue {
-  addThirdYear1stSem!: (payload: Firstyear1stsemDto) => Promise<void>;
-  allThirdYear1stSem!: Firstyear2ndsemDto[];
+  addThirdyear!: (payload: Thirdyear1stsemDto) => Promise<void>;
+  getAllThirdyear1stsem!: () => Promise<void>;
+  getAllSubjects!: () => Promise<void>;
+  getAllRoom!: () => Promise<void>;
+  getAllTeacher!: () => Promise<void>;
+  allThirdYear1stSem!: Thirdyear1stsemDto[];
   AllSubject!: ManagementSubject[];
   allTeacher!: TeacherDto[];
   AllRoom!: ManagementRoom[];
+
+  addThirdyear2ndsem!: (payload: Thirdyear2ndsemDto) => Promise<void>;
+  allThirdYear2ndSem!: Thirdyear2ndsemDto[];
+  getAllThirdyear2ndsem!: () => Promise<void>;
+
+  async mounted() {
+    await this.getAllThirdyear1stsem();
+    await this.getAllSubjects();
+    await this.getAllRoom();
+    await this.getAllTeacher();
+    await this.getAllThirdyear2ndsem();
+  }
 
   columns = [
     {
@@ -291,7 +323,7 @@ export default class ManageAccount extends Vue {
       name: 'Teacher',
       align: 'left',
       label: 'Teacher',
-      field: (row: any) => row.Teacher?.FullName || 'None',
+      field: (row: any) => row.teacher?.FullName || 'None',
     },
 
     {
@@ -299,7 +331,7 @@ export default class ManageAccount extends Vue {
       align: 'left',
       label: 'Room',
       field: (row: any) =>
-        row.Room?.Room + ' -' + row.Room?.Description || 'None',
+        row.room?.Room + ' -' + row.room?.Description || 'None',
       format: (val: string) => `${val}`,
     },
     {
@@ -318,42 +350,6 @@ export default class ManageAccount extends Vue {
     },
   ];
 
-  addNewThirdYear1stSem = false;
-  filter = '';
-
-  inputThirdYear1stSem: IThirdYear1stSemInfo = {
-    subject: '',
-    description: '',
-    units: ' ',
-    teacher: '',
-    room: '',
-    schedule: '',
-  };
-
-  async onaddThirdYear1stSem() {
-    await this.addThirdYear1stSem(this.inputThirdYear1stSem);
-    this.addNewThirdYear1stSem = false;
-    this.resetModel();
-    this.$q.notify({
-      type: 'positive',
-      message: 'Successfully Adeded.',
-    });
-  }
-
-  resetModel() {
-    this.inputThirdYear1stSem = {
-      subject: '',
-      description: '',
-      units: ' ',
-      teacher: '',
-      room: '',
-      schedule: '',
-    };
-  }
-  //---------------------------> Third Second Sem <----------------------------------------------
-
-  addThirdYear2ndSem!: (payload: IThirdYear2ndSemInfo) => Promise<void>;
-  allThirdYear2ndSem!: IThirdYear2ndSemInfo[];
   columns2 = [
     {
       name: 'name',
@@ -380,7 +376,7 @@ export default class ManageAccount extends Vue {
       name: 'Teacher',
       align: 'left',
       label: 'Teacher',
-      field: (row: any) => row.Teacher?.FullName || 'None',
+      field: (row: any) => row.teacher?.FullName || 'None',
     },
 
     {
@@ -388,7 +384,7 @@ export default class ManageAccount extends Vue {
       align: 'left',
       label: 'Room',
       field: (row: any) =>
-        row.Room?.Room + ' -' + row.Room?.Description || 'None',
+        row.room?.Room + ' -' + row.room?.Description || 'None',
       format: (val: string) => `${val}`,
     },
     {
@@ -407,19 +403,28 @@ export default class ManageAccount extends Vue {
     },
   ];
 
+  addNewThirdYear1stSem = false;
+  filter = '';
+
   addNewThirdYear2ndSem = false;
   filter1 = '';
 
-  inputThirdYear2ndSem: IThirdYear2ndSemInfo = {
-    subject: '',
-    description: '',
-    units: ' ',
-    teacher: '',
-    room: '',
-    schedule: '',
-  };
+  inputThirdYear1stSem: Thirdyear1stsemDto = {};
+
+  inputThirdYear2ndSem: Thirdyear2ndsemDto = {};
+
+  async onaddThirdYear1stSem() {
+    await this.addThirdyear(this.inputThirdYear1stSem);
+    this.addNewThirdYear1stSem = false;
+    this.resetModel();
+    this.$q.notify({
+      type: 'positive',
+      message: 'Successfully Adeded.',
+    });
+  }
+
   async onaddThirdYear2ndSem() {
-    await this.addThirdYear2ndSem(this.inputThirdYear2ndSem);
+    await this.addThirdyear2ndsem(this.inputThirdYear2ndSem);
     this.addNewThirdYear2ndSem = false;
     this.resetModel2();
     this.$q.notify({
@@ -428,15 +433,12 @@ export default class ManageAccount extends Vue {
     });
   }
 
+  resetModel() {
+    this.inputThirdYear1stSem = {};
+  }
+
   resetModel2() {
-    this.inputThirdYear2ndSem = {
-      subject: '',
-      description: '',
-      units: ' ',
-      teacher: '',
-      room: '',
-      schedule: '',
-    };
+    this.inputThirdYear2ndSem = {};
   }
 }
 </script>

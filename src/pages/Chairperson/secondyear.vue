@@ -136,7 +136,7 @@
             :columns="columns2"
             row-key="name"
             :rows-per-page-options="[0]"
-            :filter="filter1"
+            :filter="filter2"
           >
             <template v-slot:top-right>
               <div class="q-pa-md q-gutter-sm row">
@@ -145,7 +145,7 @@
                   rounded
                   dense
                   debounce="300"
-                  v-model="filter1"
+                  v-model="filter2"
                   placeholder="Search"
                 >
                   <template v-slot:append>
@@ -180,7 +180,7 @@
                     </q-card-section>
 
                     <q-card-section>
-                      <q-form @submit="onaddSecondYear2ndSem">
+                      <q-form @submit="onaddSecondYear2ndSem()">
                         <div class="row q-gutter-md">
                           <div class="col">
                             <q-select
@@ -259,63 +259,86 @@
 
 <script lang="ts">
 import {
-  SubjectDto,
   TeacherDto,
-  RoomDto,
   Secondyear1stsemDto,
   Secondyear2ndsemDto,
 } from 'src/services/restapi';
 import { Vue, Options } from 'vue-class-component';
-import { ISecondYear1stSemInfo } from 'src/store/Secondyear1stSem/state';
-import { ISecondYear2ndSemInfo } from 'src/store/Secondyear2ndSem/state';
 import { mapActions, mapState } from 'vuex';
+import { ManagementRoom } from 'src/store/ManagementRoom/state';
+import { ManagementSubject } from 'src/store/ManagementSubject/state';
+
 @Options({
   computed: {
-    ...mapState('SecondYear1stSem', ['allSecondYear1stSem']),
-    ...mapState('SecondYear2ndSem', ['allSecondYear2ndSem']),
+    ...mapState('Secondyear1stSem', ['allSecondYear1stSem']),
+    ...mapState('Secondyear2ndSem', ['allSecondYear2ndSem']),
     ...mapState('ManagementSubject', ['AllSubject']),
     ...mapState('ManagementTeacher', ['allTeacher']),
     ...mapState('ManagementRoom', ['AllRoom']),
   },
   methods: {
-    ...mapActions('SecondYear1stSem', ['addSecondyear']),
-    ...mapActions('SecondYear2ndSem', ['addSecondYear2ndSem']),
+    ...mapActions('Secondyear1stSem', [
+      'addSecondyear',
+      'getAllSecondYear1stsem',
+    ]),
+    ...mapActions('Secondyear2ndSem', [
+      'addSecondyear2ndsem',
+      'getallSecondYear2ndSem',
+    ]),
+    ...mapActions('ManagementSubject', ['getAllSubjects']),
+    ...mapActions('ManagementTeacher', ['getAllTeacher']),
+    ...mapActions('ManagementRoom', ['getAllRoom']),
   },
 })
 export default class Assigning extends Vue {
   addSecondyear!: (payload: Secondyear1stsemDto) => Promise<void>;
+  getAllSecondYear1stsem!: () => Promise<void>;
+  getAllSubjects!: () => Promise<void>;
+  getAllRoom!: () => Promise<void>;
+  getAllTeacher!: () => Promise<void>;
   allSecondYear1stSem!: Secondyear1stsemDto[];
-  AllSubject!: SubjectDto[];
+  AllSubject!: ManagementSubject[];
   allTeacher!: TeacherDto[];
-  AllRoom!: RoomDto[];
+  AllRoom!: ManagementRoom[];
+  addSecondyear2ndsem!: (payload: Secondyear2ndsemDto) => Promise<void>;
+  getallSecondYear2ndSem!: () => Promise<void>;
+  allSecondYear2ndSem!: Secondyear2ndsemDto[];
+
+  async mounted() {
+    await this.getAllSecondYear1stsem();
+    await this.getAllSubjects();
+    await this.getAllRoom();
+    await this.getAllTeacher();
+    await this.getallSecondYear2ndSem();
+  }
 
   columns = [
     {
-      name: 'name',
+      name: 'subject',
       required: true,
       label: 'Subject Code',
       align: 'left',
       field: (row: any) => row.subject?.SubjectCode || 'None',
     },
     {
-      name: 'Description',
+      name: 'description',
       align: 'left',
       label: 'Description',
       field: (row: any) => row.subject?.DescriptiveTitle || 'None',
     },
 
     {
-      name: 'Units',
+      name: 'units',
       align: 'left',
       label: 'Units',
       field: (row: any) => row.subject?.Units || 'None',
     },
 
     {
-      name: 'Teacher',
+      name: 'teacher',
       align: 'left',
       label: 'Teacher',
-      field: (row: any) => row.Teacher?.FullName || 'None',
+      field: (row: any) => row.teacher?.FullName || 'None',
     },
 
     {
@@ -323,8 +346,7 @@ export default class Assigning extends Vue {
       align: 'left',
       label: 'Room',
       field: (row: any) =>
-        row.Room?.Room + ' -' + row.Room?.Description || 'None',
-      format: (val: string) => `${val}`,
+        row.room?.Room + ' -' + row.room?.Description || 'None',
     },
     {
       name: 'Schedule',
@@ -341,44 +363,6 @@ export default class Assigning extends Vue {
       format: (val: string) => `${val}`,
     },
   ];
-
-  addNewSecondYear1stSem = false;
-  filter = '';
-
-  inputSecondYear1stSem: ISecondYear1stSemInfo = {
-    subject: '',
-    description: '',
-    units: ' ',
-    teacher: '',
-    room: '',
-    schedule: '',
-  };
-  async onaddSecondYear1stSem() {
-    await this.addSecondyear(this.inputSecondYear1stSem);
-    this.addNewSecondYear1stSem = false;
-    this.resetModel();
-    this.$q.notify({
-      position: 'center',
-      type: 'positive',
-      message: 'Successfully Adeded.',
-    });
-  }
-
-  resetModel() {
-    this.inputSecondYear1stSem = {
-      subject: '',
-      description: '',
-      units: '',
-      teacher: '',
-      room: '',
-      schedule: '',
-    };
-  }
-
-  //---------------------------> Second Year <----------------------------------------------
-
-  addSecondYear2ndSem!: (payload: Secondyear2ndsemDto) => Promise<void>;
-  allSecondYear2ndSem!: Secondyear2ndsemDto[];
 
   columns2 = [
     {
@@ -406,7 +390,7 @@ export default class Assigning extends Vue {
       name: 'Teacher',
       align: 'left',
       label: 'Teacher',
-      field: (row: any) => row.Teacher?.FullName || 'None',
+      field: (row: any) => row.teacher?.FullName || 'None',
     },
 
     {
@@ -414,8 +398,7 @@ export default class Assigning extends Vue {
       align: 'left',
       label: 'Room',
       field: (row: any) =>
-        row.Room?.Room + ' -' + row.Room?.Description || 'None',
-      format: (val: string) => `${val}`,
+        row.room?.Room + ' -' + row.room?.Description || 'None',
     },
     {
       name: 'Schedule',
@@ -433,19 +416,27 @@ export default class Assigning extends Vue {
     },
   ];
 
+  addNewSecondYear1stSem = false;
+  filter = '';
   addNewSecondYear2ndSem = false;
-  filter1 = '';
+  filter2 = '';
 
-  inputSecondYear2ndSem: ISecondYear2ndSemInfo = {
-    subject: '',
-    description: '',
-    units: ' ',
-    teacher: '',
-    room: '',
-    schedule: '',
-  };
+  inputSecondYear1stSem: Secondyear1stsemDto = {};
+
+  inputSecondYear2ndSem: Secondyear2ndsemDto = {};
+
+  async onaddSecondYear1stSem() {
+    await this.addSecondyear(this.inputSecondYear1stSem);
+    this.addNewSecondYear1stSem = false;
+    this.resetModel();
+    this.$q.notify({
+      type: 'positive',
+      message: 'Successfully Adeded.',
+    });
+  }
+
   async onaddSecondYear2ndSem() {
-    await this.addSecondYear2ndSem(this.inputSecondYear2ndSem);
+    await this.addSecondyear2ndsem(this.inputSecondYear2ndSem);
     this.addNewSecondYear2ndSem = false;
     this.resetModel2();
     this.$q.notify({
@@ -454,15 +445,11 @@ export default class Assigning extends Vue {
     });
   }
 
+  resetModel() {
+    this.inputSecondYear1stSem = {};
+  }
   resetModel2() {
-    this.inputSecondYear2ndSem = {
-      subject: '',
-      description: '',
-      units: ' ',
-      teacher: '',
-      room: '',
-      schedule: '',
-    };
+    this.inputSecondYear2ndSem = {};
   }
 }
 </script>

@@ -9,7 +9,7 @@
         <div class="col">
           <q-table
             title="First Semester"
-            :rows="allFourYear1stSem"
+            :rows="allFourthYear1stSem"
             :columns="columns"
             row-key="name"
             :rows-per-page-options="[0]"
@@ -36,9 +36,9 @@
                   dense
                   flat
                   icon="add"
-                  @click="addNewFourYear1stSem = true"
+                  @click="addNewFourthYear1stSem = true"
                 />
-                <q-dialog v-model="addNewFourYear1stSem" persistent>
+                <q-dialog v-model="addNewFourthYear1stSem" persistent>
                   <q-card
                     style="width: 800px; max-width: 100vw"
                     class="q-pa-sm"
@@ -69,7 +69,7 @@
                           option-value="subjectID"
                           map-options
                           emit-value
-                          v-model="inputFourYear1stSem.subject"
+                          v-model="inputFourthYear1stSem.subject"
                         />
                       </div>
                       <div class="col">
@@ -84,7 +84,7 @@
                           option-value="teacherID"
                           map-options
                           emit-value
-                          v-model="inputFourYear1stSem.teacher"
+                          v-model="inputFourthYear1stSem.teacher"
                         />
                       </div>
                       <div class="col">
@@ -99,7 +99,7 @@
                           option-value="roomID"
                           map-options
                           emit-value
-                          v-model="inputFourYear1stSem.room"
+                          v-model="inputFourthYear1stSem.room"
                         />
                       </div>
                     </div>
@@ -129,7 +129,7 @@
         <div class="col">
           <q-table
             title="Second Semester"
-            :rows="allFourYear2ndSem"
+            :rows="allFourthYear2ndSem"
             :columns="columns2"
             row-key="name"
             :rows-per-page-options="[0]"
@@ -156,9 +156,9 @@
                   dense
                   flat
                   icon="add"
-                  @click="addNewFourYear2ndSem = true"
+                  @click="addNewFourthYear2ndSem = true"
                 />
-                <q-dialog v-model="addNewFourYear2ndSem" persistent>
+                <q-dialog v-model="addNewFourthYear2ndSem" persistent>
                   <q-card
                     style="width: 800px; max-width: 100vw"
                     class="q-pa-sm"
@@ -191,7 +191,7 @@
                               option-value="subjectID"
                               map-options
                               emit-value
-                              v-model="inputFourYear2ndSem.subject"
+                              v-model="inputFourthYear2ndSem.subject"
                             />
                           </div>
                           <div class="col">
@@ -206,7 +206,7 @@
                               option-value="teacherID"
                               map-options
                               emit-value
-                              v-model="inputFourYear2ndSem.teacher"
+                              v-model="inputFourthYear2ndSem.teacher"
                             />
                           </div>
                           <div class="col">
@@ -221,7 +221,7 @@
                               option-value="roomID"
                               map-options
                               emit-value
-                              v-model="inputFourYear2ndSem.room"
+                              v-model="inputFourthYear2ndSem.room"
                             />
                           </div>
                         </div>
@@ -261,68 +261,90 @@ import {
   TeacherDto,
 } from 'src/services/restapi';
 import { Vue, Options } from 'vue-class-component';
-import { IFourthYear1stSemInfo } from 'src/store/Forthyear1stSem/state';
-import { IFourthYear2ndSemInfo } from 'src/store/Forthyear2ndSem/state';
 import { mapActions, mapState } from 'vuex';
 import { ManagementRoom } from 'src/store/ManagementRoom/state';
 import { ManagementSubject } from 'src/store/ManagementSubject/state';
 
 @Options({
   computed: {
-    ...mapState('FourYear1stSem', ['allFourthYear1stSem']),
-    ...mapState('FourYear2ndSem', ['allFourthYear2ndSem']),
+    ...mapState('Forthyear1stSem', ['allFourthYear1stSem']),
+    ...mapState('Forthyear2ndSem', ['allFourthYear2ndSem']),
     ...mapState('ManagementSubject', ['AllSubject']),
     ...mapState('ManagementTeacher', ['allTeacher']),
     ...mapState('ManagementRoom', ['AllRoom']),
   },
   methods: {
-    ...mapActions('FourYear1stSem', ['addFourthYear1stSem']),
-    ...mapActions('FourYear2ndSem', ['addFourthYear2ndSem']),
+    ...mapActions('Forthyear1stSem', [
+      'addFourthyear',
+      'getAllFourthYear1stsem',
+    ]),
+    ...mapActions('Forthyear2ndSem', [
+      'addFourthyear2ndsem',
+      'getAllFourthyear2ndsem',
+    ]),
+    ...mapActions('ManagementSubject', ['getAllSubjects']),
+    ...mapActions('ManagementTeacher', ['getAllTeacher']),
+    ...mapActions('ManagementRoom', ['getAllRoom']),
   },
 })
 export default class ManageAccount extends Vue {
-  addFourYear1stSem!: (payload: IFourthYear1stSemInfo) => Promise<void>;
-  allFourYear1stSem!: IFourthYear1stSemInfo[];
+  addFourthyear!: (payload: Fourthyear1stsemDto) => Promise<void>;
+  getAllFourthYear1stsem!: () => Promise<void>;
+  getAllSubjects!: () => Promise<void>;
+  getAllRoom!: () => Promise<void>;
+  getAllTeacher!: () => Promise<void>;
+  allFourthYear1stSem!: Fourthyear1stsemDto[];
   AllSubject!: ManagementSubject[];
   allTeacher!: TeacherDto[];
   AllRoom!: ManagementRoom[];
 
+  addFourthyear2ndsem!: (payload: Fourthyear2ndsemDto) => Promise<void>;
+  getAllFourthyear2ndsem!: () => Promise<void>;
+  allFourthYear2ndSem!: Fourthyear2ndsemDto[];
+
+  async mounted() {
+    await this.getAllFourthYear1stsem();
+    await this.getAllSubjects();
+    await this.getAllRoom();
+    await this.getAllTeacher();
+    await this.getAllFourthyear2ndsem();
+  }
+
   columns = [
     {
-      name: 'name',
+      name: 'subject',
       required: true,
       label: 'Subject Code',
       align: 'left',
       field: (row: any) => row.subject?.SubjectCode || 'None',
     },
     {
-      name: 'Description',
+      name: 'description',
       align: 'left',
       label: 'Description',
       field: (row: any) => row.subject?.DescriptiveTitle || 'None',
     },
 
     {
-      name: 'Units',
+      name: 'units',
       align: 'left',
       label: 'Units',
       field: (row: any) => row.subject?.Units || 'None',
     },
 
     {
-      name: 'Teacher',
+      name: 'teacher',
       align: 'left',
       label: 'Teacher',
-      field: (row: any) => row.Teacher?.FullName || 'None',
+      field: (row: any) => row.teacher?.FullName || 'None',
     },
 
     {
-      name: 'Room',
+      name: 'room',
       align: 'left',
       label: 'Room',
       field: (row: any) =>
-        row.Room?.Room + ' -' + row.Room?.Description || 'None',
-      format: (val: string) => `${val}`,
+        row.room?.Room + ' -' + row.room?.Description || 'None',
     },
     {
       name: 'Schedule',
@@ -339,43 +361,6 @@ export default class ManageAccount extends Vue {
       format: (val: string) => `${val}`,
     },
   ];
-
-  addNewFourYear1stSem = false;
-  filter = '';
-
-  inputFourYear1stSem: IFourthYear1stSemInfo = {
-    subject: '',
-    description: '',
-    units: ' ',
-    teacher: '',
-    room: '',
-    schedule: '',
-  };
-
-  async onaddFourYear1stSem() {
-    await this.addFourYear1stSem(this.inputFourYear1stSem);
-    this.addNewFourYear1stSem = false;
-    this.resetModel();
-    this.$q.notify({
-      type: 'positive',
-      message: 'Successfully Adeded.',
-    });
-  }
-
-  resetModel() {
-    this.inputFourYear1stSem = {
-      subject: '',
-      description: '',
-      units: ' ',
-      teacher: '',
-      room: '',
-      schedule: '',
-    };
-  }
-  //---------------------------> Second Semester <----------------------------------------------
-
-  addFourYear2ndSem!: (payload: IFourthYear2ndSemInfo) => Promise<void>;
-  allFourYear2ndSem!: IFourthYear2ndSemInfo[];
 
   columns2 = [
     {
@@ -403,7 +388,7 @@ export default class ManageAccount extends Vue {
       name: 'Teacher',
       align: 'left',
       label: 'Teacher',
-      field: (row: any) => row.Teacher?.FullName || 'None',
+      field: (row: any) => row.teacher?.FullName || 'None',
     },
 
     {
@@ -411,7 +396,7 @@ export default class ManageAccount extends Vue {
       align: 'left',
       label: 'Room',
       field: (row: any) =>
-        row.Room?.Room + ' -' + row.Room?.Description || 'None',
+        row.room?.Room + ' -' + row.room?.Description || 'None',
       format: (val: string) => `${val}`,
     },
     {
@@ -430,20 +415,18 @@ export default class ManageAccount extends Vue {
     },
   ];
 
-  addNewFourYear2ndSem = false;
+  addNewFourthYear1stSem = false;
+  filter = '';
+  addNewFourthYear2ndSem = false;
   filter2 = '';
 
-  inputFourYear2ndSem: IFourthYear2ndSemInfo = {
-    subject: '',
-    description: '',
-    units: ' ',
-    teacher: '',
-    room: '',
-    schedule: '',
-  };
-  async onaddFourYear2ndSem() {
-    await this.addFourYear2ndSem(this.inputFourYear2ndSem);
-    this.addNewFourYear2ndSem = false;
+  inputFourthYear1stSem: Fourthyear1stsemDto = {};
+
+  inputFourthYear2ndSem: Fourthyear2ndsemDto = {};
+
+  async onaddFourYear1stSem() {
+    await this.addFourthyear(this.inputFourthYear1stSem);
+    this.addNewFourthYear1stSem = false;
     this.resetModel();
     this.$q.notify({
       type: 'positive',
@@ -451,15 +434,21 @@ export default class ManageAccount extends Vue {
     });
   }
 
+  async onaddFourYear2ndSem() {
+    await this.addFourthyear2ndsem(this.inputFourthYear2ndSem);
+    this.addNewFourthYear2ndSem = false;
+    this.resetModel();
+    this.$q.notify({
+      type: 'positive',
+      message: 'Successfully Adeded.',
+    });
+  }
+
+  resetModel() {
+    this.inputFourthYear1stSem = {};
+  }
   resetModel2() {
-    this.inputFourYear2ndSem = {
-      subject: '',
-      description: '',
-      units: ' ',
-      teacher: '',
-      room: '',
-      schedule: '',
-    };
+    this.inputFourthYear2ndSem = {};
   }
 }
 </script>

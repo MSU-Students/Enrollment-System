@@ -1,5 +1,5 @@
 export interface ISecondYear2ndSemInfo {
-  secondYear2ndSemID?: string;
+  secondYear2ndSemID?: number;
   subject: string;
   description: string;
   units: string;
@@ -10,7 +10,7 @@ export interface ISecondYear2ndSemInfo {
 
 export interface SecondYear2ndSemStateInterface {
   allSecondYear2ndSem: ISecondYear2ndSemInfo[];
-  activeAccount?: ISecondYear2ndSemInfo;
+  allNewSecondYear2ndSem?: ISecondYear2ndSemInfo;
 }
 
 function state(): SecondYear2ndSemStateInterface {

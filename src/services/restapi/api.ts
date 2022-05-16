@@ -181,40 +181,40 @@ export interface AdmissionDto {
 export interface Firstyear1stsemDto {
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Firstyear1stsemDto
      */
-    'subject': string;
+    'DescriptiveTitle'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Firstyear1stsemDto
      */
-    'description': string;
+    'units'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Firstyear1stsemDto
      */
-    'units': string;
+    'Schedule'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {Firstyear1stsemDto}
      * @memberof Firstyear1stsemDto
      */
-    'teacher': string;
+    'subject'?: Firstyear1stsemDto;
     /**
      * 
-     * @type {string}
+     * @type {Firstyear1stsemDto}
      * @memberof Firstyear1stsemDto
      */
-    'room': string;
+    'teacher'?: Firstyear1stsemDto;
     /**
      * 
-     * @type {string}
+     * @type {Firstyear1stsemDto}
      * @memberof Firstyear1stsemDto
      */
-    'schedule': string;
+    'room'?: Firstyear1stsemDto;
 }
 /**
  * 
@@ -224,40 +224,40 @@ export interface Firstyear1stsemDto {
 export interface Firstyear2ndsemDto {
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Firstyear2ndsemDto
      */
-    'subject': string;
+    'DescriptiveTitle'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Firstyear2ndsemDto
      */
-    'description': string;
+    'units'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Firstyear2ndsemDto
      */
-    'units': string;
+    'Schedule'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {Firstyear2ndsemDto}
      * @memberof Firstyear2ndsemDto
      */
-    'teacher': string;
+    'subject'?: Firstyear2ndsemDto;
     /**
      * 
-     * @type {string}
+     * @type {Firstyear2ndsemDto}
      * @memberof Firstyear2ndsemDto
      */
-    'room': string;
+    'teacher'?: Firstyear2ndsemDto;
     /**
      * 
-     * @type {string}
+     * @type {Firstyear2ndsemDto}
      * @memberof Firstyear2ndsemDto
      */
-    'schedule': string;
+    'room'?: Firstyear2ndsemDto;
 }
 /**
  * 
@@ -267,40 +267,40 @@ export interface Firstyear2ndsemDto {
 export interface Fourthyear1stsemDto {
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Fourthyear1stsemDto
      */
-    'subject': string;
+    'DescriptiveTitle'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Fourthyear1stsemDto
      */
-    'description': string;
+    'units'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Fourthyear1stsemDto
      */
-    'units': string;
+    'Schedule'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {Fourthyear1stsemDto}
      * @memberof Fourthyear1stsemDto
      */
-    'teacher': string;
+    'subject'?: Fourthyear1stsemDto;
     /**
      * 
-     * @type {string}
+     * @type {Fourthyear1stsemDto}
      * @memberof Fourthyear1stsemDto
      */
-    'room': string;
+    'teacher'?: Fourthyear1stsemDto;
     /**
      * 
-     * @type {string}
+     * @type {Fourthyear1stsemDto}
      * @memberof Fourthyear1stsemDto
      */
-    'schedule': string;
+    'room'?: Fourthyear1stsemDto;
 }
 /**
  * 
@@ -310,40 +310,40 @@ export interface Fourthyear1stsemDto {
 export interface Fourthyear2ndsemDto {
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Fourthyear2ndsemDto
      */
-    'subject': string;
+    'DescriptiveTitle'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Fourthyear2ndsemDto
      */
-    'description': string;
+    'units'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Fourthyear2ndsemDto
      */
-    'units': string;
+    'Schedule'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {Fourthyear2ndsemDto}
      * @memberof Fourthyear2ndsemDto
      */
-    'teacher': string;
+    'subject'?: Fourthyear2ndsemDto;
     /**
      * 
-     * @type {string}
+     * @type {Fourthyear2ndsemDto}
      * @memberof Fourthyear2ndsemDto
      */
-    'room': string;
+    'teacher'?: Fourthyear2ndsemDto;
     /**
      * 
-     * @type {string}
+     * @type {Fourthyear2ndsemDto}
      * @memberof Fourthyear2ndsemDto
      */
-    'schedule': string;
+    'room'?: Fourthyear2ndsemDto;
 }
 /**
  * 
@@ -391,40 +391,40 @@ export interface RoomDto {
 export interface Secondyear1stsemDto {
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Secondyear1stsemDto
      */
-    'subject': string;
+    'DescriptiveTitle'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Secondyear1stsemDto
      */
-    'description': string;
+    'units'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Secondyear1stsemDto
      */
-    'units': string;
+    'Schedule'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {Secondyear1stsemDto}
      * @memberof Secondyear1stsemDto
      */
-    'teacher': string;
+    'subject'?: Secondyear1stsemDto;
     /**
      * 
-     * @type {string}
+     * @type {Secondyear1stsemDto}
      * @memberof Secondyear1stsemDto
      */
-    'room': string;
+    'teacher'?: Secondyear1stsemDto;
     /**
      * 
-     * @type {string}
+     * @type {Secondyear1stsemDto}
      * @memberof Secondyear1stsemDto
      */
-    'schedule': string;
+    'room'?: Secondyear1stsemDto;
 }
 /**
  * 
@@ -434,40 +434,40 @@ export interface Secondyear1stsemDto {
 export interface Secondyear2ndsemDto {
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Secondyear2ndsemDto
      */
-    'subject': string;
+    'description'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Secondyear2ndsemDto
      */
-    'description': string;
+    'units'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Secondyear2ndsemDto
      */
-    'units': string;
+    'schedule'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {Secondyear2ndsemDto}
      * @memberof Secondyear2ndsemDto
      */
-    'teacher': string;
+    'subject'?: Secondyear2ndsemDto;
     /**
      * 
-     * @type {string}
+     * @type {Secondyear2ndsemDto}
      * @memberof Secondyear2ndsemDto
      */
-    'room': string;
+    'teacher'?: Secondyear2ndsemDto;
     /**
      * 
-     * @type {string}
+     * @type {Secondyear2ndsemDto}
      * @memberof Secondyear2ndsemDto
      */
-    'schedule': string;
+    'room'?: Secondyear2ndsemDto;
 }
 /**
  * 
@@ -569,40 +569,40 @@ export interface TeacherDto {
 export interface Thirdyear1stsemDto {
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Thirdyear1stsemDto
      */
-    'subject': string;
+    'DescriptiveTitle'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Thirdyear1stsemDto
      */
-    'description': string;
+    'units'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Thirdyear1stsemDto
      */
-    'units': string;
+    'Schedule'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {Thirdyear1stsemDto}
      * @memberof Thirdyear1stsemDto
      */
-    'teacher': string;
+    'subject'?: Thirdyear1stsemDto;
     /**
      * 
-     * @type {string}
+     * @type {Thirdyear1stsemDto}
      * @memberof Thirdyear1stsemDto
      */
-    'room': string;
+    'teacher'?: Thirdyear1stsemDto;
     /**
      * 
-     * @type {string}
+     * @type {Thirdyear1stsemDto}
      * @memberof Thirdyear1stsemDto
      */
-    'schedule': string;
+    'room'?: Thirdyear1stsemDto;
 }
 /**
  * 
@@ -612,40 +612,40 @@ export interface Thirdyear1stsemDto {
 export interface Thirdyear2ndsemDto {
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Thirdyear2ndsemDto
      */
-    'subject': string;
+    'DescriptiveTitle'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Thirdyear2ndsemDto
      */
-    'description': string;
+    'units'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {SubjectDto}
      * @memberof Thirdyear2ndsemDto
      */
-    'units': string;
+    'Schedule'?: SubjectDto;
     /**
      * 
-     * @type {string}
+     * @type {Thirdyear2ndsemDto}
      * @memberof Thirdyear2ndsemDto
      */
-    'teacher': string;
+    'subject'?: Thirdyear2ndsemDto;
     /**
      * 
-     * @type {string}
+     * @type {Thirdyear2ndsemDto}
      * @memberof Thirdyear2ndsemDto
      */
-    'room': string;
+    'teacher'?: Thirdyear2ndsemDto;
     /**
      * 
-     * @type {string}
+     * @type {Thirdyear2ndsemDto}
      * @memberof Thirdyear2ndsemDto
      */
-    'schedule': string;
+    'room'?: Thirdyear2ndsemDto;
 }
 /**
  * 
