@@ -119,7 +119,7 @@ export default class Login extends Vue {
           message: 'You are logged in',
         });
       } else if (this.currentUser.userType == 'chairperson') {
-        await this.$router.replace('/chairperson/dashboard');
+        await this.$router.replace('/chairperson');
         this.$q.notify({
           type: 'positive',
           message: 'You are logged in',

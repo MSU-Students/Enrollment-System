@@ -1,41 +1,70 @@
 // app global css in SCSS form
 @font-face {
-    font-family: LuckiestGuy;
-    src: url(./fonts/LuckiestGuy-Regular.ttf);
+  font-family: LuckiestGuy;
+  src: url(./fonts/LuckiestGuy-Regular.ttf);
 }
 @font-face {
-    font-family: Oswald;
-    src: url(./fonts/Oswald-VariableFont_wght.ttf);
+  font-family: Oswald;
+  src: url(./fonts/Oswald-VariableFont_wght.ttf);
 }
 
 .font1 {
-    font-family: LuckiestGuy;
+  font-family: LuckiestGuy;
 }
 
-
-
-.font2{
-    font-family: Oswald;
+.font2 {
+  font-family: Oswald;
 }
 
 .bg-image {
-    background-image: url(../assets/logo.png);
-    background-blend-mode: overlay;
-    /* background-repeat: no-repeat; */
-    background-position: center;
-    background-color: rgb(240, 240, 239);
-    background-size: 80%;
-  }
+  background-image: url(../assets/logo.png);
+  background-blend-mode: overlay;
+  /* background-repeat: no-repeat; */
+  background-position: center;
+  background-color: rgb(240, 240, 239);
+  background-size: 80%;
+}
 
-  .bg-image1 {
-    background-image: url(../assets/back1.jpg);
-  }
+.bg-image1 {
+  background-image: url(../assets/back1.jpg);
+}
 
-  .bg-image2 {
-    background-image: url(../assets/back2.jpg);
-    background-blend-mode: overlay;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100%;
-  }
-
+.bg-image2 {
+  background-image: url(../assets/back2.jpg);
+  background-blend-mode: overlay;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+.bg-image3 {
+  background-image: url(../assets/image1.png);
+  background-blend-mode: overlay;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 40%;
+  background-position: bottom right;
+}
+.bg-image4 {
+  background-image: url(../assets/image2.png);
+  background-blend-mode: overlay;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 40%;
+  background-position: bottom right;
+}
+.bg-image5 {
+  background-image: url(../assets/image3.png);
+  background-blend-mode: overlay;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30%;
+  background-position: bottom right;
+}
+.bg-image6 {
+  background-image: url(../assets/image4.png);
+  background-blend-mode: overlay;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 40%;
+  background-position: bottom right;
+}

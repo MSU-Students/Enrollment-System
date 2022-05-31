@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-sm bg-image2">
+  <div class="bg-image5">
     <q-layout view="hHh lpR lFf">
       <q-header elevated class="q-px-lg q-py-md bg-image1">
         <q-toolbar>
@@ -31,20 +31,12 @@
       >
         <q-scroll-area class="fit">
           <q-list padding>
-            <q-item clickable v-ripple to="/chairperson/dashboard">
-              <q-item-section avatar>
-                <q-icon name="dashboard" />
-              </q-item-section>
-
-              <q-item-section> Dashboard </q-item-section>
-            </q-item>
-
             <q-expansion-item>
               <template v-slot:header>
                 <q-item-section avatar>
                   <q-icon name="people" color="black" />
                 </q-item-section>
-                <q-item-section> Manage </q-item-section>
+                <q-item-section> Maintenance </q-item-section>
               </template>
               <q-card>
                 <q-card-section>
@@ -62,55 +54,36 @@
                     <q-item-section> Manage Subject </q-item-section>
                   </q-item>
 
-                  <q-item clickable v-ripple to="/chairperson/Room">
+                  <q-item clickable v-ripple to="/chairperson/Section">
                     <q-item-section avatar>
                       <q-icon name="room" color="black" />
                     </q-item-section>
-                    <q-item-section> Manage Room</q-item-section>
+                    <q-item-section> Manage Section</q-item-section>
+                  </q-item>
+
+                  <q-item clickable v-ripple to="/chairperson/Course">
+                    <q-item-section avatar>
+                      <q-icon name="room" color="black" />
+                    </q-item-section>
+                    <q-item-section> Manage Course</q-item-section>
                   </q-item>
                 </q-card-section>
               </q-card>
             </q-expansion-item>
 
-            <q-expansion-item>
-              <template v-slot:header>
-                <q-item-section avatar>
-                  <q-icon name="analytics" color="blue-2" />
-                </q-item-section>
-                <q-item-section> Assigning </q-item-section>
-              </template>
-              <q-card>
-                <q-card-section>
-                  <q-item clickable v-ripple to="/chairperson/firstyear">
-                    <q-item-section avatar>
-                      <q-icon name="person" color="blue-2" />
-                    </q-item-section>
-                    <q-item-section> First Year </q-item-section>
-                  </q-item>
+            <q-item clickable v-ripple to="/Chairperson/Scheduling">
+              <q-item-section avatar>
+                <q-icon name="dashboard" />
+              </q-item-section>
 
-                  <q-item clickable v-ripple to="/chairperson/secondyear">
-                    <q-item-section avatar>
-                      <q-icon name="person" color="blue-2" />
-                    </q-item-section>
-                    <q-item-section> Second Year </q-item-section>
-                  </q-item>
-
-                  <q-item clickable v-ripple to="/chairperson/thirdyear">
-                    <q-item-section avatar>
-                      <q-icon name="person" color="blue-2" />
-                    </q-item-section>
-                    <q-item-section> Third Year </q-item-section>
-                  </q-item>
-
-                  <q-item clickable v-ripple to="/chairperson/fourthyear">
-                    <q-item-section avatar>
-                      <q-icon name="person" color="blue-2" />
-                    </q-item-section>
-                    <q-item-section> Fourth Year </q-item-section>
-                  </q-item>
-                </q-card-section>
-              </q-card>
-            </q-expansion-item>
+              <q-item-section> Scheduling </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple to="/chairperson/firstyear">
+              <q-item-section avatar>
+                <q-icon name="person" color="blue-2" />
+              </q-item-section>
+              <q-item-section> First Year </q-item-section>
+            </q-item>
 
             <q-separator />
 

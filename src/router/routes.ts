@@ -4,10 +4,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('src/pages/Dashboard.vue') },
-      { path: 'login', component: () => import('src/pages/Login.vue') },
-    ],
+    children: [{ path: '', component: () => import('src/pages/Login.vue') }],
   },
   {
     path: '/admin',
@@ -21,20 +18,16 @@ const routes: RouteRecordRaw[] = [
         path: 'ManageAccount',
         component: () => import('src/pages/Admin/Manage Account.vue'),
       },
+      {
+        path: 'schoolyear',
+        component: () => import('src/pages/Admin/schoolyear.vue'),
+      },
     ],
   },
   {
     path: '/chairperson',
     component: () => import('layouts/ChairpersonLayout.vue'),
     children: [
-      {
-        path: 'dashboard',
-        component: () => import('src/pages/Chairperson/Dashboard.vue'),
-      },
-      {
-        path: 'assign',
-        component: () => import('src/pages/Chairperson/Assigning.vue'),
-      },
       {
         path: 'teacher',
         component: () => import('src/pages/Chairperson/Teacher.vue'),
@@ -52,17 +45,17 @@ const routes: RouteRecordRaw[] = [
         component: () => import('src/pages/Chairperson/firstyear.vue'),
       },
       {
-        path: 'secondyear',
-        component: () => import('src/pages/Chairperson/secondyear.vue'),
+        path: 'course',
+        component: () => import('src/pages/Chairperson/course.vue'),
       },
       {
-        path: 'thirdyear',
-        component: () => import('src/pages/Chairperson/thirdyear.vue'),
+        path: 'section',
+        component: () => import('src/pages/Chairperson/section.vue'),
       },
 
       {
-        path: 'fourthyear',
-        component: () => import('src/pages/Chairperson/fourthyear.vue'),
+        path: 'scheduling',
+        component: () => import('src/pages/Chairperson/scheduling.vue'),
       },
     ],
   },

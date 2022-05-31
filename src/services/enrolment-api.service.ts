@@ -53,7 +53,6 @@ class EnrollmentApiService extends DefaultApi {
   constructor() {
     super(new Configuration(), localBasePath, getAxiosInstance());
   }
-
   async loginUser(userName: string, password: string) {
     const response = await enrollmentApiService.login(userName, password);
     if (response.status == 201) {

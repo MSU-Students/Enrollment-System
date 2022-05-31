@@ -43,7 +43,7 @@
               <q-icon name="how_to_reg" />
             </q-item-section>
 
-            <q-item-section> Cancellation </q-item-section>
+            <q-item-section> Records and Results </q-item-section>
           </q-item>
 
           <q-separator />

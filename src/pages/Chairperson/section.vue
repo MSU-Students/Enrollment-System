@@ -2,14 +2,14 @@
   <q-page class="q-pa-lg">
     <div class="text-h4 text-bold">
       <q-icon name="style" color="light-blue-6" style="font-size: 4rem" />
-      Manage Subject
+      Manage Section
     </div>
 
     <br />
 
     <q-table
-      title="Subject List"
-      :rows="AllSubject"
+      title="Section List"
+      :rows="AllSection"
       :columns="columns"
       row-key="name"
       :rows-per-page-options="[0]"
@@ -30,18 +30,18 @@
             </template>
           </q-input>
           <q-btn
-            label="Add Subject"
+            label="Add Section"
             color="primary"
             e
             dense
             flat
             icon="add"
-            @click="addNewSubject = true"
+            @click="addNewSection = true"
           />
-          <q-dialog v-model="addNewSubject" persistent>
+          <q-dialog v-model="addNewSection" persistent>
             <q-card style="width: 800px; max-width: 100vw">
               <q-card-section class="bg-primary row">
-                <div class="text-h6">Add Subject</div>
+                <div class="text-h6">Add Section</div>
                 <q-space />
                 <q-btn
                   flat
@@ -57,41 +57,31 @@
                 <q-form class="q-gutter-md">
                   <div class="row">
                     <div class="col col-md-6">
-                      <q-input
-                        autofocus
-                        readonly
-                        class="q-py-md"
-                        outlined
-                        v-model="inputSubject.AYCode"
-                        label="AY Code"
-                      />
-                      <q-input
-                        outlined
-                        class="q-py-md"
-                        v-model="inputSubject.SubjectCode"
-                        label="Subject Code"
-                      />
-                      <q-input
-                        outlined
-                        class="q-py-md"
-                        v-model="inputSubject.DescriptiveTitle"
-                        label="DescriptiveTitle"
-                      />
-                    </div>
-
-                    <div class="col-md-6 q-pl-md">
                       <q-select
-                        outlined
+                        autofocus
                         class="q-py-md"
-                        v-model="inputSubject.YearLevel"
+                        outlined
+                        v-model="inputSection.YearLevel"
                         :options="options"
                         label="Year Level"
                       />
                       <q-input
                         outlined
                         class="q-py-md"
-                        v-model="inputSubject.Units"
-                        label="Units"
+                        v-model="inputSection.sectionName"
+                        label="Section Name"
+                      />
+                      <q-select
+                        outlined
+                        v-model="inputSection.sectionTeacher"
+                        label="Teacher"
+                        transition-show="flip-up"
+                        transition-hide="flip-down"
+                        :options="allTeacher"
+                        option-label="FullName"
+                        option-value="teacherID"
+                        map-options
+                        emit-value
                       />
                     </div>
                   </div>
@@ -107,7 +97,7 @@
                       v-close-popup
                       label="Add"
                       color="primary"
-                      @click="onaddSubject()"
+                      @click="onaddSection()"
                     />
                   </q-card-actions>
                 </q-form>
@@ -129,10 +119,10 @@
               dense
               @click="openEditDialog(props.row)"
             />
-            <q-dialog v-model="updateSubject" persistent>
+            <q-dialog v-model="updateSection" persistent>
               <q-card style="width: 800px; max-width: 100vw">
                 <q-card-section class="bg-primary row">
-                  <div class="text-h6">Edit Subject</div>
+                  <div class="text-h6">Edit Section</div>
                   <q-space />
                   <q-btn
                     flat
@@ -145,49 +135,34 @@
                 </q-card-section>
 
                 <q-card-section>
-                  <q-form @submit="oneditSubject" class="q-gutter-md">
+                  <q-form @submit="oneditSection" class="q-gutter-md">
                     <div class="row">
                       <div class="col col-md-6">
-                        <q-input
+                        <q-select
                           autofocus
                           class="q-py-md"
                           outlined
-                          v-model="inputSubject.AYCode"
-                          label="AY Code"
-                        />
-                        <q-input
-                          outlined
-                          class="q-py-md"
-                          v-model="inputSubject.SubjectCode"
-                          label="Subject Code"
-                        />
-                        <q-input
-                          outlined
-                          class="q-py-md"
-                          v-model="inputSubject.DescriptiveTitle"
-                          label="DescriptiveTitle"
-                        />
-                      </div>
-
-                      <div class="col-md-6 q-pl-md">
-                        <q-select
-                          outlined
-                          class="q-py-md"
-                          v-model="inputSubject.YearLevel"
+                          v-model="inputSection.YearLevel"
                           :options="options"
                           label="Year Level"
                         />
                         <q-input
                           outlined
                           class="q-py-md"
-                          v-model="inputSubject.Prerequisite"
-                          label="Prerequisite"
+                          v-model="inputSection.sectionName"
+                          label="Section Name"
                         />
-                        <q-input
+                        <q-select
                           outlined
-                          class="q-py-md"
-                          v-model="inputSubject.Units"
-                          label="Units"
+                          v-model="inputSection.sectionTeacher"
+                          label="Teacher"
+                          transition-show="flip-up"
+                          transition-hide="flip-down"
+                          :options="allTeacher"
+                          option-label="FullName"
+                          option-value="teacherID"
+                          map-options
+                          emit-value
                         />
                       </div>
                     </div>
@@ -217,7 +192,7 @@
               flat
               round
               dense
-              @click="deleteSpecificSubject(props.row)"
+              @click="deleteSpecificSection(props.row)"
             />
           </div>
         </q-td>
@@ -228,115 +203,76 @@
 
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component';
-import { ManagementSubject } from 'src/store/ManagementSubject/state';
+import { section } from 'src/store/section/state';
 import { mapActions, mapState } from 'vuex';
-import { AdmissionDto, SubjectDto } from 'src/services/restapi';
-import { IStudentInfo } from 'src/store/Admission/state';
+import { SectionDto, TeacherDto } from 'src/services/restapi';
 
 @Options({
   computed: {
-    ...mapState('ManagementSubject', ['AllSubject']),
-    ...mapState('Admission', ['allAdmissionInfo']),
+    ...mapState('section', ['AllSection']),
+    ...mapState('ManagementTeacher', ['allTeacher']),
   },
   methods: {
-    ...mapActions('ManagementSubject', [
-      'addSubjects',
-      'editSubject',
-      'deleteSubject',
-      'getAllSubjects',
+    ...mapActions('section', [
+      'addsections',
+      'editsection',
+      'deletesection',
+      'getAllsection',
     ]),
-    ...mapActions('Admission', ['addNewAdmission', 'getAllAdmission']),
+    ...mapActions('ManagementTeacher', ['getAllTeacher']),
   },
 })
-export default class ManageSubject extends Vue {
-  addSubjects!: (payload: SubjectDto) => Promise<void>;
-  editSubject!: (payload: SubjectDto) => Promise<void>;
-  deleteSubject!: (payload: SubjectDto) => Promise<void>;
-  AllSubject!: ManagementSubject[];
-  allAdmissionInfo!: IStudentInfo[];
-  getAllSubjects!: () => Promise<void>;
-  getAllAdmission!: () => Promise<void>;
+export default class ManageSection extends Vue {
+  addsections!: (payload: SectionDto) => Promise<void>;
+  editsection!: (payload: SectionDto) => Promise<void>;
+  deletesection!: (payload: SectionDto) => Promise<void>;
+  AllSection!: section[];
+  allTeacher!: TeacherDto[];
+  getAllsection!: () => Promise<void>;
+  getAllTeacher!: () => Promise<void>;
 
   async mounted() {
-    await this.getAllSubjects();
-    await this.getAllAdmission();
+    await this.getAllsection();
+    await this.getAllTeacher();
   }
   columns = [
     {
-      name: 'AYCode',
-      required: true,
-      label: 'AY Code',
-      align: 'left',
-      field: (row: SubjectDto) => row.AYCode,
+      name: 'Year Level',
+      align: 'center',
+      label: 'Year Level',
+      field: (row: SectionDto) => row.YearLevel,
       format: (val: string) => `${val}`,
     },
     {
-      name: 'SubjectCode',
+      name: 'Section Name',
       align: 'center',
-      label: 'Subject Code',
-      field: 'SubjectCode',
-    },
-    {
-      name: 'DescriptiveTitle',
-      align: 'center',
-      label: 'Descriptive Title',
-      field: 'DescriptiveTitle',
-    },
-    {
-      name: 'YearLevel',
-      align: 'center',
-      label: 'Year Level',
-      field: 'YearLevel',
+      label: 'Section Name',
+      field: (row: SectionDto) => row.sectionName,
+      format: (val: string) => `${val}`,
     },
 
-    { name: 'Units', align: 'center', label: 'Units', field: 'Units' },
+    {
+      name: 'teacher',
+      align: 'left',
+      label: 'Teacher',
+      field: (row: any) => row.sectionTeacher?.FullName || 'None',
+    },
 
     { name: 'action', align: 'center', label: 'Action', field: 'action' },
   ];
-  addNewSubject = false;
-  updateSubject = false;
+  addNewSection = false;
+  updateSection = false;
   filter = '';
   options = ['First Year', 'Second Year', 'Third Year', 'Fourth Year'];
 
-  inputSubject: SubjectDto = {
-    AYCode: '',
-    SubjectCode: '',
-    DescriptiveTitle: '',
-    Prerequisite: '',
-    Units: '',
-    Day: '',
-    Day2: '',
-    Time: '',
-    Time2: '',
+  inputSection: SectionDto = {
+    YearLevel: '',
+    sectionName: '',
   };
 
-  inputStudentInfo: AdmissionDto = {
-    reportCard: false,
-    bCertificate: false,
-    Pic: false,
-    eForm: false,
-    IdNum: '',
-    lrn: '',
-    ayCode: '',
-    incomingYlevel: '',
-    studentType: '',
-    FName: '',
-    MName: '',
-    LName: '',
-    age: '',
-    dataOfBirth: '',
-    placeOfBirth: '',
-    contactNo: '',
-    gender: '',
-    martialStatus: '',
-    citizenship: '',
-    religion: '',
-    address: '',
-  };
-
-  async onaddSubject() {
-    await this.addSubjects(this.inputSubject);
-    this.addNewSubject = false;
+  async onaddSection() {
+    await this.addsections(this.inputSection);
+    this.addNewSection = false;
     this.resetModel();
     this.$q.notify({
       type: 'positive',
@@ -344,9 +280,9 @@ export default class ManageSubject extends Vue {
     });
   }
 
-  async oneditSubject() {
-    await this.editSubject(this.inputSubject);
-    this.updateSubject = false;
+  async oneditSection() {
+    await this.editsection(this.inputSection);
+    this.updateSection = false;
     this.resetModel();
     this.$q.notify({
       type: 'positive',
@@ -354,7 +290,7 @@ export default class ManageSubject extends Vue {
     });
   }
 
-  deleteSpecificSubject(val: SubjectDto) {
+  deleteSpecificSection(val: SectionDto) {
     this.$q
       .dialog({
         message: 'Confirm to delete?',
@@ -362,7 +298,7 @@ export default class ManageSubject extends Vue {
         persistent: true,
       })
       .onOk(async () => {
-        await this.deleteSubject(val);
+        await this.deletesection(val);
         this.$q.notify({
           type: 'warning',
           message: 'Successfully deleted',
@@ -370,22 +306,15 @@ export default class ManageSubject extends Vue {
       });
   }
 
-  openEditDialog(val: SubjectDto) {
-    this.updateSubject = true;
-    this.inputSubject = { ...val };
+  openEditDialog(val: SectionDto) {
+    this.updateSection = true;
+    this.inputSection = { ...val };
   }
 
   resetModel() {
-    this.inputSubject = {
-      AYCode: '',
-      SubjectCode: '',
-      DescriptiveTitle: '',
-      Prerequisite: '',
-      Units: '',
-      Day: '',
-      Day2: '',
-      Time: '',
-      Time2: '',
+    this.inputSection = {
+      YearLevel: '',
+      sectionName: '',
     };
   }
 }

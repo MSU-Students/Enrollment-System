@@ -1,3 +1,7 @@
+import { EnrollmentStateInterface } from './enrollment/state';
+import { SchedulingStateInterface } from './scheduling/state';
+import { sectionStateInterface } from './section/state';
+import section from './section';
 import { store } from 'quasar/wrappers';
 import { InjectionKey } from 'vue';
 import {
@@ -27,26 +31,16 @@ import { FirstYearStateInterface } from './Firstyear1stSem/state';
 import Firstyear2ndSem from './Firstyear2ndSem';
 import { FirstYear2ndSemStateInterface } from './Firstyear2ndSem/state';
 
-import Secondyear1stSem from './Secondyear1stSem';
-import { SecondYear1stSemStateInterface } from './Secondyear1stSem/state';
-
-import Secondyear2ndSem from './Secondyear2ndSem';
-import { SecondYear2ndSemStateInterface } from './Secondyear2ndSem/state';
-
-import Thirdyear1stSem from './Thirdyear1stSem';
-import { ThirdYear1stSemStateInterface } from './Thirdyear1stSem/state';
-
-import Thirdyear2ndSem from './Thirdyear2ndSem';
-import { ThirdYear2ndSemStateInterface } from './Thirdyear2ndSem/state';
-
-import Forthyear1stSem from './Forthyear1stSem';
-import { FourthYear1stSemStateInterface } from './Forthyear1stSem/state';
-
-import Forthyear2ndSem from './Forthyear2ndSem';
-import { FourthYear2ndSemStateInterface } from './Forthyear2ndSem/state';
+import schoolyear from './schoolyear';
+import { schoolyearStateInterface } from './schoolyear/state';
 
 import auth from './auth';
 import { IAuthState } from './auth/state';
+
+import { courseStateInterface } from './course/state';
+import course from './course';
+import scheduling from './scheduling';
+import enrollment from './enrollment';
 
 /*
  * If not building with SSR mode, you can
@@ -68,12 +62,11 @@ export interface StateInterface {
   admission: AdmissionStateInterface;
   Firstyear1stSem: FirstYearStateInterface;
   Firstyear2ndSem: FirstYear2ndSemStateInterface;
-  Secondyear1stSem: SecondYear1stSemStateInterface;
-  Secondyear2ndSem: SecondYear2ndSemStateInterface;
-  Thirdyear1stSem: ThirdYear1stSemStateInterface;
-  Thirdyear2ndSem: ThirdYear2ndSemStateInterface;
-  Forthyear1stSem: FourthYear1stSemStateInterface;
-  Forthyear2ndstSem: FourthYear2ndSemStateInterface;
+  schoolyear: schoolyearStateInterface;
+  course: courseStateInterface;
+  section: sectionStateInterface;
+  scheduling: SchedulingStateInterface;
+  enrollment: EnrollmentStateInterface;
   auth: IAuthState;
 }
 
@@ -99,12 +92,11 @@ export default store(function (/* { ssrContext } */) {
       ManagementRoom,
       Firstyear1stSem,
       Firstyear2ndSem,
-      Secondyear1stSem,
-      Secondyear2ndSem,
-      Thirdyear1stSem,
-      Thirdyear2ndSem,
-      Forthyear1stSem,
-      Forthyear2ndSem,
+      schoolyear,
+      course,
+      section,
+      scheduling,
+      enrollment,
       auth,
     },
 

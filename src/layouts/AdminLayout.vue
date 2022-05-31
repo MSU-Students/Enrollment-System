@@ -26,7 +26,7 @@
         :mini="miniState"
         @mouseover="miniState = false"
         @mouseout="miniState = true"
-        :width="200"
+        :width="250"
         :breakpoint="500"
         bordered
         content-class="bg-grey-3"
@@ -39,13 +39,21 @@
               </q-item-section>
               <q-item-section> Enrollment List </q-item-section>
             </q-item>
-
+            <q-separator />
             <q-item clickable v-ripple to="/admin/ManageAccount">
               <q-item-section avatar>
                 <q-icon name="how_to_reg" color="blue-2" />
               </q-item-section>
 
               <q-item-section> Manage Account </q-item-section>
+            </q-item>
+            <q-separator />
+            <q-item clickable v-ripple to="/admin/schoolyear">
+              <q-item-section avatar>
+                <q-icon name="calendar" color="blue-2" />
+              </q-item-section>
+
+              <q-item-section> Manage School Year</q-item-section>
             </q-item>
 
             <q-separator />
