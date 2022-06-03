@@ -114,6 +114,20 @@
                         label="Student Type"
                       />
                     </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        v-model="inputStudentInfo.studentType"
+                        label="Course"
+                        transition-show="flip-up"
+                        transition-hide="flip-down"
+                        :options="AllCourse"
+                        option-label="courseCode"
+                        option-value="courseID"
+                        map-options
+                        emit-value
+                      />
+                    </div>
                   </div>
 
                   <q-separator></q-separator>
@@ -781,12 +795,13 @@
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component';
 import { mapActions, mapState } from 'vuex';
-import { AdmissionDto } from 'src/services/restapi';
+import { AdmissionDto, CourseDto } from 'src/services/restapi';
 import { IStudentInfo } from 'src/store/Admission/state';
 
 @Options({
   computed: {
     ...mapState('Admission', ['allAdmissionInfo']),
+    ...mapState('course', ['AllCourse']),
   },
   methods: {
     ...mapActions('Admission', [
@@ -795,18 +810,22 @@ import { IStudentInfo } from 'src/store/Admission/state';
       'deleteAdmission',
       'getAllAdmission',
     ]),
+    ...mapActions('course', ['getAllCourse']),
   },
 })
 export default class ManageStudentInfo extends Vue {
   allAdmissionInfo!: IStudentInfo[];
+  AllCourse!: CourseDto[];
   addNewAdmission!: (payload: IStudentInfo) => Promise<void>;
   editAdmissionInfo!: (payload: IStudentInfo) => Promise<void>;
   deleteAdmission!: (payload: IStudentInfo) => Promise<void>;
   getAllAdmission!: () => Promise<void>;
+  getAllCourse!: () => Promise<void>;
 
   async mounted() {
     await this.getAllAdmission();
     console.log(this.allAdmissionInfo);
+    await this.getAllCourse();
   }
 
   columns = [
@@ -909,7 +928,7 @@ export default class ManageStudentInfo extends Vue {
         persistent: true,
       })
       .onOk(async () => {
-        await this.deleteAdmission(val);
+        await this.deleteAdmission(val.admissionID as any);
         this.$q.notify({
           type: 'warning',
           message: 'Successfully deleted',

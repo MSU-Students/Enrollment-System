@@ -8,10 +8,11 @@
     <br />
 
     <q-table
-      title="Master List"
+      title="Student Enrolled Master List"
       :rows="AllEnrollment"
       :columns="columns"
       row-key="name"
+      :rows-per-page-options="[0]"
       :filter="filter"
     >
       <template v-slot:top-right>
@@ -66,7 +67,7 @@
                 </q-form>
               </div>
               <!-- display search         -->
-              <q-scroll-area style="height: 10rem">
+              <q-scroll-area style="height: 5rem">
                 <q-list
                   v-for="(result, index) in searchResultStudent"
                   :key="index"
@@ -113,51 +114,26 @@
                   <div class="col">
                     <q-select
                       autofocus
-                      v-model="inputEnrollee.course"
+                      v-model="courseFilter"
                       outlined
                       label="Course"
                       transition-show="flip-up"
                       transition-hide="flip-down"
-                      :options="AllSchedule"
+                      :options="AllCourse"
                       option-label="courseCode"
-                      option-value="scheduleID"
+                      option-value="courseID"
                       map-options
                       emit-value
                     />
                     <br />
                   </div>
-                  <div class="col">
-                    <q-select
-                      autofocus
-                      outlined
-                      v-model="inputEnrollee.section"
-                      label="Section"
-                      transition-show="flip-up"
-                      transition-hide="flip-down"
-                      :options="AllSchedule"
-                      option-label="sectionName"
-                      option-value="scheduleID"
-                      map-options
-                      emit-value
-                    />
-                    <br />
-                  </div>
-                </div>
-
-                <div class="row q-gutter-sm q-py-sm">
                   <div class="col">
                     <q-select
                       autofocus
                       outlined
                       label="Year Level"
                       v-model="inputEnrollee.yearLevel"
-                      transition-show="flip-up"
-                      transition-hide="flip-down"
-                      :options="AllSchedule"
-                      option-label="yearLevel"
-                      option-value="scheduleID"
-                      map-options
-                      emit-value
+                      :options="Year"
                     />
                   </div>
 
@@ -168,22 +144,17 @@
                       item-aligned="left"
                       label="Semester"
                       v-model="inputEnrollee.semester"
-                      transition-show="flip-up"
-                      transition-hide="flip-down"
-                      :options="AllSchedule"
-                      option-label="Semester"
-                      option-value="scheduleID"
-                      map-options
-                      emit-value
+                      :options="sem"
                     />
                   </div>
                 </div>
               </q-card-section>
 
+              <!-- Table result -->
               <div class="q-pa-md bg-cyan-11col col-md-4">
                 <q-table
                   title="Subject List and Schedule"
-                  :rows="AllEnrollment"
+                  :rows="filterSubject()"
                   :columns="columns1"
                   color="primary"
                   row-key="name"
@@ -194,20 +165,111 @@
                     label="Cancel"
                     color="red-10"
                     v-close-popup
-                    type="submit"
+                    @click="resetModel()"
                   />
                   <q-btn
                     label="Enroll Student"
                     color="blue-10"
                     v-close-popup
                     type="submit"
+                    @click="onaddEnrollee()"
                   />
                   <q-btn
-                    label="Print Priview"
+                    label="Print Preview"
                     color="blue-10"
-                    v-close-popup
-                    type="submit"
+                    @click="printPreview = true"
                   />
+                  <q-dialog v-model="printPreview">
+                    <q-page class="q-pa-lg">
+                      <q-card
+                        style="width: 1000px; height: 600px"
+                        class="q-px-sm q-pb-md"
+                        @click="print()"
+                      >
+                        <q-toolbar>
+                          <q-space />
+                          <q-img
+                            src="~assets/logo.png"
+                            style="width: 110px"
+                          ></q-img>
+
+                          <q-card flat class="bg-transparent">
+                            <br />
+
+                            <div class="font2 text-h6 flex flex-center">
+                              Republic of the Philippines
+                            </div>
+
+                            <div class="font2 text-h6 flex flex-center">
+                              Mindanao State University Lanao National College
+                              of Arts and Trades
+                            </div>
+
+                            <div class="font11 text-h6 flex flex-center">
+                              Marawi City, Philippines
+                            </div>
+
+                            <div class="font1 text-h3 flex flex-center">
+                              CERTIFICATE OF REGISTRATION
+                            </div>
+                          </q-card>
+
+                          <q-img
+                            src="~assets/msulogo.png"
+                            style="width: 110px"
+                          ></q-img>
+                          <q-space />
+                        </q-toolbar>
+
+                        <q-card>
+                          <div class="q-pa-md col col-md-12">
+                            <q-card flat bordered class="col col-md-12 q-pa-md">
+                              <div class="q-pa-md">
+                                <div class="row">
+                                  <div class="col">
+                                    Name: {{ inputStudentInfo.FName }}
+                                    {{ inputStudentInfo.MName }}
+                                    {{ inputStudentInfo.LName }}
+                                  </div>
+                                  <div class="col">
+                                    ID Number: {{ inputStudentInfo.IdNum }}
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col">
+                                    Year:
+                                    {{ inputStudentInfo.incomingYlevel }}
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col">
+                                    Gender: {{ inputStudentInfo.gender }}
+                                  </div>
+                                  <div class="col">
+                                    Civil Status:
+                                    {{ inputStudentInfo.martialStatus }}
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col">
+                                    Religion:{{ inputStudentInfo.religion }}
+                                  </div>
+                                </div>
+                              </div>
+                            </q-card>
+                            <q-card flat bordered class="my-card q-pa-md">
+                              <q-table
+                                :rows="AllEnrollment"
+                                :columns="columns2"
+                                row-key="name"
+                                :filter="filter"
+                              />
+                            </q-card>
+                          </div>
+                        </q-card>
+                      </q-card>
+                    </q-page>
+                  </q-dialog>
                 </q-card-actions>
               </div>
             </q-card>
@@ -222,11 +284,15 @@
 import { IStudentInfo } from 'src/store/Admission/state';
 import { Options, Vue } from 'vue-class-component';
 import { mapActions, mapState } from 'vuex';
-import { enrollmentmodule } from 'src/store/enrollment/state';
 import {
   AdmissionDto,
+  CourseDto,
   EnrollmentDto,
   SchedulingDto,
+  SchoolYearDto,
+  SectionDto,
+  SubjectDto,
+  TeacherDto,
 } from 'src/services/restapi';
 
 @Options({
@@ -234,6 +300,12 @@ import {
     ...mapState('enrollment', ['AllEnrollment']),
     ...mapState('Admission', ['allAdmissionInfo']),
     ...mapState('scheduling', ['AllSchedule']),
+    ...mapState('course', ['AllCourse']),
+    ...mapState('section', ['AllSection']),
+    ...mapState('ManagementSubject', ['AllSubject']),
+    ...mapState('ManagementTeacher', ['allTeacher']),
+    ...mapState('ManagementRoom', ['AllRoom']),
+    ...mapState('schoolyear', ['allSchoolYear']),
   },
   methods: {
     ...mapActions('enrollment', [
@@ -244,6 +316,12 @@ import {
     ]),
     ...mapActions('Admission', ['addNewAdmission', 'getAllAdmission']),
     ...mapActions('scheduling', ['getAllschedule']),
+    ...mapActions('course', ['getAllCourse']),
+    ...mapActions('section', ['getAllsection']),
+    ...mapActions('ManagementSubject', ['getAllSubjects']),
+    ...mapActions('ManagementTeacher', ['getAllTeacher']),
+    ...mapActions('ManagementRoom', ['getAllRoom']),
+    ...mapActions('schoolyear', ['getAllSchoolYear']),
   },
 })
 export default class Enrollment extends Vue {
@@ -253,15 +331,20 @@ export default class Enrollment extends Vue {
   allAdmissionInfo!: IStudentInfo[];
   AllEnrollment!: EnrollmentDto[];
   AllSchedule!: SchedulingDto[];
+  AllSubject!: SubjectDto[];
+  allTeacher!: TeacherDto[];
+  AllCourse!: CourseDto[];
+  AllSection!: SectionDto[];
+  allSchoolYear!: SchoolYearDto[];
   getAllAdmission!: () => Promise<void>;
   getAllEnrollment!: () => Promise<void>;
   getAllschedule!: () => Promise<void>;
-
-  async mounted() {
-    await this.getAllAdmission();
-    await this.getAllEnrollment();
-    await this.getAllschedule();
-  }
+  getAllSubjects!: () => Promise<void>;
+  getAllTeacher!: () => Promise<void>;
+  getAllCourse!: () => Promise<void>;
+  getAllSchoolYear!: () => Promise<void>;
+  getAllsection!: () => Promise<void>;
+  sections: SectionDto[] = [];
 
   columns = [
     {
@@ -269,48 +352,42 @@ export default class Enrollment extends Vue {
       required: true,
       label: 'Student ID',
       align: 'left',
-      field: (row: any) => row.Admission?.StudentID || 'None',
+      field: (row: AdmissionDto) => row.IdNum || 'None',
     },
     {
       name: 'Fullname',
       align: 'center',
       label: 'Full Name',
-      field: (row: any) =>
-        row.Admission?.FName +
+      field: (row: AdmissionDto) =>
+        row.enrollmentStudentFullName?.studentFullName?.FName +
           ' ' +
-          row.Admission?.MName +
+          row.enrollmentStudentFullName?.studentFullName?.MName +
           ' ' +
-          row.Admission?.LName || 'None',
+          row.enrollmentStudentFullName?.studentFullName?.LName || 'None',
     },
     {
       name: 'AcademicYear',
       align: 'center',
       label: 'Academic Year',
-      field: (row: any) => row.schoolyear?.schoolyear || 'None',
+      field: (row: any) => row.AcademicYear?.schoolyear,
     },
     {
       name: 'Semester',
       align: 'center',
       label: 'Semester',
-      field: (row: any) => row.Scheduling?.Semester || 'None',
+      field: (row: any) => row.Semester,
     },
     {
       name: 'Course',
       align: 'center',
       label: 'Course',
-      field: (row: any) => row.Course?.courseCode || 'None',
+      field: (row: any) => row.Courses?.courseCode || 'None',
     },
     {
       name: 'YearLevel',
       align: 'center',
       label: 'Year Level',
-      field: (row: any) => row.Scheduling?.AcademicYear || 'None',
-    },
-    {
-      name: 'Section',
-      align: 'center',
-      label: 'Section',
-      field: (row: any) => row.section?.sectionName || 'None',
+      field: (row: any) => row.yearLevel || 'None',
     },
 
     { name: 'action', align: 'center', label: 'Action', field: 'action' },
@@ -321,41 +398,73 @@ export default class Enrollment extends Vue {
       name: 'SubjectCode',
       align: 'center',
       label: 'Subject Code',
-      field: 'SubjectCode',
+      field: (row: SchedulingDto) => row.SubjectCodes?.SubjectCode,
     },
     {
       name: 'DescriptiveTitle',
       align: 'center',
       label: 'Descriptive Title',
-      field: 'DescriptiveTitle',
+      field: (row: SchedulingDto) =>
+        row.SubjectCodes?.DescriptiveTitle || 'None',
     },
     {
       name: 'Units',
       align: 'center',
       label: 'Units',
-      field: 'Units',
+      field: (row: SchedulingDto) => row.SubjectCodes?.Units,
     },
-    {
-      name: 'Semester',
-      align: 'center',
-      label: 'Semester',
-      field: 'Semester',
-    },
+
     {
       name: 'Time/Date',
       align: 'center',
       label: 'Time / Date',
-      field: 'Time/Date',
+      field: (row: SchedulingDto) =>
+        row.Time + ' ' + row.Time2 + ' ' + row.Day + ' ' + row.Day2,
+    },
+    {
+      name: 'Section',
+      align: 'center',
+      label: 'Section',
+      field: (row: SchedulingDto) => row.Section?.sectionName,
     },
     {
       name: 'Teacher',
       align: 'center',
       label: 'Teacher',
-      field: 'Teacher',
+      field: (row: SchedulingDto) => row.Section?.sectionTeachers?.FullName,
     },
+  ];
+  columns2 = [
+    {
+      name: 'Subject Code',
+      align: 'center',
+      label: 'Subject Code',
+      field: (row: SchedulingDto) => row.SubjectCodes?.SubjectCode,
+    },
+    {
+      name: 'Section',
+      align: 'center',
+      label: 'Section',
+      field: (row: SchedulingDto) => row.Section?.sectionName,
+    },
+    {
+      name: 'DescriptiveTitle',
+      align: 'center',
+      label: 'Descriptive Title',
+      field: (row: SubjectDto) => row.DescriptiveTitle,
+    },
+    {
+      name: 'Time and Date',
+      align: 'center',
+      label: 'Time and Date',
+      field: (row: SchedulingDto) =>
+        row.Time + ' ' + row.Time2 + ' ' + row.Day + ' ' + row.Day2,
+    },
+    { name: 'Units', align: 'center', label: 'Units', field: 'Units' },
   ];
 
   search = '';
+  courseFilter = '';
   onFindSubjects = false;
   displayInfo = false;
   selectedYear = '';
@@ -363,7 +472,8 @@ export default class Enrollment extends Vue {
   printPreview = false;
   addNewEnrollee = false;
   updateEnrollee = false;
-  options1 = ['First year', 'Second year', 'Third year', 'Fourth year'];
+  Year = ['First year', 'Second year', 'Third year', 'Fourth year'];
+  sem = ['1st Semester', '2nd Semester'];
 
   inputStudentInfo: AdmissionDto = {
     reportCard: false,
@@ -394,13 +504,24 @@ export default class Enrollment extends Vue {
   inputEnrollee: EnrollmentDto = {};
   inputSchedule: SchedulingDto = {
     yearLevel: '',
-    AcademicYear: '',
     Semester: '',
     Day: '',
     Day2: '',
     Time: '',
     Time2: '',
   };
+
+  async mounted() {
+    await this.getAllAdmission();
+    await this.getAllEnrollment();
+    await this.getAllschedule();
+    await this.getAllSubjects();
+    await this.getAllTeacher();
+    await this.getAllCourse();
+    await this.getAllsection();
+    await this.getAllSchoolYear();
+    this.filterSubject();
+  }
 
   onShowClick(res: any) {
     this.displayInfo = true;
@@ -455,6 +576,15 @@ export default class Enrollment extends Vue {
       IStudentInfo.IdNum.toLowerCase().includes(this.search.toLowerCase()),
     );
     this.searchResultStudent = resultStudentInfo;
+  }
+
+  filterSubject() {
+    const result = this.AllSchedule.filter(
+      (s) =>
+        s.Courses?.courseCode.match(this.courseFilter) && this.Year && this.sem,
+    );
+    console.log(result);
+    return result;
   }
 
   clearSearch() {

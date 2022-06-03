@@ -78,12 +78,6 @@
 
               <q-item-section> Scheduling </q-item-section>
             </q-item>
-            <q-item clickable v-ripple to="/chairperson/firstyear">
-              <q-item-section avatar>
-                <q-icon name="person" color="blue-2" />
-              </q-item-section>
-              <q-item-section> First Year </q-item-section>
-            </q-item>
 
             <q-separator />
 

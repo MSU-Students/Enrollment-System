@@ -48,6 +48,12 @@ export interface AccessTokenDto {
 export interface AdmissionDto {
     /**
      * 
+     * @type {number}
+     * @memberof AdmissionDto
+     */
+    'admissionID'?: number;
+    /**
+     * 
      * @type {boolean}
      * @memberof AdmissionDto
      */
@@ -178,12 +184,6 @@ export interface AdmissionDto {
      * @memberof AdmissionDto
      */
     'enrollmentStudentFullName'?: EnrollmentDto;
-    /**
-     * 
-     * @type {AdmissionDto}
-     * @memberof AdmissionDto
-     */
-    'subjectYearLevel'?: AdmissionDto;
 }
 /**
  * 
@@ -191,6 +191,12 @@ export interface AdmissionDto {
  * @interface CourseDto
  */
 export interface CourseDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof CourseDto
+     */
+    'courseID'?: number;
     /**
      * 
      * @type {string}
@@ -210,6 +216,12 @@ export interface CourseDto {
  * @interface EnrollmentDto
  */
 export interface EnrollmentDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnrollmentDto
+     */
+    'enrollmentID'?: string;
     /**
      * 
      * @type {SchedulingDto}
@@ -298,92 +310,6 @@ export interface EnrollmentDto {
 /**
  * 
  * @export
- * @interface Firstyear1stsemDto
- */
-export interface Firstyear1stsemDto {
-    /**
-     * 
-     * @type {SubjectDto}
-     * @memberof Firstyear1stsemDto
-     */
-    'DescriptiveTitle'?: SubjectDto;
-    /**
-     * 
-     * @type {SubjectDto}
-     * @memberof Firstyear1stsemDto
-     */
-    'units'?: SubjectDto;
-    /**
-     * 
-     * @type {SubjectDto}
-     * @memberof Firstyear1stsemDto
-     */
-    'Schedule'?: SubjectDto;
-    /**
-     * 
-     * @type {Firstyear1stsemDto}
-     * @memberof Firstyear1stsemDto
-     */
-    'subject'?: Firstyear1stsemDto;
-    /**
-     * 
-     * @type {Firstyear1stsemDto}
-     * @memberof Firstyear1stsemDto
-     */
-    'teacher'?: Firstyear1stsemDto;
-    /**
-     * 
-     * @type {Firstyear1stsemDto}
-     * @memberof Firstyear1stsemDto
-     */
-    'room'?: Firstyear1stsemDto;
-}
-/**
- * 
- * @export
- * @interface Firstyear2ndsemDto
- */
-export interface Firstyear2ndsemDto {
-    /**
-     * 
-     * @type {SubjectDto}
-     * @memberof Firstyear2ndsemDto
-     */
-    'DescriptiveTitle'?: SubjectDto;
-    /**
-     * 
-     * @type {SubjectDto}
-     * @memberof Firstyear2ndsemDto
-     */
-    'units'?: SubjectDto;
-    /**
-     * 
-     * @type {SubjectDto}
-     * @memberof Firstyear2ndsemDto
-     */
-    'Schedule'?: SubjectDto;
-    /**
-     * 
-     * @type {Firstyear2ndsemDto}
-     * @memberof Firstyear2ndsemDto
-     */
-    'subject'?: Firstyear2ndsemDto;
-    /**
-     * 
-     * @type {Firstyear2ndsemDto}
-     * @memberof Firstyear2ndsemDto
-     */
-    'teacher'?: Firstyear2ndsemDto;
-    /**
-     * 
-     * @type {Firstyear2ndsemDto}
-     * @memberof Firstyear2ndsemDto
-     */
-    'room'?: Firstyear2ndsemDto;
-}
-/**
- * 
- * @export
  * @interface RefreshDto
  */
 export interface RefreshDto {
@@ -397,31 +323,6 @@ export interface RefreshDto {
 /**
  * 
  * @export
- * @interface RoomDto
- */
-export interface RoomDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof RoomDto
-     */
-    'Room': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoomDto
-     */
-    'Description': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RoomDto
-     */
-    'Status': string;
-}
-/**
- * 
- * @export
  * @interface SchedulingDto
  */
 export interface SchedulingDto {
@@ -430,13 +331,19 @@ export interface SchedulingDto {
      * @type {string}
      * @memberof SchedulingDto
      */
-    'yearLevel': string;
+    'scheduleID'?: string;
     /**
      * 
      * @type {string}
      * @memberof SchedulingDto
      */
-    'AcademicYear': string;
+    'yearLevel': string;
+    /**
+     * 
+     * @type {SchoolYearDto}
+     * @memberof SchedulingDto
+     */
+    'AcademicYear'?: SchoolYearDto;
     /**
      * 
      * @type {string}
@@ -472,7 +379,7 @@ export interface SchedulingDto {
      * @type {SubjectDto}
      * @memberof SchedulingDto
      */
-    'SubjectCode'?: SubjectDto;
+    'SubjectCodes'?: SubjectDto;
     /**
      * 
      * @type {SubjectDto}
@@ -484,7 +391,7 @@ export interface SchedulingDto {
      * @type {CourseDto}
      * @memberof SchedulingDto
      */
-    'Course'?: CourseDto;
+    'Courses'?: CourseDto;
     /**
      * 
      * @type {SectionDto}
@@ -496,7 +403,7 @@ export interface SchedulingDto {
      * @type {TeacherDto}
      * @memberof SchedulingDto
      */
-    'Teacher'?: TeacherDto;
+    'Teachers'?: TeacherDto;
     /**
      * 
      * @type {EnrollmentDto}
@@ -587,7 +494,25 @@ export interface SchoolYearDto {
      * @type {string}
      * @memberof SchoolYearDto
      */
+    'schoolyearid'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SchoolYearDto
+     */
     'schoolyear': string;
+    /**
+     * 
+     * @type {SubjectDto}
+     * @memberof SchoolYearDto
+     */
+    'subjectSchoolYear'?: SubjectDto;
+    /**
+     * 
+     * @type {SchedulingDto}
+     * @memberof SchoolYearDto
+     */
+    'schedulingSchoolYear'?: SchedulingDto;
 }
 /**
  * 
@@ -595,6 +520,12 @@ export interface SchoolYearDto {
  * @interface SectionDto
  */
 export interface SectionDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof SectionDto
+     */
+    'sectionID'?: number;
     /**
      * 
      * @type {string}
@@ -612,7 +543,7 @@ export interface SectionDto {
      * @type {TeacherDto}
      * @memberof SectionDto
      */
-    'sectionTeacher'?: TeacherDto;
+    'sectionTeachers'?: TeacherDto;
 }
 /**
  * 
@@ -628,16 +559,10 @@ export interface SubjectDto {
     'subjectID'?: string;
     /**
      * 
-     * @type {string}
+     * @type {SchoolYearDto}
      * @memberof SubjectDto
      */
-    'AYCode': string;
-    /**
-     * 
-     * @type {AdmissionDto}
-     * @memberof SubjectDto
-     */
-    'YearLevel'?: AdmissionDto;
+    'AYCodes'?: SchoolYearDto;
     /**
      * 
      * @type {string}
@@ -655,37 +580,13 @@ export interface SubjectDto {
      * @type {string}
      * @memberof SubjectDto
      */
-    'Prerequisite': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SubjectDto
-     */
     'Units': string;
     /**
      * 
      * @type {string}
      * @memberof SubjectDto
      */
-    'Day': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SubjectDto
-     */
-    'Day2': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SubjectDto
-     */
-    'Time': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SubjectDto
-     */
-    'Time2': string;
+    'YearLevel': string;
     /**
      * 
      * @type {SchedulingDto}
@@ -699,6 +600,12 @@ export interface SubjectDto {
  * @interface TeacherDto
  */
 export interface TeacherDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeacherDto
+     */
+    'teacherID'?: string;
     /**
      * 
      * @type {string}
@@ -786,78 +693,6 @@ export interface UserDto {
  */
 export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * 
-         * @summary Add new 1stSubjectfor1styear
-         * @param {Firstyear1stsemDto} firstyear1stsemDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        add1stSubjectfor1styear: async (firstyear1stsemDto: Firstyear1stsemDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'firstyear1stsemDto' is not null or undefined
-            assertParamExists('add1stSubjectfor1styear', 'firstyear1stsemDto', firstyear1stsemDto)
-            const localVarPath = `/firstyear1stsem`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(firstyear1stsemDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Add new 2ndSubjectsfor1styear
-         * @param {Firstyear2ndsemDto} firstyear2ndsemDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        add2ndSubjectsfor1styear: async (firstyear2ndsemDto: Firstyear2ndsemDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'firstyear2ndsemDto' is not null or undefined
-            assertParamExists('add2ndSubjectsfor1styear', 'firstyear2ndsemDto', firstyear2ndsemDto)
-            const localVarPath = `/secondyear2ndsem`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(firstyear2ndsemDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * 
          * @summary Add new Admissions
@@ -960,42 +795,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(enrollmentDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Add new Rooms
-         * @param {RoomDto} roomDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addRooms: async (roomDto: RoomDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'roomDto' is not null or undefined
-            assertParamExists('addRooms', 'roomDto', roomDto)
-            const localVarPath = `/room`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(roomDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1356,74 +1155,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Delete 2ndSubjectsfor1styear by id
-         * @param {number} firstyear2ndSemID 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteOneSubjectsfor1styear: async (firstyear2ndSemID: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'firstyear2ndSemID' is not null or undefined
-            assertParamExists('deleteOneSubjectsfor1styear', 'firstyear2ndSemID', firstyear2ndSemID)
-            const localVarPath = `/secondyear2ndsem/{firstyear2ndSemID}`
-                .replace(`{${"firstyear2ndSemID"}}`, encodeURIComponent(String(firstyear2ndSemID)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Delete Rooms by id
-         * @param {number} roomID 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteRoom: async (roomID: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'roomID' is not null or undefined
-            assertParamExists('deleteRoom', 'roomID', roomID)
-            const localVarPath = `/room/{roomID}`
-                .replace(`{${"roomID"}}`, encodeURIComponent(String(roomID)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Delete Schedulings by id
          * @param {number} schedulingID 
          * @param {*} [options] Override http request option.
@@ -1526,40 +1257,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Delete 1stSubjectsfor1styear by id
-         * @param {number} firstyear1stSemID 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteSubjectsfor1styear: async (firstyear1stSemID: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'firstyear1stSemID' is not null or undefined
-            assertParamExists('deleteSubjectsfor1styear', 'firstyear1stSemID', firstyear1stSemID)
-            const localVarPath = `/firstyear1stsem/{firstyear1stSemID}`
-                .replace(`{${"firstyear1stSemID"}}`, encodeURIComponent(String(firstyear1stSemID)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Delete Teachers by id
          * @param {number} teacherID 
          * @param {*} [options] Override http request option.
@@ -1632,66 +1329,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Get all 1stSubjectfor1styear
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        get1stSubjectfor1styear: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/firstyear1stsem`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get all 2ndSubjectfor1styear
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        get2ndSubjectfor1styear: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/secondyear2ndsem`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Get Admissions by id
          * @param {number} admissionID 
          * @param {*} [options] Override http request option.
@@ -1732,74 +1369,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          */
         getAdmissions: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/admission`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get all 1stSubjectsfor1styear by id
-         * @param {number} firstyear1stSemID 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAll1stSubjectsfor1styear: async (firstyear1stSemID: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'firstyear1stSemID' is not null or undefined
-            assertParamExists('getAll1stSubjectsfor1styear', 'firstyear1stSemID', firstyear1stSemID)
-            const localVarPath = `/firstyear1stsem/{firstyear1stSemID}`
-                .replace(`{${"firstyear1stSemID"}}`, encodeURIComponent(String(firstyear1stSemID)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get all 2ndSubjectsfor1styear by id
-         * @param {number} firstyear2ndSemID 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAll2ndSubjectsfor1styear: async (firstyear2ndSemID: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'firstyear2ndSemID' is not null or undefined
-            assertParamExists('getAll2ndSubjectsfor1styear', 'firstyear2ndSemID', firstyear2ndSemID)
-            const localVarPath = `/secondyear2ndsem/{firstyear2ndSemID}`
-                .replace(`{${"firstyear2ndSemID"}}`, encodeURIComponent(String(firstyear2ndSemID)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2002,70 +1571,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get Rooms by id
-         * @param {number} roomID 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getRoom: async (roomID: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'roomID' is not null or undefined
-            assertParamExists('getRoom', 'roomID', roomID)
-            const localVarPath = `/room/{roomID}`
-                .replace(`{${"roomID"}}`, encodeURIComponent(String(roomID)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get all Rooms
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getRooms: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/room`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
 
 
     
@@ -2596,86 +2101,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Update 1stSubjectfor1styear by id
-         * @param {number} firstyear1stSemID 
-         * @param {Firstyear1stsemDto} firstyear1stsemDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        update1stSubjectfor1styear: async (firstyear1stSemID: number, firstyear1stsemDto: Firstyear1stsemDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'firstyear1stSemID' is not null or undefined
-            assertParamExists('update1stSubjectfor1styear', 'firstyear1stSemID', firstyear1stSemID)
-            // verify required parameter 'firstyear1stsemDto' is not null or undefined
-            assertParamExists('update1stSubjectfor1styear', 'firstyear1stsemDto', firstyear1stsemDto)
-            const localVarPath = `/firstyear1stsem/{firstyear1stSemID}`
-                .replace(`{${"firstyear1stSemID"}}`, encodeURIComponent(String(firstyear1stSemID)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(firstyear1stsemDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Update 2ndSubjectsfor1styear by id
-         * @param {number} firstyear2ndSemID 
-         * @param {Firstyear2ndsemDto} firstyear2ndsemDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        update2ndSubjectsfor1styear: async (firstyear2ndSemID: number, firstyear2ndsemDto: Firstyear2ndsemDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'firstyear2ndSemID' is not null or undefined
-            assertParamExists('update2ndSubjectsfor1styear', 'firstyear2ndSemID', firstyear2ndSemID)
-            // verify required parameter 'firstyear2ndsemDto' is not null or undefined
-            assertParamExists('update2ndSubjectsfor1styear', 'firstyear2ndsemDto', firstyear2ndsemDto)
-            const localVarPath = `/secondyear2ndsem/{firstyear2ndSemID}`
-                .replace(`{${"firstyear2ndSemID"}}`, encodeURIComponent(String(firstyear2ndSemID)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(firstyear2ndsemDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Update Admission by id
          * @param {number} admissionID 
          * @param {AdmissionDto} admissionDto 
@@ -2748,46 +2173,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(enrollmentDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Update Rooms by id
-         * @param {number} roomID 
-         * @param {RoomDto} roomDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateRoom: async (roomID: number, roomDto: RoomDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'roomID' is not null or undefined
-            assertParamExists('updateRoom', 'roomID', roomID)
-            // verify required parameter 'roomDto' is not null or undefined
-            assertParamExists('updateRoom', 'roomDto', roomDto)
-            const localVarPath = `/room/{roomID}`
-                .replace(`{${"roomID"}}`, encodeURIComponent(String(roomID)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(roomDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3090,28 +2475,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Add new 1stSubjectfor1styear
-         * @param {Firstyear1stsemDto} firstyear1stsemDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async add1stSubjectfor1styear(firstyear1stsemDto: Firstyear1stsemDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Firstyear1stsemDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.add1stSubjectfor1styear(firstyear1stsemDto, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Add new 2ndSubjectsfor1styear
-         * @param {Firstyear2ndsemDto} firstyear2ndsemDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async add2ndSubjectsfor1styear(firstyear2ndsemDto: Firstyear2ndsemDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Firstyear2ndsemDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.add2ndSubjectsfor1styear(firstyear2ndsemDto, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary Add new Admissions
          * @param {AdmissionDto} admissionDto 
          * @param {*} [options] Override http request option.
@@ -3141,17 +2504,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          */
         async addEnrollments(enrollmentDto: EnrollmentDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnrollmentDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.addEnrollments(enrollmentDto, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Add new Rooms
-         * @param {RoomDto} roomDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async addRooms(roomDto: RoomDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addRooms(roomDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3266,28 +2618,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Delete 2ndSubjectsfor1styear by id
-         * @param {number} firstyear2ndSemID 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteOneSubjectsfor1styear(firstyear2ndSemID: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Firstyear2ndsemDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOneSubjectsfor1styear(firstyear2ndSemID, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Delete Rooms by id
-         * @param {number} roomID 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteRoom(roomID: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteRoom(roomID, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary Delete Schedulings by id
          * @param {number} schedulingID 
          * @param {*} [options] Override http request option.
@@ -3321,17 +2651,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Delete 1stSubjectsfor1styear by id
-         * @param {number} firstyear1stSemID 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteSubjectsfor1styear(firstyear1stSemID: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Firstyear1stsemDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSubjectsfor1styear(firstyear1stSemID, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary Delete Teachers by id
          * @param {number} teacherID 
          * @param {*} [options] Override http request option.
@@ -3354,26 +2673,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get all 1stSubjectfor1styear
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async get1stSubjectfor1styear(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Firstyear1stsemDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.get1stSubjectfor1styear(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Get all 2ndSubjectfor1styear
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async get2ndSubjectfor1styear(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Firstyear2ndsemDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.get2ndSubjectfor1styear(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary Get Admissions by id
          * @param {number} admissionID 
          * @param {*} [options] Override http request option.
@@ -3391,28 +2690,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          */
         async getAdmissions(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdmissionDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAdmissions(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Get all 1stSubjectsfor1styear by id
-         * @param {number} firstyear1stSemID 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getAll1stSubjectsfor1styear(firstyear1stSemID: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Firstyear1stsemDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAll1stSubjectsfor1styear(firstyear1stSemID, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Get all 2ndSubjectsfor1styear by id
-         * @param {number} firstyear2ndSemID 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getAll2ndSubjectsfor1styear(firstyear2ndSemID: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Firstyear2ndsemDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAll2ndSubjectsfor1styear(firstyear2ndSemID, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3475,27 +2752,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          */
         async getProfile(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProfile(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Get Rooms by id
-         * @param {number} roomID 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getRoom(roomID: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getRoom(roomID, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Get all Rooms
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getRooms(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getRooms(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3660,30 +2916,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Update 1stSubjectfor1styear by id
-         * @param {number} firstyear1stSemID 
-         * @param {Firstyear1stsemDto} firstyear1stsemDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async update1stSubjectfor1styear(firstyear1stSemID: number, firstyear1stsemDto: Firstyear1stsemDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Firstyear1stsemDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.update1stSubjectfor1styear(firstyear1stSemID, firstyear1stsemDto, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Update 2ndSubjectsfor1styear by id
-         * @param {number} firstyear2ndSemID 
-         * @param {Firstyear2ndsemDto} firstyear2ndsemDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async update2ndSubjectsfor1styear(firstyear2ndSemID: number, firstyear2ndsemDto: Firstyear2ndsemDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Firstyear2ndsemDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.update2ndSubjectsfor1styear(firstyear2ndSemID, firstyear2ndsemDto, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary Update Admission by id
          * @param {number} admissionID 
          * @param {AdmissionDto} admissionDto 
@@ -3704,18 +2936,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          */
         async updateEnrollment(enrollmentID: number, enrollmentDto: EnrollmentDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnrollmentDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateEnrollment(enrollmentID, enrollmentDto, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Update Rooms by id
-         * @param {number} roomID 
-         * @param {RoomDto} roomDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateRoom(roomID: number, roomDto: RoomDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateRoom(roomID, roomDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3814,26 +3034,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
-         * @summary Add new 1stSubjectfor1styear
-         * @param {Firstyear1stsemDto} firstyear1stsemDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        add1stSubjectfor1styear(firstyear1stsemDto: Firstyear1stsemDto, options?: any): AxiosPromise<Firstyear1stsemDto> {
-            return localVarFp.add1stSubjectfor1styear(firstyear1stsemDto, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Add new 2ndSubjectsfor1styear
-         * @param {Firstyear2ndsemDto} firstyear2ndsemDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        add2ndSubjectsfor1styear(firstyear2ndsemDto: Firstyear2ndsemDto, options?: any): AxiosPromise<Firstyear2ndsemDto> {
-            return localVarFp.add2ndSubjectsfor1styear(firstyear2ndsemDto, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Add new Admissions
          * @param {AdmissionDto} admissionDto 
          * @param {*} [options] Override http request option.
@@ -3861,16 +3061,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         addEnrollments(enrollmentDto: EnrollmentDto, options?: any): AxiosPromise<EnrollmentDto> {
             return localVarFp.addEnrollments(enrollmentDto, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Add new Rooms
-         * @param {RoomDto} roomDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addRooms(roomDto: RoomDto, options?: any): AxiosPromise<RoomDto> {
-            return localVarFp.addRooms(roomDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3974,26 +3164,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary Delete 2ndSubjectsfor1styear by id
-         * @param {number} firstyear2ndSemID 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteOneSubjectsfor1styear(firstyear2ndSemID: number, options?: any): AxiosPromise<Firstyear2ndsemDto> {
-            return localVarFp.deleteOneSubjectsfor1styear(firstyear2ndSemID, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Delete Rooms by id
-         * @param {number} roomID 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteRoom(roomID: number, options?: any): AxiosPromise<RoomDto> {
-            return localVarFp.deleteRoom(roomID, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Delete Schedulings by id
          * @param {number} schedulingID 
          * @param {*} [options] Override http request option.
@@ -4024,16 +3194,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary Delete 1stSubjectsfor1styear by id
-         * @param {number} firstyear1stSemID 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteSubjectsfor1styear(firstyear1stSemID: number, options?: any): AxiosPromise<Firstyear1stsemDto> {
-            return localVarFp.deleteSubjectsfor1styear(firstyear1stSemID, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Delete Teachers by id
          * @param {number} teacherID 
          * @param {*} [options] Override http request option.
@@ -4054,24 +3214,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary Get all 1stSubjectfor1styear
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        get1stSubjectfor1styear(options?: any): AxiosPromise<Firstyear1stsemDto> {
-            return localVarFp.get1stSubjectfor1styear(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get all 2ndSubjectfor1styear
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        get2ndSubjectfor1styear(options?: any): AxiosPromise<Firstyear2ndsemDto> {
-            return localVarFp.get2ndSubjectfor1styear(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Get Admissions by id
          * @param {number} admissionID 
          * @param {*} [options] Override http request option.
@@ -4088,26 +3230,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         getAdmissions(options?: any): AxiosPromise<AdmissionDto> {
             return localVarFp.getAdmissions(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get all 1stSubjectsfor1styear by id
-         * @param {number} firstyear1stSemID 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAll1stSubjectsfor1styear(firstyear1stSemID: number, options?: any): AxiosPromise<Firstyear1stsemDto> {
-            return localVarFp.getAll1stSubjectsfor1styear(firstyear1stSemID, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get all 2ndSubjectsfor1styear by id
-         * @param {number} firstyear2ndSemID 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAll2ndSubjectsfor1styear(firstyear2ndSemID: number, options?: any): AxiosPromise<Firstyear2ndsemDto> {
-            return localVarFp.getAll2ndSubjectsfor1styear(firstyear2ndSemID, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4164,25 +3286,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         getProfile(options?: any): AxiosPromise<UserDto> {
             return localVarFp.getProfile(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get Rooms by id
-         * @param {number} roomID 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getRoom(roomID: number, options?: any): AxiosPromise<RoomDto> {
-            return localVarFp.getRoom(roomID, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get all Rooms
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getRooms(options?: any): AxiosPromise<RoomDto> {
-            return localVarFp.getRooms(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4331,28 +3434,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary Update 1stSubjectfor1styear by id
-         * @param {number} firstyear1stSemID 
-         * @param {Firstyear1stsemDto} firstyear1stsemDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        update1stSubjectfor1styear(firstyear1stSemID: number, firstyear1stsemDto: Firstyear1stsemDto, options?: any): AxiosPromise<Firstyear1stsemDto> {
-            return localVarFp.update1stSubjectfor1styear(firstyear1stSemID, firstyear1stsemDto, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Update 2ndSubjectsfor1styear by id
-         * @param {number} firstyear2ndSemID 
-         * @param {Firstyear2ndsemDto} firstyear2ndsemDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        update2ndSubjectsfor1styear(firstyear2ndSemID: number, firstyear2ndsemDto: Firstyear2ndsemDto, options?: any): AxiosPromise<Firstyear2ndsemDto> {
-            return localVarFp.update2ndSubjectsfor1styear(firstyear2ndSemID, firstyear2ndsemDto, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Update Admission by id
          * @param {number} admissionID 
          * @param {AdmissionDto} admissionDto 
@@ -4372,17 +3453,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         updateEnrollment(enrollmentID: number, enrollmentDto: EnrollmentDto, options?: any): AxiosPromise<EnrollmentDto> {
             return localVarFp.updateEnrollment(enrollmentID, enrollmentDto, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Update Rooms by id
-         * @param {number} roomID 
-         * @param {RoomDto} roomDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateRoom(roomID: number, roomDto: RoomDto, options?: any): AxiosPromise<RoomDto> {
-            return localVarFp.updateRoom(roomID, roomDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4473,30 +3543,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
 export class DefaultApi extends BaseAPI {
     /**
      * 
-     * @summary Add new 1stSubjectfor1styear
-     * @param {Firstyear1stsemDto} firstyear1stsemDto 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public add1stSubjectfor1styear(firstyear1stsemDto: Firstyear1stsemDto, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).add1stSubjectfor1styear(firstyear1stsemDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Add new 2ndSubjectsfor1styear
-     * @param {Firstyear2ndsemDto} firstyear2ndsemDto 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public add2ndSubjectsfor1styear(firstyear2ndsemDto: Firstyear2ndsemDto, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).add2ndSubjectsfor1styear(firstyear2ndsemDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary Add new Admissions
      * @param {AdmissionDto} admissionDto 
      * @param {*} [options] Override http request option.
@@ -4529,18 +3575,6 @@ export class DefaultApi extends BaseAPI {
      */
     public addEnrollments(enrollmentDto: EnrollmentDto, options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).addEnrollments(enrollmentDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Add new Rooms
-     * @param {RoomDto} roomDto 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public addRooms(roomDto: RoomDto, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).addRooms(roomDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4665,30 +3699,6 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
-     * @summary Delete 2ndSubjectsfor1styear by id
-     * @param {number} firstyear2ndSemID 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public deleteOneSubjectsfor1styear(firstyear2ndSemID: number, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).deleteOneSubjectsfor1styear(firstyear2ndSemID, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Delete Rooms by id
-     * @param {number} roomID 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public deleteRoom(roomID: number, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).deleteRoom(roomID, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary Delete Schedulings by id
      * @param {number} schedulingID 
      * @param {*} [options] Override http request option.
@@ -4725,18 +3735,6 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
-     * @summary Delete 1stSubjectsfor1styear by id
-     * @param {number} firstyear1stSemID 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public deleteSubjectsfor1styear(firstyear1stSemID: number, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).deleteSubjectsfor1styear(firstyear1stSemID, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary Delete Teachers by id
      * @param {number} teacherID 
      * @param {*} [options] Override http request option.
@@ -4761,28 +3759,6 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get all 1stSubjectfor1styear
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public get1stSubjectfor1styear(options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).get1stSubjectfor1styear(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get all 2ndSubjectfor1styear
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public get2ndSubjectfor1styear(options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).get2ndSubjectfor1styear(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary Get Admissions by id
      * @param {number} admissionID 
      * @param {*} [options] Override http request option.
@@ -4802,30 +3778,6 @@ export class DefaultApi extends BaseAPI {
      */
     public getAdmissions(options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).getAdmissions(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get all 1stSubjectsfor1styear by id
-     * @param {number} firstyear1stSemID 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public getAll1stSubjectsfor1styear(firstyear1stSemID: number, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getAll1stSubjectsfor1styear(firstyear1stSemID, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get all 2ndSubjectsfor1styear by id
-     * @param {number} firstyear2ndSemID 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public getAll2ndSubjectsfor1styear(firstyear2ndSemID: number, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getAll2ndSubjectsfor1styear(firstyear2ndSemID, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4894,29 +3846,6 @@ export class DefaultApi extends BaseAPI {
      */
     public getProfile(options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).getProfile(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get Rooms by id
-     * @param {number} roomID 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public getRoom(roomID: number, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getRoom(roomID, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get all Rooms
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public getRooms(options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getRooms(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5096,32 +4025,6 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
-     * @summary Update 1stSubjectfor1styear by id
-     * @param {number} firstyear1stSemID 
-     * @param {Firstyear1stsemDto} firstyear1stsemDto 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public update1stSubjectfor1styear(firstyear1stSemID: number, firstyear1stsemDto: Firstyear1stsemDto, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).update1stSubjectfor1styear(firstyear1stSemID, firstyear1stsemDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Update 2ndSubjectsfor1styear by id
-     * @param {number} firstyear2ndSemID 
-     * @param {Firstyear2ndsemDto} firstyear2ndsemDto 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public update2ndSubjectsfor1styear(firstyear2ndSemID: number, firstyear2ndsemDto: Firstyear2ndsemDto, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).update2ndSubjectsfor1styear(firstyear2ndSemID, firstyear2ndsemDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary Update Admission by id
      * @param {number} admissionID 
      * @param {AdmissionDto} admissionDto 
@@ -5144,19 +4047,6 @@ export class DefaultApi extends BaseAPI {
      */
     public updateEnrollment(enrollmentID: number, enrollmentDto: EnrollmentDto, options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).updateEnrollment(enrollmentID, enrollmentDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Update Rooms by id
-     * @param {number} roomID 
-     * @param {RoomDto} roomDto 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public updateRoom(roomID: number, roomDto: RoomDto, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).updateRoom(roomID, roomDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

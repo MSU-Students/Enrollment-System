@@ -1,6 +1,6 @@
 export interface schoolyear {
   schoolyearid?: number;
-  schoolyear: string;
+  schoolyear: number;
 }
 
 export interface schoolyearStateInterface {

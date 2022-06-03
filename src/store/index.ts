@@ -19,18 +19,8 @@ import { ManagementSubjectStateInterface } from './ManagementSubject/state';
 import ManagementTeacher from './ManagementTeacher';
 import { ManagementTeacherStateInterface } from './ManagementTeacher/state';
 
-import ManagementRoom from './ManagementRoom';
-import { ManagementRoomStateInterface } from './ManagementRoom/state';
-
 import Admission from './Admission';
 import { AdmissionStateInterface } from './Admission/state';
-
-import Firstyear1stSem from './Firstyear1stSem';
-import { FirstYearStateInterface } from './Firstyear1stSem/state';
-
-import Firstyear2ndSem from './Firstyear2ndSem';
-import { FirstYear2ndSemStateInterface } from './Firstyear2ndSem/state';
-
 import schoolyear from './schoolyear';
 import { schoolyearStateInterface } from './schoolyear/state';
 
@@ -58,10 +48,7 @@ export interface StateInterface {
   account: AccountStateInterface;
   ManagementSubject: ManagementSubjectStateInterface;
   ManagementTeacher: ManagementTeacherStateInterface;
-  ManagementRoom: ManagementRoomStateInterface;
   admission: AdmissionStateInterface;
-  Firstyear1stSem: FirstYearStateInterface;
-  Firstyear2ndSem: FirstYear2ndSemStateInterface;
   schoolyear: schoolyearStateInterface;
   course: courseStateInterface;
   section: sectionStateInterface;
@@ -89,9 +76,6 @@ export default store(function (/* { ssrContext } */) {
       Admission,
       ManagementSubject,
       ManagementTeacher,
-      ManagementRoom,
-      Firstyear1stSem,
-      Firstyear2ndSem,
       schoolyear,
       course,
       section,

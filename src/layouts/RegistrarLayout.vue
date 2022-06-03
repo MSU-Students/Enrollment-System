@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR lFf" class="bg-image2">
+  <q-layout view="hHh lpR lFf" class="bg-image5">
     <q-header elevated class="q-px-lg q-py-md bg-image1">
       <q-toolbar>
         <q-img src="~assets/logo.png" style="width: 110px"></q-img>

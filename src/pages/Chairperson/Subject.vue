@@ -57,13 +57,19 @@
                 <q-form class="q-gutter-md">
                   <div class="row">
                     <div class="col col-md-6">
-                      <q-input
+                      <q-select
                         autofocus
-                        readonly
                         class="q-py-md"
                         outlined
-                        v-model="inputSubject.AYCode"
+                        v-model="inputSubject.AYCodes"
                         label="AY Code"
+                        transition-show="flip-up"
+                        transition-hide="flip-down"
+                        :options="allSchoolYear"
+                        option-label="schoolyear"
+                        option-value="schoolyearid"
+                        map-options
+                        emit-value
                       />
                       <q-input
                         outlined
@@ -152,7 +158,7 @@
                           autofocus
                           class="q-py-md"
                           outlined
-                          v-model="inputSubject.AYCode"
+                          v-model="inputSubject.AYCodes"
                           label="AY Code"
                         />
                         <q-input
@@ -176,12 +182,6 @@
                           v-model="inputSubject.YearLevel"
                           :options="options"
                           label="Year Level"
-                        />
-                        <q-input
-                          outlined
-                          class="q-py-md"
-                          v-model="inputSubject.Prerequisite"
-                          label="Prerequisite"
                         />
                         <q-input
                           outlined
@@ -230,13 +230,12 @@
 import { Vue, Options } from 'vue-class-component';
 import { ManagementSubject } from 'src/store/ManagementSubject/state';
 import { mapActions, mapState } from 'vuex';
-import { AdmissionDto, SubjectDto } from 'src/services/restapi';
-import { IStudentInfo } from 'src/store/Admission/state';
+import { SchedulingDto, SchoolYearDto, SubjectDto } from 'src/services/restapi';
 
 @Options({
   computed: {
     ...mapState('ManagementSubject', ['AllSubject']),
-    ...mapState('Admission', ['allAdmissionInfo']),
+    ...mapState('schoolyear', ['allSchoolYear']),
   },
   methods: {
     ...mapActions('ManagementSubject', [
@@ -245,7 +244,7 @@ import { IStudentInfo } from 'src/store/Admission/state';
       'deleteSubject',
       'getAllSubjects',
     ]),
-    ...mapActions('Admission', ['addNewAdmission', 'getAllAdmission']),
+    ...mapActions('schoolyear', ['getAllSchoolYear']),
   },
 })
 export default class ManageSubject extends Vue {
@@ -253,13 +252,13 @@ export default class ManageSubject extends Vue {
   editSubject!: (payload: SubjectDto) => Promise<void>;
   deleteSubject!: (payload: SubjectDto) => Promise<void>;
   AllSubject!: ManagementSubject[];
-  allAdmissionInfo!: IStudentInfo[];
+  allSchoolYear!: SchoolYearDto[];
   getAllSubjects!: () => Promise<void>;
-  getAllAdmission!: () => Promise<void>;
+  getAllSchoolYear!: () => Promise<void>;
 
   async mounted() {
     await this.getAllSubjects();
-    await this.getAllAdmission();
+    await this.getAllSchoolYear();
   }
   columns = [
     {
@@ -267,8 +266,7 @@ export default class ManageSubject extends Vue {
       required: true,
       label: 'AY Code',
       align: 'left',
-      field: (row: SubjectDto) => row.AYCode,
-      format: (val: string) => `${val}`,
+      field: (row: SubjectDto) => row.AYCodes?.schoolyear,
     },
     {
       name: 'SubjectCode',
@@ -299,39 +297,14 @@ export default class ManageSubject extends Vue {
   options = ['First Year', 'Second Year', 'Third Year', 'Fourth Year'];
 
   inputSubject: SubjectDto = {
-    AYCode: '',
     SubjectCode: '',
     DescriptiveTitle: '',
-    Prerequisite: '',
     Units: '',
-    Day: '',
-    Day2: '',
-    Time: '',
-    Time2: '',
+    YearLevel: '',
   };
 
-  inputStudentInfo: AdmissionDto = {
-    reportCard: false,
-    bCertificate: false,
-    Pic: false,
-    eForm: false,
-    IdNum: '',
-    lrn: '',
-    ayCode: '',
-    incomingYlevel: '',
-    studentType: '',
-    FName: '',
-    MName: '',
-    LName: '',
-    age: '',
-    dataOfBirth: '',
-    placeOfBirth: '',
-    contactNo: '',
-    gender: '',
-    martialStatus: '',
-    citizenship: '',
-    religion: '',
-    address: '',
+  inputSchoolYear: SchoolYearDto = {
+    schoolyear: '',
   };
 
   async onaddSubject() {
@@ -377,15 +350,10 @@ export default class ManageSubject extends Vue {
 
   resetModel() {
     this.inputSubject = {
-      AYCode: '',
       SubjectCode: '',
       DescriptiveTitle: '',
-      Prerequisite: '',
       Units: '',
-      Day: '',
-      Day2: '',
-      Time: '',
-      Time2: '',
+      YearLevel: '',
     };
   }
 }

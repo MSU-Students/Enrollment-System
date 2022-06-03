@@ -56,7 +56,7 @@
                     <q-input
                       autofocus
                       outlined
-                      v-model="schoolyear"
+                      v-model="inputSchoolYear.schoolyear"
                       label="School Year"
                     />
                   </div>
@@ -115,16 +115,14 @@ export default class ManageSchoolYear extends Vue {
       required: true,
       label: 'School Year',
       align: 'left',
-      field: 'schoolyear',
+      field: (row: SchoolYearDto) => row.schoolyear,
+      format: (val: number) => `${val}`,
     },
-
-    { name: 'status', align: 'center', label: 'Status', field: 'status' },
   ];
 
   addNewSchoolYear = false;
   updateSchoolYear = false;
   filter = '';
-  schoolyear = '';
 
   inputSchoolYear: SchoolYearDto = {
     schoolyear: '',

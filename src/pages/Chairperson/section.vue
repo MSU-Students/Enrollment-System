@@ -73,8 +73,8 @@
                       />
                       <q-select
                         outlined
-                        v-model="inputSection.sectionTeacher"
-                        label="Teacher"
+                        v-model="inputSection.sectionTeachers"
+                        label="Adviser"
                         transition-show="flip-up"
                         transition-hide="flip-down"
                         :options="allTeacher"
@@ -154,8 +154,8 @@
                         />
                         <q-select
                           outlined
-                          v-model="inputSection.sectionTeacher"
-                          label="Teacher"
+                          v-model="inputSection.sectionTeachers"
+                          label="Adviser"
                           transition-show="flip-up"
                           transition-hide="flip-down"
                           :options="allTeacher"
@@ -254,8 +254,8 @@ export default class ManageSection extends Vue {
     {
       name: 'teacher',
       align: 'left',
-      label: 'Teacher',
-      field: (row: any) => row.sectionTeacher?.FullName || 'None',
+      label: 'Adviser',
+      field: (row: SectionDto) => row.sectionTeachers?.FullName,
     },
 
     { name: 'action', align: 'center', label: 'Action', field: 'action' },

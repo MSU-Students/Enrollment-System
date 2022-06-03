@@ -24,6 +24,7 @@ const actions: ActionTree<SchedulingStateInterface, StateInterface> = {
   async getAllschedule(context): Promise<any> {
     const res = await scheduleService.getAll();
     context.commit('getAllschedule', res);
+    // await this.dispatch('section/getAllsection');
   },
 
   async getOneschedule(context, scheduleID: number): Promise<any> {
