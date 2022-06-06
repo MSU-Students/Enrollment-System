@@ -180,6 +180,12 @@ export interface AdmissionDto {
     'address': string;
     /**
      * 
+     * @type {string}
+     * @memberof AdmissionDto
+     */
+    'course': string;
+    /**
+     * 
      * @type {EnrollmentDto}
      * @memberof AdmissionDto
      */
@@ -306,6 +312,12 @@ export interface EnrollmentDto {
      * @memberof EnrollmentDto
      */
     'time2'?: SchedulingDto;
+    /**
+     * 
+     * @type {ReportandreportsDto}
+     * @memberof EnrollmentDto
+     */
+    'recordsection'?: ReportandreportsDto;
 }
 /**
  * 
@@ -319,6 +331,31 @@ export interface RefreshDto {
      * @memberof RefreshDto
      */
     'refresh_token': string;
+}
+/**
+ * 
+ * @export
+ * @interface ReportandreportsDto
+ */
+export interface ReportandreportsDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportandreportsDto
+     */
+    'recordsID'?: number;
+    /**
+     * 
+     * @type {SubjectDto}
+     * @memberof ReportandreportsDto
+     */
+    'subject'?: SubjectDto;
+    /**
+     * 
+     * @type {SectionDto}
+     * @memberof ReportandreportsDto
+     */
+    'Section'?: SectionDto;
 }
 /**
  * 
@@ -593,6 +630,12 @@ export interface SubjectDto {
      * @memberof SubjectDto
      */
     'schedulingDescriptiveTitle'?: SchedulingDto;
+    /**
+     * 
+     * @type {ReportandreportsDto}
+     * @memberof SubjectDto
+     */
+    'recordsSubjectCode'?: ReportandreportsDto;
 }
 /**
  * 
@@ -631,6 +674,12 @@ export interface TeacherDto {
  * @interface UserDto
  */
 export interface UserDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof UserDto
+     */
+    'id'?: number;
     /**
      * 
      * @type {string}
@@ -1428,9 +1477,9 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCourse: async (courseID: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCourseById: async (courseID: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'courseID' is not null or undefined
-            assertParamExists('getCourse', 'courseID', courseID)
+            assertParamExists('getCourseById', 'courseID', courseID)
             const localVarPath = `/course/{courseID}`
                 .replace(`{${"courseID"}}`, encodeURIComponent(String(courseID)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1571,6 +1620,36 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all Courses
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getReportCourses: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/reportandreports`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
 
 
     
@@ -2709,8 +2788,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCourse(courseID: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CourseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCourse(courseID, options);
+        async getCourseById(courseID: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CourseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCourseById(courseID, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2752,6 +2831,16 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          */
         async getProfile(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProfile(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get all Courses
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getReportCourses(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReportandreportsDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getReportCourses(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3247,8 +3336,8 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCourse(courseID: number, options?: any): AxiosPromise<CourseDto> {
-            return localVarFp.getCourse(courseID, options).then((request) => request(axios, basePath));
+        getCourseById(courseID: number, options?: any): AxiosPromise<CourseDto> {
+            return localVarFp.getCourseById(courseID, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3286,6 +3375,15 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         getProfile(options?: any): AxiosPromise<UserDto> {
             return localVarFp.getProfile(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all Courses
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getReportCourses(options?: any): AxiosPromise<ReportandreportsDto> {
+            return localVarFp.getReportCourses(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3799,8 +3897,8 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public getCourse(courseID: number, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getCourse(courseID, options).then((request) => request(this.axios, this.basePath));
+    public getCourseById(courseID: number, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getCourseById(courseID, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3846,6 +3944,17 @@ export class DefaultApi extends BaseAPI {
      */
     public getProfile(options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).getProfile(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all Courses
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getReportCourses(options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getReportCourses(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

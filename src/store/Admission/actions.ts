@@ -20,6 +20,8 @@ const actions: ActionTree<AdmissionStateInterface, StateInterface> = {
   async deleteAdmission(context, admissionID: number): Promise<any> {
     const result = await admissionService.delete(admissionID);
     context.commit('deleteAdmission', result);
+    await context.dispatch('getAllAdmission');
+    return result;
   },
 
   async getAllAdmission(context): Promise<any> {

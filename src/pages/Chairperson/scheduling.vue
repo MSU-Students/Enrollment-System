@@ -410,6 +410,7 @@ import {
   TeacherDto,
 } from 'src/services/restapi';
 import { scheduling } from 'src/store/scheduling/state';
+import { section } from 'src/store/section/state';
 
 @Options({
   computed: {
@@ -508,7 +509,7 @@ export default class ManageSchedule extends Vue {
       field: (row: SchedulingDto) => row.Section?.sectionName,
     },
     {
-      name: 'teacher',
+      name: 'Teachers',
       align: 'center',
       label: 'Adviser',
       field: (row: SchedulingDto) => row.Section?.sectionTeachers?.FullName,

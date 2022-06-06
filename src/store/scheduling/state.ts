@@ -6,6 +6,7 @@ export interface scheduling {
   Semester: string;
   Course: string;
   Section: string;
+  Teachers: string;
   DescriptiveTitle: string;
   Day: string;
   Day2: string;

@@ -60,8 +60,8 @@ const routes: RouteRecordRaw[] = [
         component: () => import('src/pages/Registrar/Enrollment.vue'),
       },
       {
-        path: 'cancellation',
-        component: () => import('src/pages/Registrar/Cancellation.vue'),
+        path: 'records&result',
+        component: () => import('src/pages/Registrar/Records&Result.vue'),
       },
     ],
   },

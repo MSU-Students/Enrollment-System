@@ -79,6 +79,12 @@
                         outlined
                         v-model="inputStudentInfo.IdNum"
                         label="ID number"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the ID number',
+                        ]"
                       />
                     </div>
                     <div class="col">
@@ -86,6 +92,11 @@
                         outlined
                         v-model="inputStudentInfo.lrn"
                         label="LRN"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) || 'Please Input the LRN',
+                        ]"
                       />
                     </div>
                     <div class="col">
@@ -94,6 +105,12 @@
                         v-model="inputStudentInfo.ayCode"
                         :options="options1"
                         label="AY Code"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the AY Code',
+                        ]"
                       />
                     </div>
                   </div>
@@ -104,6 +121,12 @@
                         v-model="inputStudentInfo.incomingYlevel"
                         :options="options2"
                         label="Year Level"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Year Level',
+                        ]"
                       />
                     </div>
                     <div class="col">
@@ -112,20 +135,26 @@
                         v-model="inputStudentInfo.studentType"
                         :options="options3"
                         label="Student Type"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Student Type',
+                        ]"
                       />
                     </div>
                     <div class="col">
                       <q-select
                         outlined
-                        v-model="inputStudentInfo.studentType"
+                        v-model="inputStudentInfo.course"
                         label="Course"
-                        transition-show="flip-up"
-                        transition-hide="flip-down"
-                        :options="AllCourse"
-                        option-label="courseCode"
-                        option-value="courseID"
-                        map-options
-                        emit-value
+                        :options="options6"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Course',
+                        ]"
                       />
                     </div>
                   </div>
@@ -140,6 +169,12 @@
                         outlined
                         v-model="inputStudentInfo.FName"
                         label="First Name"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the First Name',
+                        ]"
                       />
                     </div>
                     <div class="col">
@@ -147,6 +182,12 @@
                         outlined
                         v-model="inputStudentInfo.MName"
                         label="Middle Initial"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Middle Initial',
+                        ]"
                       />
                     </div>
                     <div class="col">
@@ -154,6 +195,12 @@
                         outlined
                         v-model="inputStudentInfo.LName"
                         label="Last Name"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Last Name',
+                        ]"
                       />
                     </div>
                   </div>
@@ -164,6 +211,11 @@
                         outlined
                         v-model="inputStudentInfo.age"
                         label="Age"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) || 'Please Input the Age',
+                        ]"
                       />
                     </div>
                     <div class="col">
@@ -172,6 +224,12 @@
                         type="date"
                         label="Date of Birth"
                         v-model="inputStudentInfo.dataOfBirth"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Date of Birth',
+                        ]"
                       >
                         <!-- <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
@@ -201,6 +259,12 @@
                         outlined
                         v-model="inputStudentInfo.placeOfBirth"
                         label="Place of Birth"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Place of Birth',
+                        ]"
                       />
                     </div>
                   </div>
@@ -212,6 +276,12 @@
                         outlined
                         v-model="inputStudentInfo.contactNo"
                         label="Contact Number"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Contact Number',
+                        ]"
                       />
                     </div>
                     <div class="col">
@@ -220,6 +290,12 @@
                         v-model="inputStudentInfo.gender"
                         :options="options4"
                         label="Gender"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Gender',
+                        ]"
                       />
                     </div>
                     <div class="col">
@@ -228,6 +304,12 @@
                         v-model="inputStudentInfo.martialStatus"
                         :options="options5"
                         label="Martial Status"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Martial Status',
+                        ]"
                       />
                     </div>
                   </div>
@@ -238,6 +320,12 @@
                         outlined
                         v-model="inputStudentInfo.citizenship"
                         label="Citizenship"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Citizenship',
+                        ]"
                       />
                     </div>
                     <div class="col">
@@ -245,6 +333,12 @@
                         outlined
                         v-model="inputStudentInfo.religion"
                         label="Religion"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Religion',
+                        ]"
                       />
                     </div>
                     <div class="col">
@@ -252,12 +346,33 @@
                         outlined
                         v-model="inputStudentInfo.address"
                         label="Address"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Address',
+                        ]"
                       />
                     </div>
                   </div>
-
+                  <div class="col">
+                    <q-file
+                      outlined
+                      label="Product Image"
+                      accept=".jpg, image/*"
+                      v-model="imageAttachement"
+                      max-file-size="2000000"
+                      @rejected="onRejected"
+                    >
+                      <template v-slot:prepend>
+                        <q-icon name="camera" />
+                      </template>
+                    </q-file>
+                  </div>
                   <div class="flex flex-center">
                     <q-btn
+                      :ripple="false"
+                      unelevated
                       flat
                       label="Cancel"
                       color="red-10"
@@ -265,6 +380,8 @@
                       v-close-popup
                     />
                     <q-btn
+                      :ripple="false"
+                      unelevated
                       flat
                       label="Save"
                       color="primary"
@@ -381,6 +498,21 @@
                           :options="options3"
                           label="Student Type"
                           disable
+                        />
+                      </div>
+                      <div class="col">
+                        <q-select
+                          outlined
+                          disable
+                          v-model="inputStudentInfo.course"
+                          label="Course"
+                          :options="options6"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) ||
+                              'Please Input the Course',
+                          ]"
                         />
                       </div>
                     </div>
@@ -592,6 +724,12 @@
                           outlined
                           v-model="inputStudentInfo.IdNum"
                           label="ID number"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) ||
+                              'Please Input the ID number',
+                          ]"
                         />
                       </div>
                       <div class="col">
@@ -599,6 +737,11 @@
                           outlined
                           v-model="inputStudentInfo.lrn"
                           label="LRN"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) || 'Please Input the LRN',
+                          ]"
                         />
                       </div>
                       <div class="col">
@@ -607,6 +750,12 @@
                           v-model="inputStudentInfo.ayCode"
                           :options="options1"
                           label="AY Code"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) ||
+                              'Please Input the AY Code',
+                          ]"
                         />
                       </div>
                     </div>
@@ -617,6 +766,12 @@
                           v-model="inputStudentInfo.incomingYlevel"
                           :options="options2"
                           label="Year Level"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) ||
+                              'Please Input the Year Level',
+                          ]"
                         />
                       </div>
                       <div class="col">
@@ -625,6 +780,26 @@
                           v-model="inputStudentInfo.studentType"
                           :options="options3"
                           label="Student Type"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) ||
+                              'Please Input the Student Type',
+                          ]"
+                        />
+                      </div>
+                      <div class="col">
+                        <q-select
+                          outlined
+                          v-model="inputStudentInfo.course"
+                          label="Course"
+                          :options="options6"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) ||
+                              'Please Input the Course',
+                          ]"
                         />
                       </div>
                     </div>
@@ -639,6 +814,12 @@
                           outlined
                           v-model="inputStudentInfo.FName"
                           label="First Name"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) ||
+                              'Please Input the First Name',
+                          ]"
                         />
                       </div>
                       <div class="col">
@@ -646,6 +827,12 @@
                           outlined
                           v-model="inputStudentInfo.MName"
                           label="Middle Initial"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) ||
+                              'Please Input the Middle Initial',
+                          ]"
                         />
                       </div>
                       <div class="col">
@@ -653,6 +840,12 @@
                           outlined
                           v-model="inputStudentInfo.LName"
                           label="Last Name"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) ||
+                              'Please Input the Last Name',
+                          ]"
                         />
                       </div>
                     </div>
@@ -663,6 +856,11 @@
                           outlined
                           v-model="inputStudentInfo.age"
                           label="Age"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) || 'Please Input the Age',
+                          ]"
                         />
                       </div>
                       <div class="col">
@@ -671,6 +869,12 @@
                           type="date"
                           label="Date of Birth"
                           v-model="inputStudentInfo.dataOfBirth"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) ||
+                              'Please Input the Date of Birth',
+                          ]"
                         >
                           <!-- <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
@@ -700,6 +904,12 @@
                           outlined
                           v-model="inputStudentInfo.placeOfBirth"
                           label="Place of Birth"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) ||
+                              'Please Input the Place of Birth',
+                          ]"
                         />
                       </div>
                     </div>
@@ -711,6 +921,12 @@
                           outlined
                           v-model="inputStudentInfo.contactNo"
                           label="Contact Number"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) ||
+                              'Please Input the Contact Number',
+                          ]"
                         />
                       </div>
                       <div class="col">
@@ -719,6 +935,12 @@
                           v-model="inputStudentInfo.gender"
                           :options="options4"
                           label="Gender"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) ||
+                              'Please Input the Gender',
+                          ]"
                         />
                       </div>
                       <div class="col">
@@ -727,6 +949,12 @@
                           v-model="inputStudentInfo.martialStatus"
                           :options="options5"
                           label="Martial Status"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) ||
+                              'Please Input the Martial Status',
+                          ]"
                         />
                       </div>
                     </div>
@@ -737,6 +965,12 @@
                           outlined
                           v-model="inputStudentInfo.citizenship"
                           label="Citizenship"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) ||
+                              'Please Input the Citizenship',
+                          ]"
                         />
                       </div>
                       <div class="col">
@@ -744,6 +978,12 @@
                           outlined
                           v-model="inputStudentInfo.religion"
                           label="Religion"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) ||
+                              'Please Input the Religion',
+                          ]"
                         />
                       </div>
                       <div class="col">
@@ -751,6 +991,12 @@
                           outlined
                           v-model="inputStudentInfo.address"
                           label="Address"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) ||
+                              'Please Input the Address',
+                          ]"
                         />
                       </div>
                     </div>
@@ -828,6 +1074,13 @@ export default class ManageStudentInfo extends Vue {
     await this.getAllCourse();
   }
 
+  onRejected() {
+    this.$q.notify({
+      type: 'negative',
+      message: 'The File is too Large',
+    });
+  }
+
   columns = [
     {
       name: 'IdNum',
@@ -870,11 +1123,25 @@ export default class ManageStudentInfo extends Vue {
   filter = '';
   addNewStudentInfo = false;
   studentDetails = false;
+  imageAttachement: File = new File([], 'Select File');
   options1 = ['First Semester', 'Second Semester'];
   options2 = ['First Year', 'Second Year', 'Third Year', 'Fourth Year'];
   options3 = ['New Student', 'Transferee'];
   options4 = ['Male', 'Female'];
   options5 = ['Single', 'Merried'];
+  options6 = [
+    'Dip in Engineering Tech (Machine Shop)',
+    'Dip in Engineering Tech (Electricity)',
+    'Dip in Engineering Tech (Electrical)',
+    'Dip in Engineering Tech (Computer Tech)',
+    'Dip in Engineering Tech (Automotive Tech)',
+    'Certificate of Tech.(Food & Beverages)',
+    'BS Tech. Teacher Education(Industrial Arts)',
+    'BTLEd (Industrial Arts)',
+    'BTLEd (Home Economics)',
+    'Bachelor of Science Secondary Education(General Science)',
+    'BEED General Education',
+  ];
 
   inputStudentInfo: AdmissionDto = {
     reportCard: false,
@@ -898,6 +1165,7 @@ export default class ManageStudentInfo extends Vue {
     citizenship: '',
     religion: '',
     address: '',
+    course: '',
   };
 
   async onAddStudent() {
@@ -968,6 +1236,7 @@ export default class ManageStudentInfo extends Vue {
       citizenship: '',
       religion: '',
       address: '',
+      course: '',
     };
   }
 }

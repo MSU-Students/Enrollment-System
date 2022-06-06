@@ -38,7 +38,7 @@
             <q-item-section> Enrollment </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple to="/Registrar/Cancellation">
+          <q-item clickable v-ripple to="/Registrar/Records&Result">
             <q-item-section avatar>
               <q-icon name="how_to_reg" />
             </q-item-section>

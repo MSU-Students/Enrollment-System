@@ -21,6 +21,7 @@ export interface IStudentInfo {
   citizenship: string;
   religion: string;
   address: string;
+  course: string;
 }
 
 export interface AdmissionStateInterface {

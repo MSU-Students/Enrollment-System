@@ -13,7 +13,7 @@ class CourseService extends DefaultApi {
   }
 
   async getOne(courseID: number): Promise<CourseDto> {
-    const response = await enrollmentApiService.getCourse(courseID);
+    const response = await enrollmentApiService.getCourseById(courseID);
     return response.data;
   }
 

@@ -11,9 +11,10 @@
       title="Student Enrolled Master List"
       :rows="AllEnrollment"
       :columns="columns"
-      row-key="name"
+      row-key="enrollmentID"
       :rows-per-page-options="[0]"
       :filter="filter"
+      dense
     >
       <template v-slot:top-right>
         <div class="q-pa-md q-gutter-sm row">
@@ -32,7 +33,6 @@
           <q-btn
             label="Add Enrollee"
             color="primary"
-            e
             dense
             flat
             icon="add"
@@ -67,7 +67,7 @@
                 </q-form>
               </div>
               <!-- display search         -->
-              <q-scroll-area style="height: 5rem">
+              <q-scroll-area style="height: 3rem">
                 <q-list
                   v-for="(result, index) in searchResultStudent"
                   :key="index"
@@ -101,180 +101,249 @@
               </q-scroll-area>
               <!-- display name -->
 
-              <q-card class="q-pa-lg q-gutter-sm q-py-sm">
-                <div class="col">
-                  Name: {{ inputStudentInfo.FName }}
-                  {{ inputStudentInfo.MName }} {{ inputStudentInfo.LName }}
-                </div>
-                <div class="col">ID Number: {{ inputStudentInfo.IdNum }}</div>
-              </q-card>
-
-              <q-card-section>
-                <div class="row q-gutter-sm q-py-sm">
-                  <div class="col">
-                    <q-select
-                      autofocus
-                      v-model="courseFilter"
-                      outlined
-                      label="Course"
-                      transition-show="flip-up"
-                      transition-hide="flip-down"
-                      :options="AllCourse"
-                      option-label="courseCode"
-                      option-value="courseID"
-                      map-options
-                      emit-value
-                    />
-                    <br />
+              <q-card class="q-pa-sm q-gutter-sm q-py-sm">
+                <div class="q-pa-md">
+                  <div class="row">
+                    <div class="col">
+                      Name: {{ inputStudentInfo.FName }}
+                      {{ inputStudentInfo.MName }}
+                      {{ inputStudentInfo.LName }}
+                    </div>
+                    <div class="col">
+                      ID Number: {{ inputStudentInfo.IdNum }}
+                    </div>
                   </div>
-                  <div class="col">
-                    <q-select
-                      autofocus
-                      outlined
-                      label="Year Level"
-                      v-model="inputEnrollee.yearLevel"
-                      :options="Year"
-                    />
+                  <div class="row">
+                    <div class="col">
+                      Year:
+                      {{ inputStudentInfo.incomingYlevel }}
+                    </div>
                   </div>
-
-                  <div class="col">
-                    <q-select
-                      autofocus
-                      outlined
-                      item-aligned="left"
-                      label="Semester"
-                      v-model="inputEnrollee.semester"
-                      :options="sem"
-                    />
+                  <div class="row">
+                    <div class="col">Gender: {{ inputStudentInfo.gender }}</div>
+                    <div class="col">
+                      Civil Status:
+                      {{ inputStudentInfo.martialStatus }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      Religion:{{ inputStudentInfo.religion }}
+                    </div>
                   </div>
                 </div>
-              </q-card-section>
 
-              <!-- Table result -->
-              <div class="q-pa-md bg-cyan-11col col-md-4">
-                <q-table
-                  title="Subject List and Schedule"
-                  :rows="filterSubject()"
-                  :columns="columns1"
-                  color="primary"
-                  row-key="name"
-                />
+                <q-card-section>
+                  <div class="row q-gutter-sm q-py-sm">
+                    <div class="col">
+                      <q-select
+                        autofocus
+                        v-model="courseFilter"
+                        outlined
+                        label="Course"
+                        transition-show="flip-up"
+                        transition-hide="flip-down"
+                        :options="AllCourse"
+                        option-label="courseCode"
+                        option-value="courseCode"
+                        map-options
+                        emit-value
+                      />
+                      <br />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        autofocus
+                        outlined
+                        label="Year Level"
+                        v-model="yearFilter"
+                        :options="Year"
+                      />
+                    </div>
 
-                <q-card-actions align="center">
-                  <q-btn
-                    label="Cancel"
-                    color="red-10"
-                    v-close-popup
-                    @click="resetModel()"
-                  />
-                  <q-btn
-                    label="Enroll Student"
-                    color="blue-10"
-                    v-close-popup
-                    type="submit"
-                    @click="onaddEnrollee()"
-                  />
-                  <q-btn
-                    label="Print Preview"
-                    color="blue-10"
-                    @click="printPreview = true"
-                  />
-                  <q-dialog v-model="printPreview">
-                    <q-page class="q-pa-lg">
-                      <q-card
-                        style="width: 1000px; height: 600px"
-                        class="q-px-sm q-pb-md"
-                        @click="print()"
+                    <div class="col">
+                      <q-select
+                        autofocus
+                        outlined
+                        item-aligned="left"
+                        label="Semester"
+                        v-model="semFilter"
+                        :options="sem"
+                      />
+                    </div>
+                  </div>
+
+                  <!-- Table result -->
+                  <div class="row q-gutter-sm q-py-sm">
+                    <div class="col">
+                      <q-table
+                        dense
+                        title="Subject List and Schedule"
+                        :rows="filterSubject()"
+                        :columns="columns1"
+                        color="primary"
+                        row-key="name"
+                        wrap-cells
+                        hide-bottom
                       >
-                        <q-toolbar>
-                          <q-space />
-                          <q-img
-                            src="~assets/logo.png"
-                            style="width: 110px"
-                          ></q-img>
-
-                          <q-card flat class="bg-transparent">
-                            <br />
-
-                            <div class="font2 text-h6 flex flex-center">
-                              Republic of the Philippines
-                            </div>
-
-                            <div class="font2 text-h6 flex flex-center">
-                              Mindanao State University Lanao National College
-                              of Arts and Trades
-                            </div>
-
-                            <div class="font11 text-h6 flex flex-center">
-                              Marawi City, Philippines
-                            </div>
-
-                            <div class="font1 text-h3 flex flex-center">
-                              CERTIFICATE OF REGISTRATION
-                            </div>
-                          </q-card>
-
-                          <q-img
-                            src="~assets/msulogo.png"
-                            style="width: 110px"
-                          ></q-img>
-                          <q-space />
-                        </q-toolbar>
-
-                        <q-card>
-                          <div class="q-pa-md col col-md-12">
-                            <q-card flat bordered class="col col-md-12 q-pa-md">
-                              <div class="q-pa-md">
-                                <div class="row">
-                                  <div class="col">
-                                    Name: {{ inputStudentInfo.FName }}
-                                    {{ inputStudentInfo.MName }}
-                                    {{ inputStudentInfo.LName }}
-                                  </div>
-                                  <div class="col">
-                                    ID Number: {{ inputStudentInfo.IdNum }}
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col">
-                                    Year:
-                                    {{ inputStudentInfo.incomingYlevel }}
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col">
-                                    Gender: {{ inputStudentInfo.gender }}
-                                  </div>
-                                  <div class="col">
-                                    Civil Status:
-                                    {{ inputStudentInfo.martialStatus }}
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col">
-                                    Religion:{{ inputStudentInfo.religion }}
-                                  </div>
-                                </div>
-                              </div>
-                            </q-card>
-                            <q-card flat bordered class="my-card q-pa-md">
-                              <q-table
-                                :rows="AllEnrollment"
-                                :columns="columns2"
-                                row-key="name"
-                                :filter="filter"
+                        <template v-slot:body-cell-checking="props">
+                          <q-td :props="props">
+                            <div class="q-gutter-sm">
+                              <q-btn
+                                round
+                                color="blue"
+                                icon="check"
+                                size="sm"
+                                flat
+                                dense
+                                @click="onaddSub(props.row)"
                               />
-                            </q-card>
+                            </div>
+                          </q-td>
+                        </template>
+                      </q-table>
+                    </div>
+                    <div class="col">
+                      <q-table
+                        dense
+                        title="Subject List and Schedule"
+                        :rows="AllEnteredSub"
+                        :columns="columns2"
+                        color="primary"
+                        row-key="enteredSubID"
+                        wrap-cells
+                        hide-bottom
+                      />
+                    </div>
+                  </div>
+                </q-card-section>
+              </q-card>
+              <q-card-actions align="center">
+                <q-btn
+                  label="Cancel"
+                  color="red-10"
+                  v-close-popup
+                  @click="resetModel()"
+                />
+                <q-btn
+                  label="Enroll Student"
+                  color="blue-10"
+                  v-close-popup
+                  type="submit"
+                  @click="onaddEnrollee()"
+                />
+                <!-- printPreview -->
+                <q-btn
+                  label="Print Preview"
+                  color="blue-10"
+                  @click="printPreview = true"
+                />
+                <q-dialog v-model="printPreview">
+                  <q-page class="q-pa-lg">
+                    <q-card
+                      style="width: 1000px; height: 600px"
+                      class="q-px-sm q-pb-md"
+                      @click="print()"
+                    >
+                      <q-toolbar>
+                        <q-space />
+                        <q-img
+                          src="~assets/logo.png"
+                          style="width: 110px"
+                        ></q-img>
+
+                        <q-card flat class="bg-transparent">
+                          <br />
+
+                          <div class="font2 text-h6 flex flex-center">
+                            Republic of the Philippines
+                          </div>
+
+                          <div class="font2 text-h6 flex flex-center">
+                            Mindanao State University Lanao National College of
+                            Arts and Trades
+                          </div>
+
+                          <div class="font11 text-h6 flex flex-center">
+                            Marawi City, Philippines
+                          </div>
+
+                          <div class="font1 text-h3 flex flex-center">
+                            CERTIFICATE OF REGISTRATION
                           </div>
                         </q-card>
+
+                        <q-img
+                          src="~assets/msulogo.png"
+                          style="width: 110px"
+                        ></q-img>
+                        <q-space />
+                      </q-toolbar>
+
+                      <q-card>
+                        <div class="q-pa-md col col-md-12">
+                          <q-card flat bordered class="col col-md-12 q-pa-md">
+                            <div class="q-pa-md">
+                              <div class="row">
+                                <div class="col">
+                                  Name: {{ inputStudentInfo.FName }}
+                                  {{ inputStudentInfo.MName }}
+                                  {{ inputStudentInfo.LName }}
+                                </div>
+                                <div class="col">
+                                  ID Number: {{ inputStudentInfo.IdNum }}
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  Year:
+                                  {{ inputStudentInfo.incomingYlevel }}
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  Gender: {{ inputStudentInfo.gender }}
+                                </div>
+                                <div class="col">
+                                  Civil Status:
+                                  {{ inputStudentInfo.martialStatus }}
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  Religion:{{ inputStudentInfo.religion }}
+                                </div>
+                              </div>
+                            </div>
+                          </q-card>
+                          <!-- table for COR -->
+                          <q-card flat bordered class="my-card q-pa-md">
+                            <q-table
+                              dense
+                              :rows="AllEnteredSub"
+                              :columns="columns2"
+                              row-key="name"
+                              :filter="filter"
+                              wrap-cells
+                              hide-bottom
+                            />
+                          </q-card>
+                        </div>
                       </q-card>
-                    </q-page>
-                  </q-dialog>
-                </q-card-actions>
-              </div>
+                    </q-card>
+                  </q-page>
+                </q-dialog>
+              </q-card-actions>
             </q-card>
           </q-dialog>
         </div>
+      </template>
+      <template v-slot:body-cell-action="props">
+        <q-td :props="props">
+          <div class="q-gutter-sm">
+            <q-btn round color="blue" label="print" size="sm" flat dense />
+          </div>
+        </q-td>
       </template>
     </q-table>
   </q-page>
@@ -294,9 +363,11 @@ import {
   SubjectDto,
   TeacherDto,
 } from 'src/services/restapi';
+import { enteredSub } from 'src/store/enteredSub/state';
 
 @Options({
   computed: {
+    ...mapState('enteredSub', ['AllEnteredSub']),
     ...mapState('enrollment', ['AllEnrollment']),
     ...mapState('Admission', ['allAdmissionInfo']),
     ...mapState('scheduling', ['AllSchedule']),
@@ -322,12 +393,21 @@ import {
     ...mapActions('ManagementTeacher', ['getAllTeacher']),
     ...mapActions('ManagementRoom', ['getAllRoom']),
     ...mapActions('schoolyear', ['getAllSchoolYear']),
+    ...mapActions('enteredSub', [
+      'addEnteredSubs',
+      'editEnteredSubs',
+      'deleteEnteredSubs',
+      'clear',
+    ]),
   },
 })
 export default class Enrollment extends Vue {
   addEnrollment!: (payload: EnrollmentDto) => Promise<void>;
   editEnrollment!: (payload: EnrollmentDto) => Promise<void>;
   deleteEnrollment!: (payload: EnrollmentDto) => Promise<void>;
+
+  addEnteredSubs!: (payload: enteredSub) => Promise<void>;
+
   allAdmissionInfo!: IStudentInfo[];
   AllEnrollment!: EnrollmentDto[];
   AllSchedule!: SchedulingDto[];
@@ -336,6 +416,7 @@ export default class Enrollment extends Vue {
   AllCourse!: CourseDto[];
   AllSection!: SectionDto[];
   allSchoolYear!: SchoolYearDto[];
+  AllEnteredSub!: enteredSub[];
   getAllAdmission!: () => Promise<void>;
   getAllEnrollment!: () => Promise<void>;
   getAllschedule!: () => Promise<void>;
@@ -352,42 +433,37 @@ export default class Enrollment extends Vue {
       required: true,
       label: 'Student ID',
       align: 'left',
-      field: (row: AdmissionDto) => row.IdNum || 'None',
+      field: 'StudentID',
     },
     {
       name: 'Fullname',
       align: 'center',
       label: 'Full Name',
-      field: (row: AdmissionDto) =>
-        row.enrollmentStudentFullName?.studentFullName?.FName +
-          ' ' +
-          row.enrollmentStudentFullName?.studentFullName?.MName +
-          ' ' +
-          row.enrollmentStudentFullName?.studentFullName?.LName || 'None',
+      field: 'Fullname',
     },
     {
       name: 'AcademicYear',
       align: 'center',
       label: 'Academic Year',
-      field: (row: any) => row.AcademicYear?.schoolyear,
+      field: 'AcademicYear',
     },
     {
       name: 'Semester',
       align: 'center',
       label: 'Semester',
-      field: (row: any) => row.Semester,
+      field: 'Semester',
     },
     {
       name: 'Course',
       align: 'center',
       label: 'Course',
-      field: (row: any) => row.Courses?.courseCode || 'None',
+      field: 'Course',
     },
     {
       name: 'YearLevel',
       align: 'center',
       label: 'Year Level',
-      field: (row: any) => row.yearLevel || 'None',
+      field: 'YearLevel',
     },
 
     { name: 'action', align: 'center', label: 'Action', field: 'action' },
@@ -401,11 +477,39 @@ export default class Enrollment extends Vue {
       field: (row: SchedulingDto) => row.SubjectCodes?.SubjectCode,
     },
     {
-      name: 'DescriptiveTitle',
+      name: 'Units',
       align: 'center',
-      label: 'Descriptive Title',
+      label: 'Units',
+      field: (row: SchedulingDto) => row.SubjectCodes?.Units,
+    },
+
+    {
+      name: 'Time/Date',
+      align: 'center',
+      label: 'Time / Date',
       field: (row: SchedulingDto) =>
-        row.SubjectCodes?.DescriptiveTitle || 'None',
+        row.Time + ' ' + row.Time2 + ' ' + row.Day + ' ' + row.Day2,
+    },
+    {
+      name: 'Section',
+      align: 'center',
+      label: 'Section',
+      field: (row: SchedulingDto) => row.Section?.sectionName,
+    },
+    {
+      name: 'teacher',
+      align: 'center',
+      label: 'Teacher',
+      field: (row: SchedulingDto) => row.Section?.sectionTeachers?.FullName,
+    },
+    { name: 'checking', align: 'center', label: 'Action', field: 'checking' },
+  ];
+  columns3 = [
+    {
+      name: 'SubjectCode',
+      align: 'center',
+      label: 'Subject Code',
+      field: (row: SchedulingDto) => row.SubjectCodes?.SubjectCode,
     },
     {
       name: 'Units',
@@ -451,7 +555,7 @@ export default class Enrollment extends Vue {
       name: 'DescriptiveTitle',
       align: 'center',
       label: 'Descriptive Title',
-      field: (row: SubjectDto) => row.DescriptiveTitle,
+      field: (row: SchedulingDto) => row.SubjectCodes?.DescriptiveTitle,
     },
     {
       name: 'Time and Date',
@@ -460,11 +564,18 @@ export default class Enrollment extends Vue {
       field: (row: SchedulingDto) =>
         row.Time + ' ' + row.Time2 + ' ' + row.Day + ' ' + row.Day2,
     },
-    { name: 'Units', align: 'center', label: 'Units', field: 'Units' },
+    {
+      name: 'Units',
+      align: 'center',
+      label: 'Units',
+      field: (row: SchedulingDto) => row.SubjectCodes?.Units,
+    },
   ];
 
   search = '';
   courseFilter = '';
+  yearFilter = '';
+  semFilter = '';
   onFindSubjects = false;
   displayInfo = false;
   selectedYear = '';
@@ -497,6 +608,7 @@ export default class Enrollment extends Vue {
     citizenship: '',
     religion: '',
     address: '',
+    course: '',
   };
 
   currentStudent = { ...this.inputStudentInfo };
@@ -537,6 +649,14 @@ export default class Enrollment extends Vue {
       message: 'Successfully Added.',
     });
   }
+
+  /////
+
+  async onaddSub(Val: enteredSub) {
+    await this.addEnteredSubs(Val);
+  }
+
+  /////
 
   async oneditEnrollee() {
     await this.editEnrollment(this.inputEnrollee);
@@ -581,7 +701,9 @@ export default class Enrollment extends Vue {
   filterSubject() {
     const result = this.AllSchedule.filter(
       (s) =>
-        s.Courses?.courseCode.match(this.courseFilter) && this.Year && this.sem,
+        s.Courses?.courseCode === this.courseFilter &&
+        s.yearLevel === this.yearFilter &&
+        s.Semester === this.semFilter,
     );
     console.log(result);
     return result;
@@ -617,6 +739,7 @@ export default class Enrollment extends Vue {
       citizenship: '',
       religion: '',
       address: '',
+      course: '',
     };
   }
 }

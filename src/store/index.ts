@@ -1,3 +1,4 @@
+import { enteredSubStateInterface } from './enteredSub/state';
 import { EnrollmentStateInterface } from './enrollment/state';
 import { SchedulingStateInterface } from './scheduling/state';
 import { sectionStateInterface } from './section/state';
@@ -31,6 +32,7 @@ import { courseStateInterface } from './course/state';
 import course from './course';
 import scheduling from './scheduling';
 import enrollment from './enrollment';
+import enteredSub from './enteredSub';
 
 /*
  * If not building with SSR mode, you can
@@ -55,6 +57,7 @@ export interface StateInterface {
   scheduling: SchedulingStateInterface;
   enrollment: EnrollmentStateInterface;
   auth: IAuthState;
+  enteredSub: enteredSubStateInterface;
 }
 
 // provide typings for `this.$store`
@@ -82,6 +85,7 @@ export default store(function (/* { ssrContext } */) {
       scheduling,
       enrollment,
       auth,
+      enteredSub,
     },
 
     // enable strict mode (adds overhead!)
