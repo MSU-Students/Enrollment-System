@@ -206,7 +206,7 @@
                     <div class="col">
                       <q-table
                         dense
-                        title="Subject List and Schedule"
+                        title="Entered Subject and Schedule"
                         :rows="AllEnteredSub"
                         :columns="columns2"
                         color="primary"
@@ -229,8 +229,7 @@
                   label="Enroll Student"
                   color="blue-10"
                   v-close-popup
-                  type="submit"
-                  @click="onaddEnrollee()"
+                  @click="onaddEnrollee(this.AllEnteredSub)"
                 />
                 <!-- printPreview -->
                 <q-btn
@@ -341,7 +340,107 @@
       <template v-slot:body-cell-action="props">
         <q-td :props="props">
           <div class="q-gutter-sm">
-            <q-btn round color="blue" label="print" size="sm" flat dense />
+            <q-btn
+              round
+              color="blue"
+              label="print"
+              size="sm"
+              flat
+              dense
+              @click="printCOR = true"
+            />
+            <q-dialog v-model="printCOR">
+              <q-page class="q-pa-lg">
+                <q-card
+                  style="width: 1000px; height: 600px"
+                  class="q-px-sm q-pb-md"
+                  @click="print()"
+                >
+                  <q-toolbar>
+                    <q-space />
+                    <q-img src="~assets/logo.png" style="width: 110px"></q-img>
+
+                    <q-card flat class="bg-transparent">
+                      <br />
+
+                      <div class="font2 text-h6 flex flex-center">
+                        Republic of the Philippines
+                      </div>
+
+                      <div class="font2 text-h6 flex flex-center">
+                        Mindanao State University Lanao National College of Arts
+                        and Trades
+                      </div>
+
+                      <div class="font11 text-h6 flex flex-center">
+                        Marawi City, Philippines
+                      </div>
+
+                      <div class="font1 text-h3 flex flex-center">
+                        CERTIFICATE OF REGISTRATION
+                      </div>
+                    </q-card>
+
+                    <q-img
+                      src="~assets/msulogo.png"
+                      style="width: 110px"
+                    ></q-img>
+                    <q-space />
+                  </q-toolbar>
+
+                  <q-card>
+                    <div class="q-pa-md col col-md-12">
+                      <q-card flat bordered class="col col-md-12 q-pa-md">
+                        <div class="q-pa-md">
+                          <div class="row">
+                            <div class="col">
+                              Name: {{ inputStudentInfo.FName }}
+                              {{ inputStudentInfo.MName }}
+                              {{ inputStudentInfo.LName }}
+                            </div>
+                            <div class="col">
+                              ID Number: {{ inputStudentInfo.IdNum }}
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              Year:
+                              {{ inputStudentInfo.incomingYlevel }}
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              Gender: {{ inputStudentInfo.gender }}
+                            </div>
+                            <div class="col">
+                              Civil Status:
+                              {{ inputStudentInfo.martialStatus }}
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              Religion:{{ inputStudentInfo.religion }}
+                            </div>
+                          </div>
+                        </div>
+                      </q-card>
+                      <!-- table for COR -->
+                      <q-card flat bordered class="my-card q-pa-md">
+                        <q-table
+                          dense
+                          :rows="AllEnteredSub"
+                          :columns="columns2"
+                          row-key="name"
+                          :filter="filter"
+                          wrap-cells
+                          hide-bottom
+                        />
+                      </q-card>
+                    </div>
+                  </q-card>
+                </q-card>
+              </q-page>
+            </q-dialog>
           </div>
         </q-td>
       </template>
@@ -433,37 +532,39 @@ export default class Enrollment extends Vue {
       required: true,
       label: 'Student ID',
       align: 'left',
-      field: 'StudentID',
+      field: (row: EnrollmentDto) => row.studentIdnumber?.IdNum,
     },
     {
       name: 'Fullname',
       align: 'center',
       label: 'Full Name',
-      field: 'Fullname',
+      field: (row: AdmissionDto) =>
+        row.FName + ' ' + row.MName + ' ' + row.LName,
+      format: (val: string) => `${val}`,
     },
     {
       name: 'AcademicYear',
       align: 'center',
       label: 'Academic Year',
-      field: 'AcademicYear',
+      field: (row: EnrollmentDto) => row.academicYear,
     },
     {
       name: 'Semester',
       align: 'center',
       label: 'Semester',
-      field: 'Semester',
+      field: (row: EnrollmentDto) => row.semester,
     },
     {
       name: 'Course',
       align: 'center',
       label: 'Course',
-      field: 'Course',
+      field: (row: EnrollmentDto) => row.course,
     },
     {
       name: 'YearLevel',
       align: 'center',
       label: 'Year Level',
-      field: 'YearLevel',
+      field: (row: EnrollmentDto) => row.yearLevel,
     },
 
     { name: 'action', align: 'center', label: 'Action', field: 'action' },
@@ -474,13 +575,13 @@ export default class Enrollment extends Vue {
       name: 'SubjectCode',
       align: 'center',
       label: 'Subject Code',
-      field: (row: SchedulingDto) => row.SubjectCodes?.SubjectCode,
+      field: (row: SchedulingDto) => row.SubjectCode?.SubjectCode,
     },
     {
       name: 'Units',
       align: 'center',
       label: 'Units',
-      field: (row: SchedulingDto) => row.SubjectCodes?.Units,
+      field: (row: SchedulingDto) => row.SubjectCode?.Units,
     },
 
     {
@@ -488,19 +589,25 @@ export default class Enrollment extends Vue {
       align: 'center',
       label: 'Time / Date',
       field: (row: SchedulingDto) =>
-        row.Time + ' ' + row.Time2 + ' ' + row.Day + ' ' + row.Day2,
+        row.sections?.time1 +
+        ' ' +
+        row.sections?.time2 +
+        ' ' +
+        row.sections?.day1 +
+        ' ' +
+        row.sections?.day2,
     },
     {
       name: 'Section',
       align: 'center',
       label: 'Section',
-      field: (row: SchedulingDto) => row.Section?.sectionName,
+      field: (row: SchedulingDto) => row.sections?.sectionName,
     },
     {
       name: 'teacher',
       align: 'center',
       label: 'Teacher',
-      field: (row: SchedulingDto) => row.Section?.sectionTeachers?.FullName,
+      field: (row: SchedulingDto) => row.Teachers?.FullName,
     },
     { name: 'checking', align: 'center', label: 'Action', field: 'checking' },
   ];
@@ -509,13 +616,13 @@ export default class Enrollment extends Vue {
       name: 'SubjectCode',
       align: 'center',
       label: 'Subject Code',
-      field: (row: SchedulingDto) => row.SubjectCodes?.SubjectCode,
+      field: (row: SchedulingDto) => row.SubjectCode?.SubjectCode,
     },
     {
       name: 'Units',
       align: 'center',
       label: 'Units',
-      field: (row: SchedulingDto) => row.SubjectCodes?.Units,
+      field: (row: SchedulingDto) => row.SubjectCode?.Units,
     },
 
     {
@@ -523,19 +630,25 @@ export default class Enrollment extends Vue {
       align: 'center',
       label: 'Time / Date',
       field: (row: SchedulingDto) =>
-        row.Time + ' ' + row.Time2 + ' ' + row.Day + ' ' + row.Day2,
+        row.sections?.time1 +
+        ' ' +
+        row.sections?.time2 +
+        ' ' +
+        row.sections?.day1 +
+        ' ' +
+        row.sections?.day2,
     },
     {
       name: 'Section',
       align: 'center',
       label: 'Section',
-      field: (row: SchedulingDto) => row.Section?.sectionName,
+      field: (row: SchedulingDto) => row.sections?.sectionName,
     },
     {
       name: 'Teacher',
       align: 'center',
       label: 'Teacher',
-      field: (row: SchedulingDto) => row.Section?.sectionTeachers?.FullName,
+      field: (row: SchedulingDto) => row.Teachers?.FullName,
     },
   ];
   columns2 = [
@@ -543,32 +656,38 @@ export default class Enrollment extends Vue {
       name: 'Subject Code',
       align: 'center',
       label: 'Subject Code',
-      field: (row: SchedulingDto) => row.SubjectCodes?.SubjectCode,
+      field: (row: SchedulingDto) => row.SubjectCode?.SubjectCode,
     },
     {
       name: 'Section',
       align: 'center',
       label: 'Section',
-      field: (row: SchedulingDto) => row.Section?.sectionName,
+      field: (row: SchedulingDto) => row.sections?.sectionName,
     },
     {
       name: 'DescriptiveTitle',
       align: 'center',
       label: 'Descriptive Title',
-      field: (row: SchedulingDto) => row.SubjectCodes?.DescriptiveTitle,
+      field: (row: SchedulingDto) => row.SubjectCode?.DescriptiveTitle,
     },
     {
       name: 'Time and Date',
       align: 'center',
       label: 'Time and Date',
       field: (row: SchedulingDto) =>
-        row.Time + ' ' + row.Time2 + ' ' + row.Day + ' ' + row.Day2,
+        row.sections?.time1 +
+        ' ' +
+        row.sections?.time2 +
+        ' ' +
+        row.sections?.day1 +
+        ' ' +
+        row.sections?.day2,
     },
     {
       name: 'Units',
       align: 'center',
       label: 'Units',
-      field: (row: SchedulingDto) => row.SubjectCodes?.Units,
+      field: (row: SchedulingDto) => row.SubjectCode?.Units,
     },
   ];
 
@@ -581,6 +700,7 @@ export default class Enrollment extends Vue {
   selectedYear = '';
   filter = '';
   printPreview = false;
+  printCOR = false;
   addNewEnrollee = false;
   updateEnrollee = false;
   Year = ['First year', 'Second year', 'Third year', 'Fourth year'];
@@ -613,14 +733,23 @@ export default class Enrollment extends Vue {
 
   currentStudent = { ...this.inputStudentInfo };
 
-  inputEnrollee: EnrollmentDto = {};
+  inputEnrollee: EnrollmentDto = {
+    academicYear: '',
+    semester: '',
+    yearLevel: '',
+    subjectCode: '',
+    descriptiveTitle: '',
+    units: '',
+    fullName: '',
+    Teacher: '',
+    Section: '',
+    timeAnddate: '',
+  };
+
   inputSchedule: SchedulingDto = {
     yearLevel: '',
     Semester: '',
-    Day: '',
-    Day2: '',
-    Time: '',
-    Time2: '',
+    AcademicYear: '',
   };
 
   async mounted() {
@@ -640,7 +769,8 @@ export default class Enrollment extends Vue {
     this.inputStudentInfo = res;
   }
 
-  async onaddEnrollee() {
+  async onaddEnrollee(val: any) {
+    console.log(val);
     await this.addEnrollment(this.inputEnrollee);
     this.addNewEnrollee = false;
     this.resetModel();
@@ -652,8 +782,8 @@ export default class Enrollment extends Vue {
 
   /////
 
-  async onaddSub(Val: enteredSub) {
-    await this.addEnteredSubs(Val);
+  async onaddSub(val: enteredSub) {
+    await this.addEnteredSubs(val);
   }
 
   /////
@@ -717,29 +847,17 @@ export default class Enrollment extends Vue {
   }
 
   resetModel() {
-    this.inputStudentInfo = {
-      reportCard: false,
-      bCertificate: false,
-      Pic: false,
-      eForm: false,
-      IdNum: '',
-      lrn: '',
-      ayCode: '',
-      incomingYlevel: '',
-      studentType: '',
-      FName: '',
-      MName: '',
-      LName: '',
-      age: '',
-      dataOfBirth: '',
-      placeOfBirth: '',
-      contactNo: '',
-      gender: '',
-      martialStatus: '',
-      citizenship: '',
-      religion: '',
-      address: '',
-      course: '',
+    this.inputEnrollee = {
+      academicYear: '',
+      semester: '',
+      yearLevel: '',
+      subjectCode: '',
+      descriptiveTitle: '',
+      units: '',
+      fullName: '',
+      Teacher: '',
+      Section: '',
+      timeAnddate: '',
     };
   }
 }
