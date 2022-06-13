@@ -8,7 +8,7 @@
     <br />
 
     <q-table
-      title="Scheduling"
+      title="Offerings"
       :rows="AllSchedule"
       :columns="columns"
       row-key="name"
@@ -30,7 +30,7 @@
             </template>
           </q-input>
           <q-btn
-            label="Add Schedule"
+            label="Add Offerings"
             color="primary"
             e
             dense
@@ -41,7 +41,7 @@
           <q-dialog v-model="addNewSchedule" persistent>
             <q-card style="width: 800px; max-width: 100vw" class="q-pa-sm">
               <q-card-section class="row">
-                <div class="text-h6">Add Schedule</div>
+                <div class="text-h6">Add Offerings</div>
                 <q-space />
                 <q-btn
                   flat
@@ -61,44 +61,18 @@
                         outlined
                         v-model="inputSchedule.AcademicYear"
                         label="Academic Year"
-                        transition-show="flip-up"
-                        transition-hide="flip-down"
-                        :options="allSchoolYear"
-                        option-label="schoolyear"
-                        option-value="schoolyearid"
-                        map-options
-                        emit-value
-                        @update:model-value="filterSubject($event)"
+                        :options="academicYear"
                       />
                     </div>
-                    <div class="col">
-                      <q-select
-                        outlined
-                        v-model="inputSchedule.Courses"
-                        label="Course"
-                        transition-show="flip-up"
-                        transition-hide="flip-down"
-                        :options="AllCourse"
-                        option-label="courseCode"
-                        option-value="courseID"
-                        map-options
-                        emit-value
-                      />
-                    </div>
-
                     <div class="col">
                       <q-select
                         autofocus
                         outlined
                         v-model="inputSchedule.yearLevel"
-                        :options="options3"
+                        :options="yearLevel"
                         label="Year Level"
-                        @update:model-value="filterSection($event)"
                       />
                     </div>
-                  </div>
-
-                  <div class="row q-gutter-sm q-py-sm">
                     <div class="col">
                       <q-select
                         outlined
@@ -107,15 +81,41 @@
                         label="Semester"
                       />
                     </div>
+                    <div class="col">
+                      <q-select
+                        autofocus
+                        outlined
+                        v-model="inputSchedule.Courses"
+                        label="Course"
+                        :options="AllCourse"
+                        option-label="courseCode"
+                        option-value="courseID"
+                        map-options
+                        emit-value
+                      />
+                    </div>
+                  </div>
 
+                  <div class="row q-gutter-sm q-py-sm">
+                    <div class="col">
+                      <q-select
+                        autofocus
+                        outlined
+                        v-model="inputSchedule.SubjectCode"
+                        label="SubjectCode"
+                        :options="AllSubject"
+                        option-label="SubjectCode"
+                        option-value="subjectID"
+                        map-options
+                        emit-value
+                      />
+                    </div>
                     <div class="col">
                       <q-select
                         outlined
-                        v-model="inputSchedule.Section"
+                        v-model="inputSchedule.sections"
                         label="Section"
-                        transition-show="flip-up"
-                        transition-hide="flip-down"
-                        :options="sections"
+                        :options="AllSection"
                         option-label="sectionName"
                         option-value="sectionID"
                         map-options
@@ -126,55 +126,30 @@
                     </div>
                     <div class="col">
                       <q-select
-                        autofocus
                         outlined
-                        v-model="inputSchedule.SubjectCodes"
-                        label="SubjectCode"
-                        transition-show="flip-up"
-                        transition-hide="flip-down"
-                        :options="subjectCodes"
-                        option-label="SubjectCode"
-                        option-value="subjectID"
+                        v-model="inputSchedule.room"
+                        :options="AllRoom"
+                        option-label="roomCode"
+                        option-value="roomID"
+                        label="Room"
                         map-options
                         emit-value
+                        lazy-rules
+                        :rules="[(val) => val || 'Select Room']"
                       />
                     </div>
-                  </div>
-
-                  <div class="row q-gutter-sm q-py-sm">
-                    <div class="col">
-                      <q-input
-                        outlined
-                        v-model="inputSchedule.Time"
-                        label="Time"
-                      />
-                    </div>
-
-                    <div class="col">
-                      <q-input
-                        outlined
-                        v-model="inputSchedule.Time2"
-                        label="Time 2"
-                      />
-                    </div>
-                  </div>
-
-                  <div class="row q-gutter-sm q-py-sm">
                     <div class="col">
                       <q-select
                         outlined
-                        v-model="inputSchedule.Day"
-                        :options="options"
-                        label="Day"
-                      />
-                    </div>
-
-                    <div class="col">
-                      <q-select
-                        outlined
-                        v-model="inputSchedule.Day2"
-                        :options="options2"
-                        label="Day 2"
+                        v-model="inputSchedule.Teachers"
+                        :options="allTeacher"
+                        option-label="FullName"
+                        option-value="teacherID"
+                        label="Teacher"
+                        map-options
+                        emit-value
+                        lazy-rules
+                        :rules="[(val) => val || 'Select Teacher']"
                       />
                     </div>
                   </div>
@@ -215,7 +190,7 @@
             <q-dialog v-model="updateSchedule" persistent>
               <q-card style="width: 800px; max-width: 100vw">
                 <q-card-section class="bg-primary row">
-                  <div class="text-h6">Edit Schedule</div>
+                  <div class="text-h6">Edit Offerings</div>
                   <q-space />
                   <q-btn
                     flat
@@ -228,49 +203,25 @@
                 </q-card-section>
 
                 <q-card-section class="bg-info">
-                  <q-form class="q-gutter-md">
+                  <q-form class="q-gutter-sm">
                     <div class="row q-gutter-sm q-py-sm">
                       <div class="col">
                         <q-select
                           outlined
                           v-model="inputSchedule.AcademicYear"
                           label="Academic Year"
-                          transition-show="flip-up"
-                          transition-hide="flip-down"
-                          :options="allSchoolYear"
-                          option-label="schoolyear"
-                          option-value="schoolyearid"
-                          map-options
-                          emit-value
+                          :options="academicYear"
                         />
                       </div>
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputSchedule.Courses"
-                          label="Course"
-                          transition-show="flip-up"
-                          transition-hide="flip-down"
-                          :options="AllCourse"
-                          option-label="courseCode"
-                          option-value="courseID"
-                          map-options
-                          emit-value
-                        />
-                      </div>
-
                       <div class="col">
                         <q-select
                           autofocus
                           outlined
                           v-model="inputSchedule.yearLevel"
-                          :options="options3"
+                          :options="yearLevel"
                           label="Year Level"
                         />
                       </div>
-                    </div>
-
-                    <div class="row q-gutter-sm q-py-sm">
                       <div class="col">
                         <q-select
                           outlined
@@ -279,90 +230,80 @@
                           label="Semester"
                         />
                       </div>
-
                       <div class="col">
                         <q-select
                           outlined
-                          v-model="inputSchedule.Section"
-                          label="Section"
+                          v-model="inputSchedule.Courses"
+                          label="Courses"
                           transition-show="flip-up"
                           transition-hide="flip-down"
-                          :options="AllSection"
-                          option-label="sectionName"
-                          option-value="sectionID"
+                          :options="AllCourse"
+                          option-label="coursesCode"
+                          option-value="coursesID"
                           map-options
                           emit-value
                         />
                       </div>
+                    </div>
+
+                    <div class="row q-gutter-sm q-py-sm">
                       <div class="col">
                         <q-select
                           autofocus
                           outlined
-                          v-model="inputSchedule.SubjectCodes"
+                          v-model="inputSchedule.SubjectCode"
                           label="SubjectCode"
-                          transition-show="flip-up"
-                          transition-hide="flip-down"
-                          :options="subjectCodes"
+                          :options="AllSubject"
                           option-label="SubjectCode"
                           option-value="subjectID"
                           map-options
                           emit-value
                         />
                       </div>
-                    </div>
-
-                    <div class="row q-gutter-sm q-py-sm">
                       <div class="col">
-                        <q-input
+                        <q-select
+                          outlined
+                          v-model="inputSchedule.sections"
+                          label="Section"
+                          :options="AllSection"
+                          option-label="sectionName"
+                          option-value="sectionID"
+                          map-options
+                          emit-value
+                          lazy-rules
+                          :rules="[(val) => val || 'Select Section']"
+                        />
+                      </div>
+                      <div class="col">
+                        <q-select
+                          outlined
+                          v-model="inputSchedule.room"
+                          :options="AllRoom"
+                          option-label="roomCode"
+                          option-value="roomID"
+                          label="Room"
+                          map-options
+                          emit-value
+                          lazy-rules
+                          :rules="[(val) => val || 'Select Room']"
+                        />
+                      </div>
+                      <div class="col">
+                        <q-select
                           outlined
                           v-model="inputSchedule.Teachers"
-                          label="Adviser"
-                          transition-show="flip-up"
-                          transition-hide="flip-down"
                           :options="allTeacher"
                           option-label="FullName"
                           option-value="teacherID"
+                          label="Teacher"
                           map-options
                           emit-value
-                        />
-                      </div>
-
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputSchedule.Time"
-                          label="Time"
-                        />
-                      </div>
-
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputSchedule.Time2"
-                          label="Time 2"
+                          lazy-rules
+                          :rules="[(val) => val || 'Select Teacher']"
                         />
                       </div>
                     </div>
 
-                    <div class="row q-gutter-sm q-py-sm">
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputSchedule.Day"
-                          :options="options"
-                          label="Day"
-                        />
-                      </div>
-
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputSchedule.Day2"
-                          :options="options2"
-                          label="Day 2"
-                        />
-                      </div>
-                    </div>
                     <q-card-actions align="right">
                       <q-btn
                         label="Cancel"
@@ -403,14 +344,13 @@ import { Vue, Options } from 'vue-class-component';
 import { mapActions, mapState } from 'vuex';
 import {
   CourseDto,
+  RoomDto,
   SchedulingDto,
   SchoolYearDto,
   SectionDto,
   SubjectDto,
   TeacherDto,
 } from 'src/services/restapi';
-import { scheduling } from 'src/store/scheduling/state';
-import { section } from 'src/store/section/state';
 
 @Options({
   computed: {
@@ -419,8 +359,7 @@ import { section } from 'src/store/section/state';
     ...mapState('section', ['AllSection']),
     ...mapState('ManagementSubject', ['AllSubject']),
     ...mapState('ManagementTeacher', ['allTeacher']),
-    ...mapState('ManagementRoom', ['AllRoom']),
-    ...mapState('schoolyear', ['allSchoolYear']),
+    ...mapState('room', ['AllRoom']),
   },
   methods: {
     ...mapActions('scheduling', [
@@ -433,8 +372,7 @@ import { section } from 'src/store/section/state';
     ...mapActions('section', ['getAllsection']),
     ...mapActions('ManagementSubject', ['getAllSubjects']),
     ...mapActions('ManagementTeacher', ['getAllTeacher']),
-    ...mapActions('ManagementRoom', ['getAllRoom']),
-    ...mapActions('schoolyear', ['getAllSchoolYear']),
+    ...mapActions('room', ['getAllRoom']),
   },
 })
 export default class ManageSchedule extends Vue {
@@ -446,23 +384,37 @@ export default class ManageSchedule extends Vue {
   allTeacher!: TeacherDto[];
   AllCourse!: CourseDto[];
   AllSection!: SectionDto[];
-  allSchoolYear!: SchoolYearDto[];
+  AllRoom!: RoomDto[];
   getAllsection!: () => Promise<void>;
   getAllschedule!: () => Promise<void>;
   getAllSubjects!: () => Promise<void>;
   getAllTeacher!: () => Promise<void>;
   getAllCourse!: () => Promise<void>;
-  getAllSchoolYear!: () => Promise<void>;
-  sections: SectionDto[] = [];
-  subjectCodes: SubjectDto[] = [];
+  getAllRoom!: () => Promise<void>;
+  // sections: SectionDto[] = [];
+  // subjectCodes: SubjectDto[] = [];
 
   columns = [
+    {
+      name: 'academicYear',
+      required: true,
+      label: 'Academic Year',
+      align: 'left',
+      field: (row: SchedulingDto) => row.AcademicYear,
+    },
+    {
+      name: 'semester',
+      required: true,
+      label: 'Semester',
+      align: 'left',
+      field: (row: SchedulingDto) => row.Semester,
+    },
     {
       name: 'SubjectCode',
       required: true,
       label: 'Subject Code',
       align: 'left',
-      field: (row: SchedulingDto) => row.SubjectCodes?.SubjectCode,
+      field: (row: SchedulingDto) => row.SubjectCode?.SubjectCode,
       format: (val: string) => `${val}`,
     },
     {
@@ -470,7 +422,7 @@ export default class ManageSchedule extends Vue {
       align: 'center',
       label: 'Descriptive Title',
       field: (row: SchedulingDto) =>
-        row.SubjectCodes?.DescriptiveTitle || 'None',
+        row.SubjectCode?.DescriptiveTitle || 'None',
     },
 
     {
@@ -478,16 +430,13 @@ export default class ManageSchedule extends Vue {
       align: 'center',
       label: 'Time / Day',
       field: (row: SchedulingDto) =>
-        row.Time +
-        ' -' +
-        row.Time2 +
+        row.sections?.time1 +
         ' ' +
-        '/ ' +
-        row.Day +
+        row.sections?.time2 +
         ' ' +
-        ' -' +
-        row.Day2 +
-        ' ',
+        row.sections?.day1 +
+        ' ' +
+        row.sections?.day2,
       format: (val: string) => `${val}`,
     },
     {
@@ -497,22 +446,28 @@ export default class ManageSchedule extends Vue {
       field: (row: SchedulingDto) => row.yearLevel,
     },
     {
-      name: 'course',
+      name: 'courses',
       align: 'center',
-      label: 'Course',
+      label: 'Courses',
       field: (row: SchedulingDto) => row.Courses?.courseCode,
     },
     {
       name: 'section',
       align: 'center',
       label: 'Section',
-      field: (row: SchedulingDto) => row.Section?.sectionName,
+      field: (row: SchedulingDto) => row.sections?.sectionName,
     },
     {
-      name: 'Teachers',
+      name: 'teacher',
       align: 'center',
-      label: 'Adviser',
-      field: (row: SchedulingDto) => row.Section?.sectionTeachers?.FullName,
+      label: 'Teacher',
+      field: (row: SchedulingDto) => row.Teachers?.FullName,
+    },
+    {
+      name: 'room',
+      align: 'center',
+      label: 'Room',
+      field: (row: SchedulingDto) => row.room?.roomCode,
     },
 
     { name: 'action', align: 'center', label: ' ', field: 'action' },
@@ -521,39 +476,14 @@ export default class ManageSchedule extends Vue {
   updateSchedule = false;
   AcademicYear = false;
   filter = '';
-  Time = '';
-  Time2 = '';
-  options3 = ['First year', 'Second year', 'Third year', 'Fourth year'];
-  options = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ];
-  options2 = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ];
+  yearLevel = ['First year', 'Second year', 'Third year', 'Fourth year'];
   sem = ['1st Semester', '2nd Semester'];
+  academicYear = ['2022-2023'];
 
   inputSchedule: SchedulingDto = {
     yearLevel: '',
     Semester: '',
-    Day: '',
-    Day2: '',
-    Time: '',
-    Time2: '',
-  };
-  inputSchoolYear: SchoolYearDto = {
-    schoolyear: '',
+    AcademicYear: '',
   };
 
   async mounted() {
@@ -562,28 +492,28 @@ export default class ManageSchedule extends Vue {
     await this.getAllTeacher();
     await this.getAllCourse();
     await this.getAllsection();
-    await this.getAllSchoolYear();
-    this.sections = this.AllSection;
-    this.subjectCodes = this.AllSubject;
+    await this.getAllRoom();
+    // this.sections = this.AllSection;
+    // this.subjectCodes = this.AllSubject;
   }
 
-  filterSubject(val: string) {
-    this.subjectCodes = this.AllSubject.filter(
-      (i: any) =>
-        i.AYCodes.schoolyearid === val &&
-        i.YearLevel.toLowerCase() ===
-          this.inputSchedule.yearLevel.toLowerCase(),
-    );
-  }
+  // filterSubject(val: string) {
+  //   this.subjectCodes = this.AllSubject.filter(
+  //     (i: any) =>
+  //       i.AYCodes.schoolyearid === val &&
+  //       i.YearLevel.toLowerCase() ===
+  //         this.inputSchedule.yearLevel.toLowerCase(),
+  //   );
+  // }
 
-  filterSection(val: string) {
-    this.sections = this.AllSection.filter(
-      (i) => i.YearLevel.toLowerCase() == val.toLowerCase(),
-    );
-  }
+  // filterSection(val: string) {
+  //   this.sections = this.AllSection.filter(
+  //     (i) => i.YearLevel.toLowerCase() == val.toLowerCase(),
+  //   );
+  // }
 
-  onSelectSection(section: any) {
-    this.inputSchedule.Section = section.sectionTeachers;
+  onSelectCourse(Course: any) {
+    this.inputSchedule.Courses = Course.courseCode;
   }
 
   async onaddSchedule() {
@@ -631,10 +561,7 @@ export default class ManageSchedule extends Vue {
     this.inputSchedule = {
       yearLevel: '',
       Semester: '',
-      Day: '',
-      Day2: '',
-      Time: '',
-      Time2: '',
+      AcademicYear: '',
     };
   }
 }

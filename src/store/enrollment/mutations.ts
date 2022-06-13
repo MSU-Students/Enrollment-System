@@ -12,7 +12,7 @@ const mutation: MutationTree<EnrollmentStateInterface> = {
     state.AllEnrollment.push(payload);
   },
 
-  getAllenrollment(state, payload) {
+  getAllEnrollment(state, payload) {
     state.AllEnrollment = [];
     state.AllEnrollment.push(...payload);
   },

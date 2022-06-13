@@ -6,13 +6,9 @@ export interface scheduling {
   Semester: string;
   Course: string;
   Section: string;
-  Teachers: string;
-  DescriptiveTitle: string;
-  Day: string;
-  Day2: string;
-  Time: string;
-  Time2: string;
   Teacher: string;
+  DescriptiveTitle: string;
+  room: string;
 }
 
 export interface SchedulingStateInterface {

@@ -1,15 +1,15 @@
 <template>
   <q-page class="q-pa-lg">
     <div class="text-h4 text-bold">
-      <q-icon name="style" color="light-blue-6" style="font-size: 4rem" />
-      Manage Subject
+      <q-icon name="house" color="light-blue-6" style="font-size: 4rem" />
+      Manage Room
     </div>
 
     <br />
 
     <q-table
-      title="Subject List"
-      :rows="AllSubject"
+      title="Room List"
+      :rows="AllRoom"
       :columns="columns"
       row-key="name"
       :rows-per-page-options="[0]"
@@ -30,18 +30,18 @@
             </template>
           </q-input>
           <q-btn
-            label="Add Subject"
+            label="Add Room"
             color="primary"
             e
             dense
             flat
             icon="add"
-            @click="addNewSubject = true"
+            @click="addNewRoom = true"
           />
-          <q-dialog v-model="addNewSubject" persistent>
+          <q-dialog v-model="addNewRoom" persistent>
             <q-card style="width: 800px; max-width: 100vw">
               <q-card-section class="bg-primary row">
-                <div class="text-h6">Add Subject</div>
+                <div class="text-h6">Add Room</div>
                 <q-space />
                 <q-btn
                   flat
@@ -54,40 +54,21 @@
               </q-card-section>
 
               <q-card-section>
-                <q-form class="q-gutter-md">
+                <q-form @submit="onaddRoom" class="q-gutter-md">
                   <div class="row">
                     <div class="col col-md-6">
                       <q-input
-                        outlined
+                        autofocus
                         class="q-py-md"
-                        v-model="inputSubject.SubjectCode"
-                        label="Subject Code"
+                        outlined
+                        v-model="inputroom.roomCode"
+                        label="Room"
                       />
                       <q-input
                         outlined
                         class="q-py-md"
-                        v-model="inputSubject.DescriptiveTitle"
-                        label="DescriptiveTitle"
-                      />
-                    </div>
-
-                    <div class="col-md-6 q-pl-md">
-                      <q-select
-                        outlined
-                        class="q-py-md"
-                        v-model="inputSubject.course"
-                        label="Course"
-                        :options="AllCourse"
-                        option-label="courseCode"
-                        option-value="courseID"
-                        map-options
-                        emit-value
-                      />
-                      <q-input
-                        outlined
-                        class="q-py-md"
-                        v-model="inputSubject.Units"
-                        label="Units"
+                        v-model="inputroom.roomDescription"
+                        label="Description"
                       />
                     </div>
                   </div>
@@ -103,7 +84,7 @@
                       v-close-popup
                       label="Add"
                       color="primary"
-                      @click="onaddSubject()"
+                      type="submit"
                     />
                   </q-card-actions>
                 </q-form>
@@ -125,10 +106,10 @@
               dense
               @click="openEditDialog(props.row)"
             />
-            <q-dialog v-model="updateSubject" persistent>
+            <q-dialog v-model="updateCourse" persistent>
               <q-card style="width: 800px; max-width: 100vw">
                 <q-card-section class="bg-primary row">
-                  <div class="text-h6">Edit Subject</div>
+                  <div class="text-h6">Edit Room</div>
                   <q-space />
                   <q-btn
                     flat
@@ -141,40 +122,21 @@
                 </q-card-section>
 
                 <q-card-section>
-                  <q-form @submit="oneditSubject" class="q-gutter-md">
+                  <q-form @submit="oneditRoom" class="q-gutter-md">
                     <div class="row">
                       <div class="col col-md-6">
                         <q-input
-                          outlined
+                          autofocus
                           class="q-py-md"
-                          v-model="inputSubject.SubjectCode"
-                          label="Subject Code"
+                          outlined
+                          v-model="inputroom.roomCode"
+                          label="Room"
                         />
                         <q-input
                           outlined
                           class="q-py-md"
-                          v-model="inputSubject.DescriptiveTitle"
-                          label="DescriptiveTitle"
-                        />
-                      </div>
-
-                      <div class="col-md-6 q-pl-md">
-                        <q-select
-                          outlined
-                          class="q-py-md"
-                          v-model="inputSubject.course"
-                          label="Course"
-                          :options="AllCourse"
-                          option-label="courseCode"
-                          option-value="courseID"
-                          map-options
-                          emit-value
-                        />
-                        <q-input
-                          outlined
-                          class="q-py-md"
-                          v-model="inputSubject.Units"
-                          label="Units"
+                          v-model="inputroom.roomDescription"
+                          label="Description"
                         />
                       </div>
                     </div>
@@ -204,7 +166,7 @@
               flat
               round
               dense
-              @click="deleteSpecificSubject(props.row)"
+              @click="deleteSpecificRoom(props.row)"
             />
           </div>
         </q-td>
@@ -215,74 +177,58 @@
 
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component';
-import { ManagementSubject } from 'src/store/ManagementSubject/state';
 import { mapActions, mapState } from 'vuex';
-import { CourseDto, SchoolYearDto, SubjectDto } from 'src/services/restapi';
+import { CourseDto, RoomDto } from 'src/services/restapi';
 
 @Options({
   computed: {
-    ...mapState('ManagementSubject', ['AllSubject']),
-    ...mapState('course', ['AllCourse']),
+    ...mapState('room', ['AllRoom']),
   },
   methods: {
-    ...mapActions('ManagementSubject', [
-      'addSubjects',
-      'editSubject',
-      'deleteSubject',
-      'getAllSubjects',
-    ]),
-    ...mapActions('course', ['getAllCourse']),
+    ...mapActions('room', ['addRoom', 'editRoom', 'deleteRoom', 'getAllRoom']),
   },
 })
-export default class ManageSubject extends Vue {
-  addSubjects!: (payload: SubjectDto) => Promise<void>;
-  editSubject!: (payload: SubjectDto) => Promise<void>;
-  deleteSubject!: (payload: SubjectDto) => Promise<void>;
-  AllSubject!: ManagementSubject[];
-  AllCourse!: CourseDto[];
-  getAllSubjects!: () => Promise<void>;
-  getAllCourse!: () => Promise<void>;
+export default class ManageRoom extends Vue {
+  addRoom!: (payload: RoomDto) => Promise<void>;
+  editRoom!: (payload: RoomDto) => Promise<void>;
+  deleteRoom!: (payload: RoomDto) => Promise<void>;
+  getAllRoom!: () => Promise<void>;
+  AllRoom!: ManageRoom[];
 
   async mounted() {
-    await this.getAllSubjects();
-    await this.getAllCourse();
+    await this.getAllRoom();
   }
   columns = [
     {
-      name: 'SubjectCode',
-      align: 'center',
-      label: 'Subject Code',
-      field: 'SubjectCode',
+      name: 'Room',
+      required: true,
+      label: 'Room',
+      align: 'left',
+      field: (row: RoomDto) => row.roomCode,
+      format: (val: string) => `${val}`,
     },
     {
-      name: 'DescriptiveTitle',
+      name: 'Description',
       align: 'center',
-      label: 'Descriptive Title',
-      field: 'DescriptiveTitle',
-    },
-    { name: 'Units', align: 'center', label: 'Units', field: 'Units' },
-    {
-      name: 'course',
-      align: 'center',
-      label: 'Course',
-      field: (row: SubjectDto) => row.course?.courseCode,
+      label: 'Description',
+      field: (row: RoomDto) => row.roomDescription,
+      format: (val: string) => `${val}`,
     },
 
     { name: 'action', align: 'center', label: 'Action', field: 'action' },
   ];
-  addNewSubject = false;
-  updateSubject = false;
+  addNewRoom = false;
+  updateCourse = false;
   filter = '';
 
-  inputSubject: SubjectDto = {
-    SubjectCode: '',
-    DescriptiveTitle: '',
-    Units: '',
+  inputroom: RoomDto = {
+    roomCode: '',
+    roomDescription: '',
   };
 
-  async onaddSubject() {
-    await this.addSubjects(this.inputSubject);
-    this.addNewSubject = false;
+  async onaddRoom() {
+    await this.addRoom(this.inputroom);
+    this.addNewRoom = false;
     this.resetModel();
     this.$q.notify({
       type: 'positive',
@@ -290,9 +236,9 @@ export default class ManageSubject extends Vue {
     });
   }
 
-  async oneditSubject() {
-    await this.editSubject(this.inputSubject);
-    this.updateSubject = false;
+  async oneditRoom() {
+    await this.editRoom(this.inputroom);
+    this.updateCourse = false;
     this.resetModel();
     this.$q.notify({
       type: 'positive',
@@ -300,7 +246,7 @@ export default class ManageSubject extends Vue {
     });
   }
 
-  deleteSpecificSubject(val: SubjectDto) {
+  deleteSpecificRoom(val: RoomDto) {
     this.$q
       .dialog({
         message: 'Confirm to delete?',
@@ -308,7 +254,7 @@ export default class ManageSubject extends Vue {
         persistent: true,
       })
       .onOk(async () => {
-        await this.deleteSubject(val);
+        await this.deleteRoom(val);
         this.$q.notify({
           type: 'warning',
           message: 'Successfully deleted',
@@ -316,16 +262,15 @@ export default class ManageSubject extends Vue {
       });
   }
 
-  openEditDialog(val: SubjectDto) {
-    this.updateSubject = true;
-    this.inputSubject = { ...val };
+  openEditDialog(val: RoomDto) {
+    this.updateCourse = true;
+    this.inputroom = { ...val };
   }
 
   resetModel() {
-    this.inputSubject = {
-      SubjectCode: '',
-      DescriptiveTitle: '',
-      Units: '',
+    this.inputroom = {
+      roomCode: '',
+      roomDescription: '',
     };
   }
 }

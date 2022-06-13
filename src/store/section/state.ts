@@ -2,7 +2,10 @@ export interface section {
   sectionID?: number;
   YearLevel: string;
   sectionName: string;
-  sectionTeacher: string;
+  time1: string;
+  time2: string;
+  day1: string;
+  day2: string;
 }
 
 export interface sectionStateInterface {

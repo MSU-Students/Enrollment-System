@@ -7,19 +7,7 @@ const actions: ActionTree<EnrollmentStateInterface, StateInterface> = {
   async addEnrollment(context, payload: any): Promise<any> {
     const result = await enrollmentService.create(payload);
     context.commit('setenrollment', result);
-    await context.dispatch('getAllenrollment');
-
-    const listEnrollee = context.rootState.enteredSub.AllEnteredSub;
-    if (listEnrollee.length > 0 && result) {
-      listEnrollee.map(
-        async (s) =>
-          await context.dispatch(
-            'enrollmentmodule/addEnrollment',
-            { ...s, invoice: result.enrollmentID },
-            { root: true },
-          ),
-      );
-    }
+    await context.dispatch('getAllEnrollment');
   },
 
   async editEnrollment(context, payload: any): Promise<void> {
@@ -28,7 +16,7 @@ const actions: ActionTree<EnrollmentStateInterface, StateInterface> = {
       payload,
     );
     context.commit('updateenrollment', result);
-    await context.dispatch('getAllenrollment');
+    await context.dispatch('getAllEnrollment');
   },
 
   async deleteEnrollment(context, enrollmentID: number): Promise<any> {
@@ -38,7 +26,7 @@ const actions: ActionTree<EnrollmentStateInterface, StateInterface> = {
 
   async getAllEnrollment(context): Promise<any> {
     const res = await enrollmentService.getAll();
-    context.commit('getAllenrollment', res);
+    context.commit('getAllEnrollment', res);
   },
 
   async getOneEnrollment(context, enrollmentID: number): Promise<any> {

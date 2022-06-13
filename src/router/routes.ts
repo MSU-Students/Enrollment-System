@@ -46,6 +46,11 @@ const routes: RouteRecordRaw[] = [
       },
 
       {
+        path: 'room',
+        component: () => import('src/pages/Chairperson/room.vue'),
+      },
+
+      {
         path: 'scheduling',
         component: () => import('src/pages/Chairperson/scheduling.vue'),
       },

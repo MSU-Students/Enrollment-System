@@ -56,32 +56,66 @@
               <q-card-section>
                 <q-form class="q-gutter-md">
                   <div class="row">
-                    <div class="col col-md-6">
+                    <div class="col">
                       <q-select
+                        class="q-pa-md"
                         autofocus
-                        class="q-py-md"
                         outlined
                         v-model="inputSection.YearLevel"
                         :options="options"
                         label="Year Level"
                       />
+                    </div>
+                    <div class="col">
                       <q-input
+                        class="q-pa-md"
                         outlined
-                        class="q-py-md"
                         v-model="inputSection.sectionName"
                         label="Section Name"
                       />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
                       <q-select
+                        class="q-pa-md"
+                        autofocus
                         outlined
-                        v-model="inputSection.sectionTeachers"
-                        label="Adviser"
-                        transition-show="flip-up"
-                        transition-hide="flip-down"
-                        :options="allTeacher"
-                        option-label="FullName"
-                        option-value="teacherID"
-                        map-options
-                        emit-value
+                        v-model="inputSection.time1"
+                        :options="time"
+                        label="Time"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        class="q-pa-md"
+                        autofocus
+                        outlined
+                        v-model="inputSection.time2"
+                        :options="time"
+                        label="Time"
+                      />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <q-select
+                        class="q-pa-md"
+                        autofocus
+                        outlined
+                        v-model="inputSection.day1"
+                        :options="day"
+                        label="Day"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        class="q-pa-md"
+                        autofocus
+                        outlined
+                        v-model="inputSection.day2"
+                        :options="day"
+                        label="Day"
                       />
                     </div>
                   </div>
@@ -136,33 +170,67 @@
 
                 <q-card-section>
                   <q-form @submit="oneditSection" class="q-gutter-md">
-                    <div class="row">
+                    <div class="row q-pa-md">
                       <div class="col col-md-6">
                         <q-select
-                          autofocus
                           class="q-py-md"
+                          autofocus
                           outlined
                           v-model="inputSection.YearLevel"
                           :options="options"
                           label="Year Level"
                         />
+                      </div>
+                      <div class="col col-md-6">
                         <q-input
-                          outlined
                           class="q-py-md"
+                          outlined
                           v-model="inputSection.sectionName"
                           label="Section Name"
                         />
+                      </div>
+                    </div>
+                    <div class="row q-pa-md">
+                      <div class="col col-md-6">
                         <q-select
+                          class="q-py-md"
+                          autofocus
                           outlined
-                          v-model="inputSection.sectionTeachers"
-                          label="Adviser"
-                          transition-show="flip-up"
-                          transition-hide="flip-down"
-                          :options="allTeacher"
-                          option-label="FullName"
-                          option-value="teacherID"
-                          map-options
-                          emit-value
+                          v-model="inputSection.time1"
+                          :options="time"
+                          label="Time"
+                        />
+                      </div>
+                      <div class="col col-md-6">
+                        <q-select
+                          class="q-py-md"
+                          autofocus
+                          outlined
+                          v-model="inputSection.time2"
+                          :options="time"
+                          label="Time"
+                        />
+                      </div>
+                    </div>
+                    <div class="row q-pa-md">
+                      <div class="col col-md-6">
+                        <q-select
+                          class="q-py-md"
+                          autofocus
+                          outlined
+                          v-model="inputSection.day1"
+                          :options="day"
+                          label="Day"
+                        />
+                      </div>
+                      <div class="col col-md-6">
+                        <q-select
+                          class="q-py-md"
+                          autofocus
+                          outlined
+                          v-model="inputSection.day2"
+                          :options="day"
+                          label="Day"
                         />
                       </div>
                     </div>
@@ -210,7 +278,6 @@ import { SectionDto, TeacherDto } from 'src/services/restapi';
 @Options({
   computed: {
     ...mapState('section', ['AllSection']),
-    ...mapState('ManagementTeacher', ['allTeacher']),
   },
   methods: {
     ...mapActions('section', [
@@ -219,7 +286,6 @@ import { SectionDto, TeacherDto } from 'src/services/restapi';
       'deletesection',
       'getAllsection',
     ]),
-    ...mapActions('ManagementTeacher', ['getAllTeacher']),
   },
 })
 export default class ManageSection extends Vue {
@@ -227,13 +293,10 @@ export default class ManageSection extends Vue {
   editsection!: (payload: SectionDto) => Promise<void>;
   deletesection!: (payload: SectionDto) => Promise<void>;
   AllSection!: section[];
-  allTeacher!: TeacherDto[];
   getAllsection!: () => Promise<void>;
-  getAllTeacher!: () => Promise<void>;
 
   async mounted() {
     await this.getAllsection();
-    await this.getAllTeacher();
   }
   columns = [
     {
@@ -241,7 +304,6 @@ export default class ManageSection extends Vue {
       align: 'center',
       label: 'Year Level',
       field: (row: SectionDto) => row.YearLevel,
-      format: (val: string) => `${val}`,
     },
     {
       name: 'Section Name',
@@ -252,10 +314,11 @@ export default class ManageSection extends Vue {
     },
 
     {
-      name: 'teacher',
+      name: 'time/date',
       align: 'left',
-      label: 'Adviser',
-      field: (row: SectionDto) => row.sectionTeachers?.FullName,
+      label: 'Time and Day',
+      field: (row: SectionDto) =>
+        row.time1 + ' -' + row.time2 + ' /' + row.day1 + ' -' + row.day2,
     },
 
     { name: 'action', align: 'center', label: 'Action', field: 'action' },
@@ -264,10 +327,49 @@ export default class ManageSection extends Vue {
   updateSection = false;
   filter = '';
   options = ['First Year', 'Second Year', 'Third Year', 'Fourth Year'];
+  time = [
+    '6:00am',
+    '6:30am',
+    '7:00am',
+    '7:30am',
+    '8:00am',
+    '8:30am',
+    '9:00am',
+    '9:30am',
+    '10:00am',
+    '10:30am',
+    '11:30am',
+    '12:00am',
+    '12:30pm',
+    '1:00pm',
+    '1:30pm',
+    '2:00pm',
+    '2:30pm',
+    '3:00pm',
+    '3:30pm',
+    '4:00pm',
+    '4:30pm',
+    '5:00pm',
+    '5:30pm',
+    '6:00pm',
+  ];
+  day = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
 
   inputSection: SectionDto = {
     YearLevel: '',
     sectionName: '',
+    time1: '',
+    time2: '',
+    day1: '',
+    day2: '',
   };
 
   async onaddSection() {
@@ -315,6 +417,10 @@ export default class ManageSection extends Vue {
     this.inputSection = {
       YearLevel: '',
       sectionName: '',
+      time1: '',
+      time2: '',
+      day1: '',
+      day2: '',
     };
   }
 }

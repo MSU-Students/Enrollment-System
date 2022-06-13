@@ -189,7 +189,7 @@ export interface AdmissionDto {
      * @type {EnrollmentDto}
      * @memberof AdmissionDto
      */
-    'enrollmentStudentFullName'?: EnrollmentDto;
+    'studentIdnumber'?: EnrollmentDto;
 }
 /**
  * 
@@ -215,6 +215,24 @@ export interface CourseDto {
      * @memberof CourseDto
      */
     'courseDescription': string;
+    /**
+     * 
+     * @type {SchedulingDto}
+     * @memberof CourseDto
+     */
+    'Offered_Course'?: SchedulingDto;
+    /**
+     * 
+     * @type {EnrollmentDto}
+     * @memberof CourseDto
+     */
+    'enrollmentcourse'?: EnrollmentDto;
+    /**
+     * 
+     * @type {SubjectDto}
+     * @memberof CourseDto
+     */
+    'subjectCourse'?: SubjectDto;
 }
 /**
  * 
@@ -230,94 +248,76 @@ export interface EnrollmentDto {
     'enrollmentID'?: string;
     /**
      * 
-     * @type {SchedulingDto}
-     * @memberof EnrollmentDto
-     */
-    'subjectCode'?: SchedulingDto;
-    /**
-     * 
      * @type {AdmissionDto}
      * @memberof EnrollmentDto
      */
-    'studentFullName'?: AdmissionDto;
+    'studentIdnumber'?: AdmissionDto;
     /**
      * 
-     * @type {SchedulingDto}
+     * @type {string}
      * @memberof EnrollmentDto
      */
-    'academicYear'?: SchedulingDto;
+    'academicYear': string;
     /**
      * 
-     * @type {SchedulingDto}
+     * @type {string}
      * @memberof EnrollmentDto
      */
-    'yearLevel'?: SchedulingDto;
+    'semester': string;
     /**
      * 
-     * @type {SchedulingDto}
+     * @type {string}
      * @memberof EnrollmentDto
      */
-    'semester'?: SchedulingDto;
+    'yearLevel': string;
     /**
      * 
-     * @type {SchedulingDto}
+     * @type {CourseDto}
      * @memberof EnrollmentDto
      */
-    'course'?: SchedulingDto;
+    'course'?: CourseDto;
     /**
      * 
-     * @type {SchedulingDto}
+     * @type {string}
      * @memberof EnrollmentDto
      */
-    'section'?: SchedulingDto;
+    'subjectCode': string;
     /**
      * 
-     * @type {SchedulingDto}
+     * @type {string}
      * @memberof EnrollmentDto
      */
-    'teacher'?: SchedulingDto;
+    'descriptiveTitle': string;
     /**
      * 
-     * @type {SchedulingDto}
+     * @type {string}
      * @memberof EnrollmentDto
      */
-    'descriptiveTitle'?: SchedulingDto;
+    'units': string;
     /**
      * 
-     * @type {SchedulingDto}
+     * @type {string}
      * @memberof EnrollmentDto
      */
-    'units'?: SchedulingDto;
+    'fullName': string;
     /**
      * 
-     * @type {SchedulingDto}
+     * @type {string}
      * @memberof EnrollmentDto
      */
-    'day'?: SchedulingDto;
+    'Teacher': string;
     /**
      * 
-     * @type {SchedulingDto}
+     * @type {string}
      * @memberof EnrollmentDto
      */
-    'day2'?: SchedulingDto;
+    'Section': string;
     /**
      * 
-     * @type {SchedulingDto}
+     * @type {string}
      * @memberof EnrollmentDto
      */
-    'time'?: SchedulingDto;
-    /**
-     * 
-     * @type {SchedulingDto}
-     * @memberof EnrollmentDto
-     */
-    'time2'?: SchedulingDto;
-    /**
-     * 
-     * @type {ReportandreportsDto}
-     * @memberof EnrollmentDto
-     */
-    'recordsection'?: ReportandreportsDto;
+    'timeAnddate': string;
 }
 /**
  * 
@@ -346,16 +346,47 @@ export interface ReportandreportsDto {
     'recordsID'?: number;
     /**
      * 
-     * @type {SubjectDto}
+     * @type {string}
      * @memberof ReportandreportsDto
      */
-    'subject'?: SubjectDto;
+    'Section'?: string;
     /**
      * 
-     * @type {SectionDto}
+     * @type {string}
      * @memberof ReportandreportsDto
      */
-    'Section'?: SectionDto;
+    'subject'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RoomDto
+ */
+export interface RoomDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof RoomDto
+     */
+    'roomID'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoomDto
+     */
+    'roomCode': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoomDto
+     */
+    'roomDescription': string;
+    /**
+     * 
+     * @type {SchedulingDto}
+     * @memberof RoomDto
+     */
+    'Offered_Room'?: SchedulingDto;
 }
 /**
  * 
@@ -377,10 +408,10 @@ export interface SchedulingDto {
     'yearLevel': string;
     /**
      * 
-     * @type {SchoolYearDto}
+     * @type {string}
      * @memberof SchedulingDto
      */
-    'AcademicYear'?: SchoolYearDto;
+    'AcademicYear': string;
     /**
      * 
      * @type {string}
@@ -389,40 +420,10 @@ export interface SchedulingDto {
     'Semester': string;
     /**
      * 
-     * @type {string}
-     * @memberof SchedulingDto
-     */
-    'Day': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SchedulingDto
-     */
-    'Day2': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SchedulingDto
-     */
-    'Time': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SchedulingDto
-     */
-    'Time2': string;
-    /**
-     * 
      * @type {SubjectDto}
      * @memberof SchedulingDto
      */
-    'SubjectCodes'?: SubjectDto;
-    /**
-     * 
-     * @type {SubjectDto}
-     * @memberof SchedulingDto
-     */
-    'DescriptiveTitle'?: SubjectDto;
+    'SubjectCode'?: SubjectDto;
     /**
      * 
      * @type {CourseDto}
@@ -434,7 +435,7 @@ export interface SchedulingDto {
      * @type {SectionDto}
      * @memberof SchedulingDto
      */
-    'Section'?: SectionDto;
+    'sections'?: SectionDto;
     /**
      * 
      * @type {TeacherDto}
@@ -443,82 +444,10 @@ export interface SchedulingDto {
     'Teachers'?: TeacherDto;
     /**
      * 
-     * @type {EnrollmentDto}
+     * @type {RoomDto}
      * @memberof SchedulingDto
      */
-    'enrollmentSubjectCode'?: EnrollmentDto;
-    /**
-     * 
-     * @type {EnrollmentDto}
-     * @memberof SchedulingDto
-     */
-    'enrollmentacademicYear'?: EnrollmentDto;
-    /**
-     * 
-     * @type {EnrollmentDto}
-     * @memberof SchedulingDto
-     */
-    'enrollmentyearLevel'?: EnrollmentDto;
-    /**
-     * 
-     * @type {EnrollmentDto}
-     * @memberof SchedulingDto
-     */
-    'enrollmentcourse'?: EnrollmentDto;
-    /**
-     * 
-     * @type {EnrollmentDto}
-     * @memberof SchedulingDto
-     */
-    'enrollmentsemester'?: EnrollmentDto;
-    /**
-     * 
-     * @type {EnrollmentDto}
-     * @memberof SchedulingDto
-     */
-    'enrollmentsection'?: EnrollmentDto;
-    /**
-     * 
-     * @type {EnrollmentDto}
-     * @memberof SchedulingDto
-     */
-    'enrollmentTeacher'?: EnrollmentDto;
-    /**
-     * 
-     * @type {EnrollmentDto}
-     * @memberof SchedulingDto
-     */
-    'enrollmentDescriptiveTitle'?: EnrollmentDto;
-    /**
-     * 
-     * @type {EnrollmentDto}
-     * @memberof SchedulingDto
-     */
-    'enrollmentUnits'?: EnrollmentDto;
-    /**
-     * 
-     * @type {EnrollmentDto}
-     * @memberof SchedulingDto
-     */
-    'enrollmentDay'?: EnrollmentDto;
-    /**
-     * 
-     * @type {EnrollmentDto}
-     * @memberof SchedulingDto
-     */
-    'enrollmentTime'?: EnrollmentDto;
-    /**
-     * 
-     * @type {EnrollmentDto}
-     * @memberof SchedulingDto
-     */
-    'enrollmentTime2'?: EnrollmentDto;
-    /**
-     * 
-     * @type {EnrollmentDto}
-     * @memberof SchedulingDto
-     */
-    'enrollmentDay2'?: EnrollmentDto;
+    'room'?: RoomDto;
 }
 /**
  * 
@@ -540,16 +469,16 @@ export interface SchoolYearDto {
     'schoolyear': string;
     /**
      * 
-     * @type {SubjectDto}
-     * @memberof SchoolYearDto
-     */
-    'subjectSchoolYear'?: SubjectDto;
-    /**
-     * 
      * @type {SchedulingDto}
      * @memberof SchoolYearDto
      */
     'schedulingSchoolYear'?: SchedulingDto;
+    /**
+     * 
+     * @type {EnrollmentDto}
+     * @memberof SchoolYearDto
+     */
+    'enrollmentShoolYear'?: EnrollmentDto;
 }
 /**
  * 
@@ -577,10 +506,34 @@ export interface SectionDto {
     'sectionName': string;
     /**
      * 
-     * @type {TeacherDto}
+     * @type {string}
      * @memberof SectionDto
      */
-    'sectionTeachers'?: TeacherDto;
+    'time1': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SectionDto
+     */
+    'time2': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SectionDto
+     */
+    'day1': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SectionDto
+     */
+    'day2': string;
+    /**
+     * 
+     * @type {SchedulingDto}
+     * @memberof SectionDto
+     */
+    'Offeredsection'?: SchedulingDto;
 }
 /**
  * 
@@ -594,12 +547,6 @@ export interface SubjectDto {
      * @memberof SubjectDto
      */
     'subjectID'?: string;
-    /**
-     * 
-     * @type {SchoolYearDto}
-     * @memberof SubjectDto
-     */
-    'AYCodes'?: SchoolYearDto;
     /**
      * 
      * @type {string}
@@ -620,22 +567,28 @@ export interface SubjectDto {
     'Units': string;
     /**
      * 
-     * @type {string}
+     * @type {CourseDto}
      * @memberof SubjectDto
      */
-    'YearLevel': string;
+    'course'?: CourseDto;
     /**
      * 
-     * @type {SchedulingDto}
+     * @type {EnrollmentDto}
      * @memberof SubjectDto
      */
-    'schedulingDescriptiveTitle'?: SchedulingDto;
+    'enrollmentSubjectCode'?: EnrollmentDto;
     /**
      * 
-     * @type {ReportandreportsDto}
+     * @type {EnrollmentDto}
      * @memberof SubjectDto
      */
-    'recordsSubjectCode'?: ReportandreportsDto;
+    'enrollmentDescriptiveTitle'?: EnrollmentDto;
+    /**
+     * 
+     * @type {EnrollmentDto}
+     * @memberof SubjectDto
+     */
+    'enrollmentUnits'?: EnrollmentDto;
 }
 /**
  * 
@@ -844,6 +797,42 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(enrollmentDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Add new Rooms
+         * @param {RoomDto} roomDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addRooms: async (roomDto: RoomDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'roomDto' is not null or undefined
+            assertParamExists('addRooms', 'roomDto', roomDto)
+            const localVarPath = `/room`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(roomDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1180,6 +1169,40 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             assertParamExists('deleteOneSubject', 'subjectID', subjectID)
             const localVarPath = `/subject/{subjectID}`
                 .replace(`{${"subjectID"}}`, encodeURIComponent(String(subjectID)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete Rooms by id
+         * @param {number} roomID 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteRoom: async (roomID: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'roomID' is not null or undefined
+            assertParamExists('deleteRoom', 'roomID', roomID)
+            const localVarPath = `/room/{roomID}`
+                .replace(`{${"roomID"}}`, encodeURIComponent(String(roomID)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1640,6 +1663,70 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          */
         getReportCourses: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/reportandreports`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get Rooms by id
+         * @param {number} roomID 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRoomById: async (roomID: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'roomID' is not null or undefined
+            assertParamExists('getRoomById', 'roomID', roomID)
+            const localVarPath = `/room/{roomID}`
+                .replace(`{${"roomID"}}`, encodeURIComponent(String(roomID)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all Rooms
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRooms: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/room`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2260,6 +2347,46 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Update Rooms by id
+         * @param {number} roomID 
+         * @param {RoomDto} roomDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateRoom: async (roomID: number, roomDto: RoomDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'roomID' is not null or undefined
+            assertParamExists('updateRoom', 'roomID', roomID)
+            // verify required parameter 'roomDto' is not null or undefined
+            assertParamExists('updateRoom', 'roomDto', roomDto)
+            const localVarPath = `/room/{roomID}`
+                .replace(`{${"roomID"}}`, encodeURIComponent(String(roomID)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(roomDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Update Schedulings by id
          * @param {number} schedulingID 
          * @param {SchedulingDto} schedulingDto 
@@ -2587,6 +2714,17 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Add new Rooms
+         * @param {RoomDto} roomDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addRooms(roomDto: RoomDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addRooms(roomDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Add new Schedulings
          * @param {SchedulingDto} schedulingDto 
          * @param {*} [options] Override http request option.
@@ -2693,6 +2831,17 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          */
         async deleteOneSubject(subjectID: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubjectDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOneSubject(subjectID, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete Rooms by id
+         * @param {number} roomID 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteRoom(roomID: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteRoom(roomID, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2841,6 +2990,27 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          */
         async getReportCourses(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReportandreportsDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getReportCourses(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get Rooms by id
+         * @param {number} roomID 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getRoomById(roomID: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRoomById(roomID, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get all Rooms
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getRooms(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRooms(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3029,6 +3199,18 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update Rooms by id
+         * @param {number} roomID 
+         * @param {RoomDto} roomDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateRoom(roomID: number, roomDto: RoomDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateRoom(roomID, roomDto, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Update Schedulings by id
          * @param {number} schedulingID 
          * @param {SchedulingDto} schedulingDto 
@@ -3153,6 +3335,16 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Add new Rooms
+         * @param {RoomDto} roomDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addRooms(roomDto: RoomDto, options?: any): AxiosPromise<RoomDto> {
+            return localVarFp.addRooms(roomDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Add new Schedulings
          * @param {SchedulingDto} schedulingDto 
          * @param {*} [options] Override http request option.
@@ -3250,6 +3442,16 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         deleteOneSubject(subjectID: number, options?: any): AxiosPromise<SubjectDto> {
             return localVarFp.deleteOneSubject(subjectID, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete Rooms by id
+         * @param {number} roomID 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteRoom(roomID: number, options?: any): AxiosPromise<RoomDto> {
+            return localVarFp.deleteRoom(roomID, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3384,6 +3586,25 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         getReportCourses(options?: any): AxiosPromise<ReportandreportsDto> {
             return localVarFp.getReportCourses(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get Rooms by id
+         * @param {number} roomID 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRoomById(roomID: number, options?: any): AxiosPromise<RoomDto> {
+            return localVarFp.getRoomById(roomID, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all Rooms
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRooms(options?: any): AxiosPromise<RoomDto> {
+            return localVarFp.getRooms(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3554,6 +3775,17 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Update Rooms by id
+         * @param {number} roomID 
+         * @param {RoomDto} roomDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateRoom(roomID: number, roomDto: RoomDto, options?: any): AxiosPromise<RoomDto> {
+            return localVarFp.updateRoom(roomID, roomDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Update Schedulings by id
          * @param {number} schedulingID 
          * @param {SchedulingDto} schedulingDto 
@@ -3677,6 +3909,18 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
+     * @summary Add new Rooms
+     * @param {RoomDto} roomDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public addRooms(roomDto: RoomDto, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).addRooms(roomDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Add new Schedulings
      * @param {SchedulingDto} schedulingDto 
      * @param {*} [options] Override http request option.
@@ -3793,6 +4037,18 @@ export class DefaultApi extends BaseAPI {
      */
     public deleteOneSubject(subjectID: number, options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).deleteOneSubject(subjectID, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete Rooms by id
+     * @param {number} roomID 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public deleteRoom(roomID: number, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).deleteRoom(roomID, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3955,6 +4211,29 @@ export class DefaultApi extends BaseAPI {
      */
     public getReportCourses(options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).getReportCourses(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get Rooms by id
+     * @param {number} roomID 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getRoomById(roomID: number, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getRoomById(roomID, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all Rooms
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getRooms(options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getRooms(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4156,6 +4435,19 @@ export class DefaultApi extends BaseAPI {
      */
     public updateEnrollment(enrollmentID: number, enrollmentDto: EnrollmentDto, options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).updateEnrollment(enrollmentID, enrollmentDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update Rooms by id
+     * @param {number} roomID 
+     * @param {RoomDto} roomDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public updateRoom(roomID: number, roomDto: RoomDto, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).updateRoom(roomID, roomDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
