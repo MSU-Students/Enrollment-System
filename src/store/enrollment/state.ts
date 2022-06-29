@@ -1,11 +1,12 @@
 export interface enrollmentmodule {
   enrollmentID?: string;
-  studentID: string;
-  fullname: string;
-  academicYear: string;
-  semester: string;
-  course: string;
-  YearLevel: string;
+  enteredsubjectCode: string;
+  enteredsection: string;
+  entereddescriptiveTitle: string;
+  enteredtime: string;
+  entereddate: string;
+  enteredunits: string;
+  enteredteacher: string;
 }
 
 export interface EnrollmentStateInterface {

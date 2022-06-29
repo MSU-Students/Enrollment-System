@@ -48,14 +48,12 @@
               <q-item-section> Manage Account </q-item-section>
             </q-item>
             <q-separator />
-            <q-item clickable v-ripple to="/admin/schoolyear">
+            <q-item clickable v-ripple to="/admin/Course">
               <q-item-section avatar>
-                <q-icon name="calendar" color="blue-2" />
+                <q-icon name="room" color="black" />
               </q-item-section>
-
-              <q-item-section> Manage School Year</q-item-section>
+              <q-item-section> Manage Course</q-item-section>
             </q-item>
-
             <q-separator />
 
             <q-item clickable v-ripple to="/">

@@ -104,12 +104,26 @@
                         outlined
                         v-model="inputStudentInfo.ayCode"
                         :options="options1"
-                        label="AY Code"
+                        label="Academic Year"
                         lazy-rules
                         :rules="[
                           (val) =>
                             (val && val.length > 0) ||
                             'Please Input the AY Code',
+                        ]"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        v-model="inputStudentInfo.semester"
+                        :options="options7"
+                        label="Semester"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Semester',
                         ]"
                       />
                     </div>
@@ -145,16 +159,15 @@
                     </div>
                     <div class="col">
                       <q-select
+                        autofocus
                         outlined
-                        v-model="inputStudentInfo.course"
+                        v-model="inputStudentInfo.Courses"
                         label="Course"
-                        :options="options6"
-                        lazy-rules
-                        :rules="[
-                          (val) =>
-                            (val && val.length > 0) ||
-                            'Please Input the Course',
-                        ]"
+                        :options="AllCourse"
+                        option-label="courseCode"
+                        option-value="courseID"
+                        map-options
+                        emit-value
                       />
                     </div>
                   </div>
@@ -502,17 +515,15 @@
                       </div>
                       <div class="col">
                         <q-select
+                          autofocus
                           outlined
-                          disable
-                          v-model="inputStudentInfo.course"
+                          v-model="inputStudentInfo.Courses"
                           label="Course"
-                          :options="options6"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) ||
-                              'Please Input the Course',
-                          ]"
+                          :options="AllCourse"
+                          option-label="courseCode"
+                          option-value="courseID"
+                          map-options
+                          emit-value
                         />
                       </div>
                     </div>
@@ -692,7 +703,7 @@
                 </q-card-section>
 
                 <q-card-section>
-                  <q-form @submit="oneditStudent()" class="q-gutter-sm">
+                  <q-form class="q-gutter-sm">
                     <div class="text-h4 flex flex-center">Requirements</div>
 
                     <div class="flex flex-center">
@@ -749,12 +760,26 @@
                           outlined
                           v-model="inputStudentInfo.ayCode"
                           :options="options1"
-                          label="AY Code"
+                          label="Academic Year"
                           lazy-rules
                           :rules="[
                             (val) =>
                               (val && val.length > 0) ||
                               'Please Input the AY Code',
+                          ]"
+                        />
+                      </div>
+                      <div class="col">
+                        <q-select
+                          outlined
+                          v-model="inputStudentInfo.semester"
+                          :options="options7"
+                          label="Semester"
+                          lazy-rules
+                          :rules="[
+                            (val) =>
+                              (val && val.length > 0) ||
+                              'Please Input the Semester',
                           ]"
                         />
                       </div>
@@ -790,16 +815,15 @@
                       </div>
                       <div class="col">
                         <q-select
+                          autofocus
                           outlined
-                          v-model="inputStudentInfo.course"
+                          v-model="inputStudentInfo.Courses"
                           label="Course"
-                          :options="options6"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) ||
-                              'Please Input the Course',
-                          ]"
+                          :options="AllCourse"
+                          option-label="courseCode"
+                          option-value="courseID"
+                          map-options
+                          emit-value
                         />
                       </div>
                     </div>
@@ -1000,7 +1024,6 @@
                         />
                       </div>
                     </div>
-
                     <div class="flex flex-center">
                       <q-btn
                         flat
@@ -1070,7 +1093,6 @@ export default class ManageStudentInfo extends Vue {
 
   async mounted() {
     await this.getAllAdmission();
-    console.log(this.allAdmissionInfo);
     await this.getAllCourse();
   }
 
@@ -1124,24 +1146,12 @@ export default class ManageStudentInfo extends Vue {
   addNewStudentInfo = false;
   studentDetails = false;
   imageAttachement: File = new File([], 'Select File');
-  options1 = ['First Semester', 'Second Semester'];
+  options1 = ['2022-2023'];
+  options7 = ['First Semester', 'Second Semester', 'Summer'];
   options2 = ['First Year', 'Second Year', 'Third Year', 'Fourth Year'];
   options3 = ['New Student', 'Transferee'];
   options4 = ['Male', 'Female'];
   options5 = ['Single', 'Merried'];
-  options6 = [
-    'Dip in Engineering Tech (Machine Shop)',
-    'Dip in Engineering Tech (Electricity)',
-    'Dip in Engineering Tech (Electrical)',
-    'Dip in Engineering Tech (Computer Tech)',
-    'Dip in Engineering Tech (Automotive Tech)',
-    'Certificate of Tech.(Food & Beverages)',
-    'BS Tech. Teacher Education(Industrial Arts)',
-    'BTLEd (Industrial Arts)',
-    'BTLEd (Home Economics)',
-    'Bachelor of Science Secondary Education(General Science)',
-    'BEED General Education',
-  ];
 
   inputStudentInfo: AdmissionDto = {
     reportCard: false,
@@ -1165,7 +1175,7 @@ export default class ManageStudentInfo extends Vue {
     citizenship: '',
     religion: '',
     address: '',
-    course: '',
+    semester: '',
   };
 
   async onAddStudent() {
@@ -1236,7 +1246,7 @@ export default class ManageStudentInfo extends Vue {
       citizenship: '',
       religion: '',
       address: '',
-      course: '',
+      semester: '',
     };
   }
 }

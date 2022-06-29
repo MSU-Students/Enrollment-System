@@ -19,8 +19,8 @@ const routes: RouteRecordRaw[] = [
         component: () => import('src/pages/Admin/Manage Account.vue'),
       },
       {
-        path: 'schoolyear',
-        component: () => import('src/pages/Admin/schoolyear.vue'),
+        path: 'course',
+        component: () => import('src/pages/Admin/course.vue'),
       },
     ],
   },
@@ -36,10 +36,7 @@ const routes: RouteRecordRaw[] = [
         path: 'subject',
         component: () => import('src/pages/Chairperson/Subject.vue'),
       },
-      {
-        path: 'course',
-        component: () => import('src/pages/Chairperson/course.vue'),
-      },
+
       {
         path: 'section',
         component: () => import('src/pages/Chairperson/section.vue'),
@@ -67,6 +64,10 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'records&result',
         component: () => import('src/pages/Registrar/Records&Result.vue'),
+      },
+      {
+        path: 'studentrecords',
+        component: () => import('src/pages/Registrar/studentRecord.vue'),
       },
     ],
   },

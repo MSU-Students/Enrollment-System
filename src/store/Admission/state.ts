@@ -21,7 +21,7 @@ export interface IStudentInfo {
   citizenship: string;
   religion: string;
   address: string;
-  course: string;
+  semester: string;
 }
 
 export interface AdmissionStateInterface {

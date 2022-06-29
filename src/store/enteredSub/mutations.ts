@@ -5,13 +5,16 @@ const mutation: MutationTree<enteredSubStateInterface> = {
   setenteredSub(state, payload: enteredSub) {
     const exist = state.AllEnteredSub.find(
       (subject) =>
-        subject.subjectCode === payload.subjectCode &&
-        subject.section === payload.section,
+        subject.enteredsubjectCode === payload.enteredsubjectCode &&
+        subject.entereddescriptiveTitle === payload.entereddescriptiveTitle &&
+        subject.enteredsection === payload.enteredsection,
     );
+    console.log(exist);
     if (!exist) {
-      const res = state.AllEnteredSub.push({
-        ...payload,
-      });
+      const res = state.AllEnteredSub.push(payload);
+    }
+    if (exist) {
+      return 'youasd';
     }
   },
   updateenteredSub(state, payload) {

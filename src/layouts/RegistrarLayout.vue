@@ -46,6 +46,14 @@
             <q-item-section> Records and Results </q-item-section>
           </q-item>
 
+          <q-item clickable v-ripple to="/Registrar/StudentRecords">
+            <q-item-section avatar>
+              <q-icon name="how_to_reg" />
+            </q-item-section>
+
+            <q-item-section> Student Records </q-item-section>
+          </q-item>
+
           <q-separator />
 
           <q-item clickable v-ripple to="/">

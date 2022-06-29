@@ -2,7 +2,7 @@
   <q-page class="q-pa-lg">
     <div class="text-h4 text-bold">
       <q-icon name="style" color="light-blue-6" style="font-size: 4rem" />
-      Manage Schedule
+      Manage Offerings
     </div>
 
     <br />
@@ -346,7 +346,6 @@ import {
   CourseDto,
   RoomDto,
   SchedulingDto,
-  SchoolYearDto,
   SectionDto,
   SubjectDto,
   TeacherDto,

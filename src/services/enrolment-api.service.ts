@@ -56,7 +56,6 @@ class EnrollmentApiService extends DefaultApi {
   async loginUser(userName: string, password: string) {
     const response = await enrollmentApiService.login(userName, password);
     if (response.status == 201) {
-      console.log(response);
       sessionStorage.setItem('access-token', response.data.accessToken || '');
       sessionStorage.setItem(
         'refresh-token',

@@ -217,7 +217,7 @@
 import { Vue, Options } from 'vue-class-component';
 import { ManagementSubject } from 'src/store/ManagementSubject/state';
 import { mapActions, mapState } from 'vuex';
-import { CourseDto, SchoolYearDto, SubjectDto } from 'src/services/restapi';
+import { CourseDto, SubjectDto } from 'src/services/restapi';
 
 @Options({
   computed: {

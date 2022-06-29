@@ -135,7 +135,6 @@ import {
   EnrollmentDto,
   ReportandreportsDto,
   SchedulingDto,
-  SchoolYearDto,
   SectionDto,
   SubjectDto,
   TeacherDto,
@@ -181,7 +180,6 @@ export default class ManageSubject extends Vue {
   allTeacher!: TeacherDto[];
   AllCourse!: CourseDto[];
   AllSection!: SectionDto[];
-  allSchoolYear!: SchoolYearDto[];
   getAllAdmission!: () => Promise<void>;
   getAllEnrollment!: () => Promise<void>;
   getAllschedule!: () => Promise<void>;
@@ -250,7 +248,6 @@ export default class ManageSubject extends Vue {
 
   filterSubject() {
     const result = this.AllSchedule;
-    console.log(result);
     return result;
   }
 

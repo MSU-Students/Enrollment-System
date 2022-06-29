@@ -1,3 +1,4 @@
+import { studentRecordStateInterface } from './studentRecord/state';
 import { roomStateInterface } from './room/state';
 import { enteredSubStateInterface } from './enteredSub/state';
 import { EnrollmentStateInterface } from './enrollment/state';
@@ -23,8 +24,6 @@ import { ManagementTeacherStateInterface } from './ManagementTeacher/state';
 
 import Admission from './Admission';
 import { AdmissionStateInterface } from './Admission/state';
-import schoolyear from './schoolyear';
-import { schoolyearStateInterface } from './schoolyear/state';
 
 import auth from './auth';
 import { IAuthState } from './auth/state';
@@ -35,6 +34,7 @@ import scheduling from './scheduling';
 import enrollment from './enrollment';
 import enteredSub from './enteredSub';
 import room from './room';
+import studentRecord from './studentRecord';
 
 /*
  * If not building with SSR mode, you can
@@ -53,7 +53,6 @@ export interface StateInterface {
   ManagementSubject: ManagementSubjectStateInterface;
   ManagementTeacher: ManagementTeacherStateInterface;
   admission: AdmissionStateInterface;
-  schoolyear: schoolyearStateInterface;
   course: courseStateInterface;
   section: sectionStateInterface;
   scheduling: SchedulingStateInterface;
@@ -61,6 +60,7 @@ export interface StateInterface {
   auth: IAuthState;
   enteredSub: enteredSubStateInterface;
   room: roomStateInterface;
+  studentRecord: studentRecordStateInterface;
 }
 
 // provide typings for `this.$store`
@@ -82,7 +82,6 @@ export default store(function (/* { ssrContext } */) {
       Admission,
       ManagementSubject,
       ManagementTeacher,
-      schoolyear,
       course,
       section,
       scheduling,
@@ -90,6 +89,7 @@ export default store(function (/* { ssrContext } */) {
       auth,
       enteredSub,
       room,
+      studentRecord,
     },
 
     // enable strict mode (adds overhead!)

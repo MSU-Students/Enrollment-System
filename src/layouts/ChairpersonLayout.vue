@@ -67,13 +67,6 @@
                     </q-item-section>
                     <q-item-section> Manage Room</q-item-section>
                   </q-item>
-
-                  <q-item clickable v-ripple to="/chairperson/Course">
-                    <q-item-section avatar>
-                      <q-icon name="room" color="black" />
-                    </q-item-section>
-                    <q-item-section> Manage Course</q-item-section>
-                  </q-item>
                 </q-card-section>
               </q-card>
             </q-expansion-item>
@@ -83,7 +76,7 @@
                 <q-icon name="dashboard" />
               </q-item-section>
 
-              <q-item-section> Scheduling </q-item-section>
+              <q-item-section> Offerings </q-item-section>
             </q-item>
 
             <q-separator />

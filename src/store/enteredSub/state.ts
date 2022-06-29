@@ -1,12 +1,12 @@
 export interface enteredSub {
   enteredSubID?: number;
-  subjectCode: string;
-  section: string;
-  descriptiveTitle: string;
-  time: string;
-  date: string;
-  units: string;
-  teacher: string;
+  enteredsubjectCode: string;
+  enteredsection: string;
+  entereddescriptiveTitle: string;
+  enteredtime: string;
+  entereddate: string;
+  enteredunits: string;
+  enteredteacher: string;
 }
 
 export interface enteredSubStateInterface {
