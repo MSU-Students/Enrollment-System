@@ -1,20 +1,34 @@
 <template>
   <q-page class="q-pa-md">
+     <q-btn
+            label="Add Student"
+            color="primary"
+            dense
+            flat
+            icon="person_add"
+            @click="addNewStudentInfo = true"
+          />
     <q-table
-      title="Student List"
+    class="my-sticky-header-table"
+    title="Student List"
       :rows="allAdmissionInfo"
       :columns="columns"
       row-key="name"
       :rows-per-page-options="[0]"
       :filter="filter"
+      hide-bottom
+      :grid="$q.screen.xs"
+      bordered
+      flat
+      dense
     >
       <template v-slot:top-right>
-        <div class="q-pa-md q-gutter-sm row">
+        <div class="q-pa-sm q-gutter-sm row">
           <q-input
             outlined
             rounded
             dense
-            debounce="300"
+            debounce="100"
             v-model="filter"
             placeholder="Search"
           >
@@ -22,18 +36,10 @@
               <q-icon name="search" />
             </template>
           </q-input>
-          <q-btn
-            label="Add Student"
-            color="primary"
-            e
-            dense
-            flat
-            icon="add"
-            @click="addNewStudentInfo = true"
-          />
+         
           <q-dialog v-model="addNewStudentInfo" persistent>
             <q-card style="width: 800px; max-width: 100vw" class="q-pa-sm">
-              <q-card-section class="row">
+              <q-card-section class="bg-primary row">
                 <div class="text-h6">Add Student</div>
                 <q-space />
                 <q-btn
@@ -47,8 +53,8 @@
               </q-card-section>
 
               <q-card-section>
-                <q-form class="q-gutter-sm">
-                  <div class="text-h4 flex flex-center">Requirements</div>
+                <q-form class="q-gutter-xs">
+                  <div class="text-h6 flex flex-center bg-blue-2">Requirements</div>
 
                   <div class="flex flex-center">
                     <q-checkbox
@@ -72,10 +78,11 @@
                       color="blue"
                     />
                   </div>
-                  <div class="row q-gutter-sm q-py-sm">
+                  <div class="row q-gutter-md q-py-sm">
                     <div class="col">
                       <q-input
                         autofocus
+                        dense
                         outlined
                         v-model="inputStudentInfo.IdNum"
                         label="ID number"
@@ -90,6 +97,7 @@
                     <div class="col">
                       <q-input
                         outlined
+                        dense
                         v-model="inputStudentInfo.lrn"
                         label="LRN"
                         lazy-rules
@@ -102,6 +110,7 @@
                     <div class="col">
                       <q-select
                         outlined
+                        dense
                         v-model="inputStudentInfo.ayCode"
                         :options="options1"
                         label="Academic Year"
@@ -116,6 +125,7 @@
                     <div class="col">
                       <q-select
                         outlined
+                        dense
                         v-model="inputStudentInfo.semester"
                         :options="options7"
                         label="Semester"
@@ -128,10 +138,11 @@
                       />
                     </div>
                   </div>
-                  <div class="row q-gutter-sm q-py-sm">
+                  <div class="row q-gutter-md q-py-sm">
                     <div class="col">
                       <q-select
                         outlined
+                        dense
                         v-model="inputStudentInfo.incomingYlevel"
                         :options="options2"
                         label="Year Level"
@@ -146,6 +157,7 @@
                     <div class="col">
                       <q-select
                         outlined
+                        dense
                         v-model="inputStudentInfo.studentType"
                         :options="options3"
                         label="Student Type"
@@ -161,6 +173,7 @@
                       <q-select
                         autofocus
                         outlined
+                        dense
                         v-model="inputStudentInfo.Courses"
                         label="Course"
                         :options="AllCourse"
@@ -173,13 +186,14 @@
                   </div>
 
                   <q-separator></q-separator>
-                  <div class="text-h4 flex flex-center">Information</div>
+                  <div class="text-h6 flex flex-center bg-blue-2">Information</div>
 
-                  <div class="row q-gutter-sm q-py-sm">
+                  <div class="row q-gutter-md q-py-sm">
                     <div class="col">
                       <q-input
                         autofocus
                         outlined
+                        dense
                         v-model="inputStudentInfo.FName"
                         label="First Name"
                         lazy-rules
@@ -193,6 +207,7 @@
                     <div class="col">
                       <q-input
                         outlined
+                        dense
                         v-model="inputStudentInfo.MName"
                         label="Middle Initial"
                         lazy-rules
@@ -206,6 +221,7 @@
                     <div class="col">
                       <q-input
                         outlined
+                        dense
                         v-model="inputStudentInfo.LName"
                         label="Last Name"
                         lazy-rules
@@ -221,6 +237,7 @@
                     <div class="col">
                       <q-input
                         autofocus
+                        dense
                         outlined
                         v-model="inputStudentInfo.age"
                         label="Age"
@@ -233,7 +250,9 @@
                     </div>
                     <div class="col">
                       <q-input
-                        filled
+                      outlined
+                      dense
+                      stack-label 
                         type="date"
                         label="Date of Birth"
                         v-model="inputStudentInfo.dataOfBirth"
@@ -244,32 +263,12 @@
                             'Please Input the Date of Birth',
                         ]"
                       >
-                        <!-- <template v-slot:append>
-                <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy
-                    ref="qDateProxy"
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
-                  >
-                    <q-date v-model="inputStudentInfo.dataOfBirth">
-                      <div class="row items-center justify-end">
-                        <q-btn
-                          v-close-popup
-                          label="Close"
-                          color="primary"
-                          flat
-                        />
-                      </div>
-                    </q-date>
-                  </q-popup-proxy>
-                </q-icon>
-              </template> -->
                       </q-input>
                     </div>
                     <div class="col">
                       <q-input
                         outlined
+                        dense
                         v-model="inputStudentInfo.placeOfBirth"
                         label="Place of Birth"
                         lazy-rules
@@ -282,10 +281,11 @@
                     </div>
                   </div>
 
-                  <div class="row q-gutter-sm q-py-sm">
+                  <div class="row q-gutter-md q-py-sm">
                     <div class="col">
                       <q-input
                         autofocus
+                        dense
                         outlined
                         v-model="inputStudentInfo.contactNo"
                         label="Contact Number"
@@ -300,6 +300,7 @@
                     <div class="col">
                       <q-select
                         outlined
+                        dense
                         v-model="inputStudentInfo.gender"
                         :options="options4"
                         label="Gender"
@@ -314,6 +315,7 @@
                     <div class="col">
                       <q-select
                         outlined
+                        dense
                         v-model="inputStudentInfo.martialStatus"
                         :options="options5"
                         label="Martial Status"
@@ -326,10 +328,11 @@
                       />
                     </div>
                   </div>
-                  <div class="row q-gutter-sm q-py-sm">
+                  <div class="row q-gutter-md q-py-sm">
                     <div class="col">
                       <q-input
                         autofocus
+                        dense
                         outlined
                         v-model="inputStudentInfo.citizenship"
                         label="Citizenship"
@@ -344,6 +347,7 @@
                     <div class="col">
                       <q-input
                         outlined
+                        dense
                         v-model="inputStudentInfo.religion"
                         label="Religion"
                         lazy-rules
@@ -357,6 +361,7 @@
                     <div class="col">
                       <q-input
                         outlined
+                        dense
                         v-model="inputStudentInfo.address"
                         label="Address"
                         lazy-rules
@@ -368,7 +373,7 @@
                       />
                     </div>
                   </div>
-                  <div class="col">
+                  <!-- <div class="col">
                     <q-file
                       outlined
                       label="Product Image"
@@ -381,7 +386,7 @@
                         <q-icon name="camera" />
                       </template>
                     </q-file>
-                  </div>
+                  </div> -->
                   <div class="flex flex-center">
                     <q-btn
                       :ripple="false"
@@ -438,233 +443,348 @@
 
                 <q-card-section>
                   <q-form @submit="onAddStudent()" class="q-gutter-sm">
-                    <div class="text-h4 flex flex-center">Requirements</div>
+                    <div class="text-h6 flex flex-center bg-blue-2">Requirements</div>
 
-                    <div class="flex flex-center">
-                      <q-checkbox
-                        v-model="inputStudentInfo.reportCard"
-                        label="Report Card"
-                        color="blue"
+                  <div class="flex flex-center">
+                    <q-checkbox
+                      v-model="inputStudentInfo.reportCard"
+                      label="Report Card"
+                      color="blue"
+                      disable
+                    />
+                    <q-checkbox
+                      v-model="inputStudentInfo.bCertificate"
+                      label="Birth Certificate"
+                      color="blue"
+                      disable
+                    />
+                    <q-checkbox
+                      v-model="inputStudentInfo.Pic"
+                      label="1x1 Picture"
+                      color="blue"
+                      disable
+                    />
+                    <q-checkbox
+                      v-model="inputStudentInfo.eForm"
+                      label="Enrollment Form"
+                      color="blue"
+                      disable
+                    />
+                  </div>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        dense
+                        outlined
+                        v-model="inputStudentInfo.IdNum"
+                        label="ID number"
+                        lazy-rules
+                        disable
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the ID number',
+                        ]"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.lrn"
+                        label="LRN"
+                        lazy-rules
+                        disable
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) || 'Please Input the LRN',
+                        ]"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.ayCode"
+                        :options="options1"
+                        label="Academic Year"
+                        lazy-rules
+                        disable
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the AY Code',
+                        ]"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.semester"
+                        :options="options7"
+                        label="Semester"
+                        lazy-rules
+                        disable
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Semester',
+                        ]"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-select
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.incomingYlevel"
+                        :options="options2"
+                        label="Year Level"
+                        lazy-rules
+                        disable
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Year Level',
+                        ]"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.studentType"
+                        :options="options3"
+                        label="Student Type"
+                        lazy-rules
+                        disable
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Student Type',
+                        ]"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        autofocus
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.Courses"
+                        label="Course"
+                        :options="AllCourse"
+                        option-label="courseCode"
+                        option-value="courseID"
+                        map-options
+                        emit-value
                         disable
                       />
-                      <q-checkbox
-                        v-model="inputStudentInfo.bCertificate"
-                        label="Birth Certificate"
-                        color="blue"
-                        disable
-                      />
-                      <q-checkbox
-                        v-model="inputStudentInfo.Pic"
-                        label="1x1 Picture"
-                        color="blue"
-                        disable
-                      />
-                      <q-checkbox
-                        v-model="inputStudentInfo.eForm"
-                        label="Enrollment Form"
-                        color="blue"
-                        disable
-                      />
                     </div>
-                    <div class="row q-gutter-sm q-py-sm">
-                      <div class="col">
-                        <q-input
-                          autofocus
-                          outlined
-                          v-model="inputStudentInfo.IdNum"
-                          label="ID number"
-                          disable
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputStudentInfo.lrn"
-                          label="LRN"
-                          disable
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputStudentInfo.ayCode"
-                          :options="options1"
-                          label="AY Code"
-                          disable
-                        />
-                      </div>
-                    </div>
-                    <div class="row q-gutter-sm q-py-sm">
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputStudentInfo.incomingYlevel"
-                          :options="options2"
-                          label="Year Level"
-                          disable
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputStudentInfo.studentType"
-                          :options="options3"
-                          label="Student Type"
-                          disable
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          autofocus
-                          outlined
-                          v-model="inputStudentInfo.Courses"
-                          label="Course"
-                          :options="AllCourse"
-                          option-label="courseCode"
-                          option-value="courseID"
-                          map-options
-                          emit-value
-                        />
-                      </div>
-                    </div>
+                  </div>
 
-                    <q-separator></q-separator>
-                    <div class="text-h4 flex flex-center">Information</div>
+                  <q-separator></q-separator>
+                  <div class="text-h6 flex flex-center bg-blue-2">Information</div>
 
-                    <div class="row q-gutter-sm q-py-sm">
-                      <div class="col">
-                        <q-input
-                          autofocus
-                          outlined
-                          v-model="inputStudentInfo.FName"
-                          label="First Name"
-                          disable
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputStudentInfo.MName"
-                          label="Middle Initial"
-                          disable
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputStudentInfo.LName"
-                          label="Last Name"
-                          disable
-                        />
-                      </div>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.FName"
+                        label="First Name"
+                        lazy-rules
+                        disable
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the First Name',
+                        ]"
+                      />
                     </div>
-                    <div class="row q-gutter-sm q-py-sm">
-                      <div class="col">
-                        <q-input
-                          autofocus
-                          outlined
-                          v-model="inputStudentInfo.age"
-                          label="Age"
-                          disable
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          filled
-                          type="date"
-                          label="Date of Birth"
-                          v-model="inputStudentInfo.dataOfBirth"
-                          disable
-                        >
-                          <!-- <template v-slot:append>
-                <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy
-                    ref="qDateProxy"
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
-                  >
-                    <q-date v-model="inputStudentInfo.dataOfBirth">
-                      <div class="row items-center justify-end">
-                        <q-btn
-                          v-close-popup
-                          label="Close"
-                          color="primary"
-                          flat
-                        />
-                      </div>
-                    </q-date>
-                  </q-popup-proxy>
-                </q-icon>
-              </template> -->
-                        </q-input>
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputStudentInfo.placeOfBirth"
-                          label="Place of Birth"
-                          disable
-                        />
-                      </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.MName"
+                        label="Middle Initial"
+                        lazy-rules
+                        disable
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Middle Initial',
+                        ]"
+                      />
                     </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.LName"
+                        label="Last Name"
+                        lazy-rules
+                        disable
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Last Name',
+                        ]"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-gutter-sm q-py-sm">
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        dense
+                        outlined
+                        v-model="inputStudentInfo.age"
+                        label="Age"
+                        lazy-rules
+                        disable
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) || 'Please Input the Age',
+                        ]"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                      outlined
+                      dense
+                      stack-label 
+                        type="date"
+                        label="Date of Birth"
+                        v-model="inputStudentInfo.dataOfBirth"
+                        lazy-rules
+                        disable
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Date of Birth',
+                        ]"
+                      >
+                      </q-input>
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.placeOfBirth"
+                        label="Place of Birth"
+                        lazy-rules
+                        disable
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Place of Birth',
+                        ]"
+                      />
+                    </div>
+                  </div>
 
-                    <div class="row q-gutter-sm q-py-sm">
-                      <div class="col">
-                        <q-input
-                          autofocus
-                          outlined
-                          v-model="inputStudentInfo.contactNo"
-                          label="Contact Number"
-                          disable
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputStudentInfo.gender"
-                          :options="options4"
-                          label="Gender"
-                          disable
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputStudentInfo.martialStatus"
-                          :options="options5"
-                          label="Martial Status"
-                          disable
-                        />
-                      </div>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        dense
+                        outlined
+                        v-model="inputStudentInfo.contactNo"
+                        label="Contact Number"
+                        lazy-rules
+                        disable
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Contact Number',
+                        ]"
+                      />
                     </div>
-                    <div class="row q-gutter-sm q-py-sm">
-                      <div class="col">
-                        <q-input
-                          autofocus
-                          outlined
-                          v-model="inputStudentInfo.citizenship"
-                          label="Citizenship"
-                          disable
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputStudentInfo.religion"
-                          label="Religion"
-                          disable
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputStudentInfo.address"
-                          label="Address"
-                          disable
-                        />
-                      </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.gender"
+                        :options="options4"
+                        label="Gender"
+                        lazy-rules
+                        disable
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Gender',
+                        ]"
+                      />
                     </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.martialStatus"
+                        :options="options5"
+                        label="Martial Status"
+                        lazy-rules
+                        disable
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Martial Status',
+                        ]"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        dense
+                        outlined
+                        v-model="inputStudentInfo.citizenship"
+                        label="Citizenship"
+                        lazy-rules
+                        disable
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Citizenship',
+                        ]"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.religion"
+                        label="Religion"
+                        lazy-rules
+                        disable
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Religion',
+                        ]"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.address"
+                        label="Address"
+                        lazy-rules
+                        disable
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Address',
+                        ]"
+                      />
+                    </div>
+                  </div>
                   </q-form>
                 </q-card-section>
               </q-card>
@@ -689,7 +809,7 @@
             />
             <q-dialog v-model="updateStudent" persistent>
               <q-card style="width: 800px; max-width: 100vw" class="q-pa-sm">
-                <q-card-section class="row">
+                <q-card-section class="row bg-primary">
                   <div class="text-h6">Edit Student</div>
                   <q-space />
                   <q-btn
@@ -703,327 +823,326 @@
                 </q-card-section>
 
                 <q-card-section>
-                  <q-form class="q-gutter-sm">
-                    <div class="text-h4 flex flex-center">Requirements</div>
+                  <q-form @submit="oneditStudent()">
+                    <div class="text-h6 flex flex-center bg-blue-2">Requirements</div>
 
-                    <div class="flex flex-center">
-                      <q-checkbox
-                        v-model="inputStudentInfo.reportCard"
-                        label="Report Card"
-                        color="blue"
-                      />
-                      <q-checkbox
-                        v-model="inputStudentInfo.bCertificate"
-                        label="Birth Certificate"
-                        color="blue"
-                      />
-                      <q-checkbox
-                        v-model="inputStudentInfo.Pic"
-                        label="1x1 Picture"
-                        color="blue"
-                      />
-                      <q-checkbox
-                        v-model="inputStudentInfo.eForm"
-                        label="Enrollment Form"
-                        color="blue"
+                  <div class="flex flex-center">
+                    <q-checkbox
+                      v-model="inputStudentInfo.reportCard"
+                      label="Report Card"
+                      color="blue"
+                    />
+                    <q-checkbox
+                      v-model="inputStudentInfo.bCertificate"
+                      label="Birth Certificate"
+                      color="blue"
+                    />
+                    <q-checkbox
+                      v-model="inputStudentInfo.Pic"
+                      label="1x1 Picture"
+                      color="blue"
+                    />
+                    <q-checkbox
+                      v-model="inputStudentInfo.eForm"
+                      label="Enrollment Form"
+                      color="blue"
+                    />
+                  </div>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        dense
+                        outlined
+                        v-model="inputStudentInfo.IdNum"
+                        label="ID number"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the ID number',
+                        ]"
                       />
                     </div>
-                    <div class="row q-gutter-sm q-py-sm">
-                      <div class="col">
-                        <q-input
-                          autofocus
-                          outlined
-                          v-model="inputStudentInfo.IdNum"
-                          label="ID number"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) ||
-                              'Please Input the ID number',
-                          ]"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputStudentInfo.lrn"
-                          label="LRN"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) || 'Please Input the LRN',
-                          ]"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputStudentInfo.ayCode"
-                          :options="options1"
-                          label="Academic Year"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) ||
-                              'Please Input the AY Code',
-                          ]"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputStudentInfo.semester"
-                          :options="options7"
-                          label="Semester"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) ||
-                              'Please Input the Semester',
-                          ]"
-                        />
-                      </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.lrn"
+                        label="LRN"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) || 'Please Input the LRN',
+                        ]"
+                      />
                     </div>
-                    <div class="row q-gutter-sm q-py-sm">
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputStudentInfo.incomingYlevel"
-                          :options="options2"
-                          label="Year Level"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) ||
-                              'Please Input the Year Level',
-                          ]"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputStudentInfo.studentType"
-                          :options="options3"
-                          label="Student Type"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) ||
-                              'Please Input the Student Type',
-                          ]"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          autofocus
-                          outlined
-                          v-model="inputStudentInfo.Courses"
-                          label="Course"
-                          :options="AllCourse"
-                          option-label="courseCode"
-                          option-value="courseID"
-                          map-options
-                          emit-value
-                        />
-                      </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.ayCode"
+                        :options="options1"
+                        label="Academic Year"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the AY Code',
+                        ]"
+                      />
                     </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.semester"
+                        :options="options7"
+                        label="Semester"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Semester',
+                        ]"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-select
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.incomingYlevel"
+                        :options="options2"
+                        label="Year Level"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Year Level',
+                        ]"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.studentType"
+                        :options="options3"
+                        label="Student Type"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Student Type',
+                        ]"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        autofocus
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.Courses"
+                        label="Course"
+                        :options="AllCourse"
+                        option-label="courseCode"
+                        option-value="courseID"
+                        map-options
+                        emit-value
+                      />
+                    </div>
+                  </div>
 
-                    <q-separator></q-separator>
-                    <div class="text-h4 flex flex-center">Information</div>
+                  <q-separator></q-separator>
+                  <div class="text-h6 flex flex-center bg-blue-2">Information</div>
 
-                    <div class="row q-gutter-sm q-py-sm">
-                      <div class="col">
-                        <q-input
-                          autofocus
-                          outlined
-                          v-model="inputStudentInfo.FName"
-                          label="First Name"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) ||
-                              'Please Input the First Name',
-                          ]"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputStudentInfo.MName"
-                          label="Middle Initial"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) ||
-                              'Please Input the Middle Initial',
-                          ]"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputStudentInfo.LName"
-                          label="Last Name"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) ||
-                              'Please Input the Last Name',
-                          ]"
-                        />
-                      </div>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.FName"
+                        label="First Name"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the First Name',
+                        ]"
+                      />
                     </div>
-                    <div class="row q-gutter-sm q-py-sm">
-                      <div class="col">
-                        <q-input
-                          autofocus
-                          outlined
-                          v-model="inputStudentInfo.age"
-                          label="Age"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) || 'Please Input the Age',
-                          ]"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          filled
-                          type="date"
-                          label="Date of Birth"
-                          v-model="inputStudentInfo.dataOfBirth"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) ||
-                              'Please Input the Date of Birth',
-                          ]"
-                        >
-                          <!-- <template v-slot:append>
-                <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy
-                    ref="qDateProxy"
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
-                  >
-                    <q-date v-model="inputStudentInfo.dataOfBirth">
-                      <div class="row items-center justify-end">
-                        <q-btn
-                          v-close-popup
-                          label="Close"
-                          color="primary"
-                          flat
-                        />
-                      </div>
-                    </q-date>
-                  </q-popup-proxy>
-                </q-icon>
-              </template> -->
-                        </q-input>
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputStudentInfo.placeOfBirth"
-                          label="Place of Birth"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) ||
-                              'Please Input the Place of Birth',
-                          ]"
-                        />
-                      </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.MName"
+                        label="Middle Initial"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Middle Initial',
+                        ]"
+                      />
                     </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.LName"
+                        label="Last Name"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Last Name',
+                        ]"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-gutter-sm q-py-sm">
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        dense
+                        outlined
+                        v-model="inputStudentInfo.age"
+                        label="Age"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) || 'Please Input the Age',
+                        ]"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                      outlined
+                      dense
+                      stack-label 
+                        type="date"
+                        label="Date of Birth"
+                        v-model="inputStudentInfo.dataOfBirth"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Date of Birth',
+                        ]"
+                      >
+                      </q-input>
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.placeOfBirth"
+                        label="Place of Birth"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Place of Birth',
+                        ]"
+                      />
+                    </div>
+                  </div>
 
-                    <div class="row q-gutter-sm q-py-sm">
-                      <div class="col">
-                        <q-input
-                          autofocus
-                          outlined
-                          v-model="inputStudentInfo.contactNo"
-                          label="Contact Number"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) ||
-                              'Please Input the Contact Number',
-                          ]"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputStudentInfo.gender"
-                          :options="options4"
-                          label="Gender"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) ||
-                              'Please Input the Gender',
-                          ]"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputStudentInfo.martialStatus"
-                          :options="options5"
-                          label="Martial Status"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) ||
-                              'Please Input the Martial Status',
-                          ]"
-                        />
-                      </div>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        dense
+                        outlined
+                        v-model="inputStudentInfo.contactNo"
+                        label="Contact Number"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Contact Number',
+                        ]"
+                      />
                     </div>
-                    <div class="row q-gutter-sm q-py-sm">
-                      <div class="col">
-                        <q-input
-                          autofocus
-                          outlined
-                          v-model="inputStudentInfo.citizenship"
-                          label="Citizenship"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) ||
-                              'Please Input the Citizenship',
-                          ]"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputStudentInfo.religion"
-                          label="Religion"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) ||
-                              'Please Input the Religion',
-                          ]"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputStudentInfo.address"
-                          label="Address"
-                          lazy-rules
-                          :rules="[
-                            (val) =>
-                              (val && val.length > 0) ||
-                              'Please Input the Address',
-                          ]"
-                        />
-                      </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.gender"
+                        :options="options4"
+                        label="Gender"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Gender',
+                        ]"
+                      />
                     </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.martialStatus"
+                        :options="options5"
+                        label="Martial Status"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Martial Status',
+                        ]"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        dense
+                        outlined
+                        v-model="inputStudentInfo.citizenship"
+                        label="Citizenship"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Citizenship',
+                        ]"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.religion"
+                        label="Religion"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Religion',
+                        ]"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        dense
+                        v-model="inputStudentInfo.address"
+                        label="Address"
+                        lazy-rules
+                        :rules="[
+                          (val) =>
+                            (val && val.length > 0) ||
+                            'Please Input the Address',
+                        ]"
+                      />
+                    </div>
+                  </div>
                     <div class="flex flex-center">
                       <q-btn
                         flat
@@ -1036,7 +1155,6 @@
                         flat
                         label="Save"
                         color="primary"
-                        @click="onAddStudent()"
                         type="submit"
                       />
                     </div>
@@ -1075,7 +1193,7 @@ import { IStudentInfo } from 'src/store/Admission/state';
   methods: {
     ...mapActions('Admission', [
       'addNewAdmission',
-      'editAdmissiontInfo',
+      'editAdmissionInfo',
       'deleteAdmission',
       'getAllAdmission',
     ]),
@@ -1106,15 +1224,17 @@ export default class ManageStudentInfo extends Vue {
   columns = [
     {
       name: 'IdNum',
-      align: 'center',
+      align: 'left',
       label: 'Student ID',
       field: 'IdNum',
+      sortable: true,
     },
     {
       name: 'lrn',
-      align: 'center',
+      align: 'left',
       label: 'LRN',
       field: 'lrn',
+      sortable: true,
     },
     {
       name: 'name',
@@ -1124,19 +1244,23 @@ export default class ManageStudentInfo extends Vue {
       field: (row: AdmissionDto) =>
         row.FName + ' ' + row.MName + '. ' + row.LName,
       format: (val: string) => `${val}`,
+      sortable: true,
     },
     {
       name: 'incomingYlevel',
-      align: 'center',
+      align: 'left',
       label: 'Year Level',
       field: 'incomingYlevel',
+      sortable: true,
     },
-    { name: 'ayCode', align: 'center', label: 'AY Code', field: 'ayCode' },
+    { name: 'ayCode', align: 'left', label: 'AY Code', field: 'ayCode', sortable: true,},
+    
     {
       name: 'studentDetails',
       align: 'center',
       label: 'studentDetails',
       field: 'studentDetails',
+      sortable: true,
     },
     { name: 'action', align: 'center', label: 'Action', field: 'action' },
   ];
@@ -1194,7 +1318,7 @@ export default class ManageStudentInfo extends Vue {
     this.resetModel();
     this.$q.notify({
       type: 'positive',
-      message: 'Successfully Edit.',
+      message: 'Successfully Edited.',
     });
   }
 
@@ -1251,3 +1375,29 @@ export default class ManageStudentInfo extends Vue {
   }
 }
 </script>
+<style lang="sass">
+.my-sticky-header-table
+  /* height or max-height is important */
+  height: 100%
+  max-height: 700px
+  width: 100%
+  max-width: 1500px
+
+
+  .q-table__top,
+  .q-table__bottom,
+thead tr:first-child th
+    /* bg color is important for th; just specify one */
+    background-color: #B3E5FC
+  thead tr th
+    position: sticky
+    z-index: 1
+  thead tr:first-child th
+    top: 0
+
+  /* this is when the loading indicator appears */
+  &.q-table--loading thead tr:last-child th
+    /* height of all previous header rows */
+    top: 48px
+
+</style>

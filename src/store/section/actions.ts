@@ -19,6 +19,8 @@ const actions: ActionTree<sectionStateInterface, StateInterface> = {
   async deletesection(context, sectionID: number): Promise<any> {
     const result = await SectionService.delete(sectionID);
     context.commit('deletesection', result);
+    await context.dispatch('getAllsection');
+    return result;
   },
 
   async getAllsection(context): Promise<any> {

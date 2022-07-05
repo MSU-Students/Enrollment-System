@@ -1,19 +1,26 @@
 <template>
-  <q-page class="q-pa-lg">
-    <div class="text-h4 text-bold">
-      <q-icon name="house" color="light-blue-6" style="font-size: 4rem" />
-      Manage Room
-    </div>
-
-    <br />
-
+  <q-page class="q-pa-md">
+    <q-btn
+            label="Add Room"
+            color="primary"
+            dense
+            flat
+            icon="add"
+            @click="addNewRoom = true"
+          />
     <q-table
+    class="my-sticky-header-table"
       title="Room List"
       :rows="AllRoom"
       :columns="columns"
       row-key="name"
       :rows-per-page-options="[0]"
       :filter="filter"
+      :grid="$q.screen.xs"
+      hide-bottom
+      bordered
+      flat
+      dense
     >
       <template v-slot:top-right>
         <div class="q-pa-md q-gutter-sm row">
@@ -21,7 +28,7 @@
             outlined
             rounded
             dense
-            debounce="300"
+            debounce="100"
             v-model="filter"
             placeholder="Search"
           >
@@ -29,17 +36,9 @@
               <q-icon name="search" />
             </template>
           </q-input>
-          <q-btn
-            label="Add Room"
-            color="primary"
-            e
-            dense
-            flat
-            icon="add"
-            @click="addNewRoom = true"
-          />
+          
           <q-dialog v-model="addNewRoom" persistent>
-            <q-card style="width: 800px; max-width: 100vw">
+            <q-card style="width: 800px; max-width: 100vw" class="q-pa-sm">
               <q-card-section class="bg-primary row">
                 <div class="text-h6">Add Room</div>
                 <q-space />
@@ -54,19 +53,19 @@
               </q-card-section>
 
               <q-card-section>
-                <q-form @submit="onaddRoom" class="q-gutter-md">
-                  <div class="row">
-                    <div class="col col-md-6">
+                <q-form @submit="onaddRoom">
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
                       <q-input
                         autofocus
-                        class="q-py-md"
                         outlined
                         v-model="inputroom.roomCode"
                         label="Room"
                       />
+                    </div>
+                    <div class="col">
                       <q-input
                         outlined
-                        class="q-py-md"
                         v-model="inputroom.roomDescription"
                         label="Description"
                       />
@@ -123,23 +122,23 @@
 
                 <q-card-section>
                   <q-form @submit="oneditRoom" class="q-gutter-md">
-                    <div class="row">
-                      <div class="col col-md-6">
-                        <q-input
-                          autofocus
-                          class="q-py-md"
-                          outlined
-                          v-model="inputroom.roomCode"
-                          label="Room"
-                        />
-                        <q-input
-                          outlined
-                          class="q-py-md"
-                          v-model="inputroom.roomDescription"
-                          label="Description"
-                        />
-                      </div>
+                    <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        outlined
+                        v-model="inputroom.roomCode"
+                        label="Room"
+                      />
                     </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputroom.roomDescription"
+                        label="Description"
+                      />
+                    </div>
+                  </div>
                     <q-card-actions align="right">
                       <q-btn
                         label="Cancel"
@@ -254,7 +253,7 @@ export default class ManageRoom extends Vue {
         persistent: true,
       })
       .onOk(async () => {
-        await this.deleteRoom(val);
+        await this.deleteRoom(val.roomID as any);
         this.$q.notify({
           type: 'warning',
           message: 'Successfully deleted',
@@ -275,3 +274,29 @@ export default class ManageRoom extends Vue {
   }
 }
 </script>
+<style lang="sass">
+.my-sticky-header-table
+  /* height or max-height is important */
+  height: 100%
+  max-height: 700px
+  width: 100%
+  max-width: 1500px
+
+
+  .q-table__top,
+  .q-table__bottom,
+thead tr:first-child th
+    /* bg color is important for th; just specify one */
+    background-color: #B3E5FC
+  thead tr th
+    position: sticky
+    z-index: 1
+  thead tr:first-child th
+    top: 0
+
+  /* this is when the loading indicator appears */
+  &.q-table--loading thead tr:last-child th
+    /* height of all previous header rows */
+    top: 48px
+
+</style>

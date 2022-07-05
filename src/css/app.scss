@@ -7,13 +7,20 @@
   font-family: Oswald;
   src: url(./fonts/Oswald-VariableFont_wght.ttf);
 }
+*{
+  font-family: 'Roboto', sans-serif;
+}
 
 .font1 {
-  font-family: LuckiestGuy;
+  font-family: 'Comfort';
+  margin: 2px;
+  font-style:unset;
 }
 
 .font2 {
-  font-family: Oswald;
+  font-family: 'Poor Richard';
+  color: rgb(255, 255, 255);
+  margin: 2px;
 }
 
 .bg-image {

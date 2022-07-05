@@ -1470,9 +1470,9 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCourseById: async (courseID: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCourse: async (courseID: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'courseID' is not null or undefined
-            assertParamExists('getCourseById', 'courseID', courseID)
+            assertParamExists('getCourse', 'courseID', courseID)
             const localVarPath = `/course/{courseID}`
                 .replace(`{${"courseID"}}`, encodeURIComponent(String(courseID)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2601,17 +2601,17 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Update Courses by id
+         * @summary Update Course by id
          * @param {number} courseID 
          * @param {CourseDto} courseDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updatecourse: async (courseID: number, courseDto: CourseDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updatecourses: async (courseID: number, courseDto: CourseDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'courseID' is not null or undefined
-            assertParamExists('updatecourse', 'courseID', courseID)
+            assertParamExists('updatecourses', 'courseID', courseID)
             // verify required parameter 'courseDto' is not null or undefined
-            assertParamExists('updatecourse', 'courseDto', courseDto)
+            assertParamExists('updatecourses', 'courseDto', courseDto)
             const localVarPath = `/course/{courseID}`
                 .replace(`{${"courseID"}}`, encodeURIComponent(String(courseID)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2907,8 +2907,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCourseById(courseID: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CourseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCourseById(courseID, options);
+        async getCourse(courseID: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CourseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCourse(courseID, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3253,14 +3253,14 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Update Courses by id
+         * @summary Update Course by id
          * @param {number} courseID 
          * @param {CourseDto} courseDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updatecourse(courseID: number, courseDto: CourseDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CourseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updatecourse(courseID, courseDto, options);
+        async updatecourses(courseID: number, courseDto: CourseDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CourseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updatecourses(courseID, courseDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -3508,8 +3508,8 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCourseById(courseID: number, options?: any): AxiosPromise<CourseDto> {
-            return localVarFp.getCourseById(courseID, options).then((request) => request(axios, basePath));
+        getCourse(courseID: number, options?: any): AxiosPromise<CourseDto> {
+            return localVarFp.getCourse(courseID, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3822,14 +3822,14 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary Update Courses by id
+         * @summary Update Course by id
          * @param {number} courseID 
          * @param {CourseDto} courseDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updatecourse(courseID: number, courseDto: CourseDto, options?: any): AxiosPromise<CourseDto> {
-            return localVarFp.updatecourse(courseID, courseDto, options).then((request) => request(axios, basePath));
+        updatecourses(courseID: number, courseDto: CourseDto, options?: any): AxiosPromise<CourseDto> {
+            return localVarFp.updatecourses(courseID, courseDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4123,8 +4123,8 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public getCourseById(courseID: number, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getCourseById(courseID, options).then((request) => request(this.axios, this.basePath));
+    public getCourse(courseID: number, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getCourse(courseID, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4500,15 +4500,15 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
-     * @summary Update Courses by id
+     * @summary Update Course by id
      * @param {number} courseID 
      * @param {CourseDto} courseDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public updatecourse(courseID: number, courseDto: CourseDto, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).updatecourse(courseID, courseDto, options).then((request) => request(this.axios, this.basePath));
+    public updatecourses(courseID: number, courseDto: CourseDto, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).updatecourses(courseID, courseDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

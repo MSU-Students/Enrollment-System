@@ -10,7 +10,7 @@ const actions: ActionTree<courseStateInterface, StateInterface> = {
     await context.dispatch('getAllCourse');
   },
 
-  async editCourse(context, payload: any): Promise<void> {
+  async editCourse(context, payload: any): Promise<any> {
     const result = await CourseService.update(payload.Courseid, payload);
     context.commit('updateCourse', result);
     await context.dispatch('getAllCourse');
@@ -19,6 +19,8 @@ const actions: ActionTree<courseStateInterface, StateInterface> = {
   async deleteCourse(context, CourseID: number): Promise<any> {
     const result = await CourseService.delete(CourseID);
     context.commit('deleteCourse', result);
+    await context.dispatch('getAllCourse');
+    return result;
   },
 
   async getAllCourse(context): Promise<any> {

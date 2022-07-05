@@ -19,6 +19,8 @@ const actions: ActionTree<SchedulingStateInterface, StateInterface> = {
   async deleteschedule(context, scheduleID: number): Promise<any> {
     const result = await scheduleService.delete(scheduleID);
     context.commit('deleteschedule', result);
+    await context.dispatch('getAllschedule');
+    return result;
   },
 
   async getAllschedule(context): Promise<any> {

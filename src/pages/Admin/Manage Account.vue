@@ -1,31 +1,34 @@
 <template>
-  <q-page class="q-pa-lg">
-    <div class="text-h4 text-bold">
-      <q-icon
-        name="account_circle"
-        color="light-blue-6"
-        style="font-size: 4rem"
-      />
-      Account Management
-    </div>
-
-    <br />
-
+  <q-page class="q-pa-md">
+    <q-btn
+            label="Add User"
+            color="primary"
+            dense
+            flat
+            icon="person_add"
+            @click="addNewAccount = true"
+          />
     <q-table
+    class="my-sticky-header-table"
       title="Account List"
       :rows="allAccount"
       :columns="columns"
       row-key="name"
       :rows-per-page-options="[0]"
       :filter="filter"
+       hide-bottom
+      :grid="$q.screen.xs"
+      bordered
+      flat
+      dense
     >
       <template v-slot:top-right>
-        <div class="q-pa-md q-gutter-sm row">
+        <div class="q-pa-sm q-gutter-sm row">
           <q-input
             outlined
             rounded
             dense
-            debounce="300"
+            debounce="100"
             v-model="filter"
             placeholder="Search"
           >
@@ -33,18 +36,10 @@
               <q-icon name="search" />
             </template>
           </q-input>
-          <q-btn
-            label="Add User"
-            color="primary"
-            e
-            dense
-            flat
-            icon="add"
-            @click="addNewAccount = true"
-          />
+          
           <q-dialog v-model="addNewAccount" persistent>
             <q-card style="width: 800px; max-width: 100vw" class="q-pa-sm">
-              <q-card-section class="row">
+              <q-card-section class="bg-primary row">
                 <div class="text-h6">Add User</div>
                 <q-space />
                 <q-btn
@@ -58,7 +53,7 @@
               </q-card-section>
 
               <q-card-section>
-                <q-form @submit="onaddAccount">
+                <q-form @submit="onaddAccount()">
                   <div class="row q-gutter-md q-py-sm">
                     <div class="col">
                       <q-input
@@ -156,7 +151,7 @@
             />
             <q-dialog v-model="updateAccount" persistent>
               <q-card style="width: 800px; max-width: 100vw" class="q-pa-sm">
-                <q-card-section class="row">
+                <q-card-section class="row bg-primary">
                   <div class="text-h6">Edit User</div>
                   <q-space />
                   <q-btn
@@ -172,55 +167,71 @@
                 <q-card-section>
                   <q-form @submit="oneditAccount">
                     <div class="row q-gutter-md q-py-sm">
-                      <div class="col">
-                        <q-input
-                          autofocus
-                          outlined
-                          v-model="inputAccount.FName"
-                          label="First Name"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputAccount.MName"
-                          label="Middle Initial"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputAccount.LName"
-                          label="Last Name"
-                        />
-                      </div>
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        outlined
+                        v-model="inputAccount.FName"
+                        label="First Name"
+                      />
                     </div>
-                    <div class="row q-gutter-md q-py-sm">
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputAccount.username"
-                          label="Username"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputAccount.password"
-                          label="Password"
-                        />
-                      </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputAccount.MName"
+                        label="Middle Initial"
+                      />
                     </div>
-                    <div class="row q-gutter-md q-py-sm">
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputAccount.userType"
-                          :options="options"
-                          label="Designation"
-                        />
-                      </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputAccount.LName"
+                        label="Last Name"
+                      />
                     </div>
+                  </div>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputAccount.username"
+                        label="Username"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputAccount.password"
+                        label="Password"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputAccount.email"
+                        label="Email"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputAccount.contact"
+                        label="Contact Number"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-select
+                        outlined
+                        v-model="inputAccount.userType"
+                        :options="options"
+                        label="Designation"
+                      />
+                    </div>
+                  </div>
                     <div align="right">
                       <q-btn
                         flat
@@ -376,3 +387,29 @@ export default class ManageAccount extends Vue {
   }
 }
 </script>
+<style lang="sass">
+.my-sticky-header-table
+  /* height or max-height is important */
+  height: 100%
+  max-height: 700px
+  width: 100%
+  max-width: 1500px
+
+
+  .q-table__top,
+  .q-table__bottom,
+thead tr:first-child th
+    /* bg color is important for th; just specify one */
+    background-color: #B3E5FC
+  thead tr th
+    position: sticky
+    z-index: 1
+  thead tr:first-child th
+    top: 0
+
+  /* this is when the loading indicator appears */
+  &.q-table--loading thead tr:last-child th
+    /* height of all previous header rows */
+    top: 48px
+
+</style>

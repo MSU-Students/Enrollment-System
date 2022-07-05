@@ -6,10 +6,10 @@
           <q-img src="~assets/logo.png" style="width: 110px"></q-img>
           <q-space />
           <q-card flat class="bg-transparent">
-            <div class="font1 text-h3 flex flex-center">Chairperson Module</div>
-            <div class="font2 text-h6 flex flex-center">
+            <div class="font1 text-h2 flex flex-center">Chairperson Module</div>
+            <!-- <div class="font2 text-h6 flex flex-center">
               ______________________________________________________________________________________________
-            </div>
+            </div> -->
           </q-card>
 
           <q-space />
@@ -34,7 +34,7 @@
             <q-expansion-item>
               <template v-slot:header>
                 <q-item-section avatar>
-                  <q-icon name="people" color="black" />
+                  <q-icon name="people" color="primary" />
                 </q-item-section>
                 <q-item-section> Maintenance </q-item-section>
               </template>
@@ -42,28 +42,28 @@
                 <q-card-section>
                   <q-item clickable v-ripple to="/chairperson/Teacher">
                     <q-item-section avatar>
-                      <q-icon name="person" color="black" />
+                      <q-icon name="person" color="primary" />
                     </q-item-section>
                     <q-item-section> Manage Teacher </q-item-section>
                   </q-item>
 
                   <q-item clickable v-ripple to="/chairperson/Subject">
                     <q-item-section avatar>
-                      <q-icon name="style" color="black" />
+                      <q-icon name="style" color="primary" />
                     </q-item-section>
                     <q-item-section> Manage Subject </q-item-section>
                   </q-item>
 
                   <q-item clickable v-ripple to="/chairperson/Section">
                     <q-item-section avatar>
-                      <q-icon name="room" color="black" />
+                      <q-icon name="room" color="primary" />
                     </q-item-section>
                     <q-item-section> Manage Section</q-item-section>
                   </q-item>
 
                   <q-item clickable v-ripple to="/chairperson/Room">
                     <q-item-section avatar>
-                      <q-icon name="room" color="black" />
+                      <q-icon name="room" color="primary" />
                     </q-item-section>
                     <q-item-section> Manage Room</q-item-section>
                   </q-item>
@@ -73,7 +73,7 @@
 
             <q-item clickable v-ripple to="/Chairperson/Scheduling">
               <q-item-section avatar>
-                <q-icon name="dashboard" />
+                <q-icon name="dashboard" color="primary"/>
               </q-item-section>
 
               <q-item-section> Offerings </q-item-section>

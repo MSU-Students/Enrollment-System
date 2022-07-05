@@ -1,19 +1,26 @@
 <template>
-  <q-page class="q-pa-lg">
-    <div class="text-h4 text-bold">
-      <q-icon name="style" color="light-blue-6" style="font-size: 4rem" />
-      Manage Offerings
-    </div>
-
-    <br />
-
+  <q-page class="q-pa-md">
+    <q-btn
+            label="Add Offerings"
+            color="primary"
+            dense
+            flat
+            icon="add"
+            @click="addNewSchedule = true"
+          />
     <q-table
+    class="my-sticky-header-table"
       title="Offerings"
       :rows="AllSchedule"
       :columns="columns"
       row-key="name"
       :rows-per-page-options="[0]"
       :filter="filter"
+      :grid="$q.screen.xs"
+      hide-bottom
+      bordered
+      flat
+      dense
     >
       <template v-slot:top-right>
         <div class="q-pa-md q-gutter-sm row">
@@ -21,7 +28,7 @@
             outlined
             rounded
             dense
-            debounce="300"
+            debounce="100"
             v-model="filter"
             placeholder="Search"
           >
@@ -29,15 +36,7 @@
               <q-icon name="search" />
             </template>
           </q-input>
-          <q-btn
-            label="Add Offerings"
-            color="primary"
-            e
-            dense
-            flat
-            icon="add"
-            @click="addNewSchedule = true"
-          />
+          
           <q-dialog v-model="addNewSchedule" persistent>
             <q-card style="width: 800px; max-width: 100vw" class="q-pa-sm">
               <q-card-section class="row">
@@ -202,107 +201,106 @@
                   />
                 </q-card-section>
 
-                <q-card-section class="bg-info">
-                  <q-form class="q-gutter-sm">
+                <q-card-section>
+                  <q-form>
                     <div class="row q-gutter-sm q-py-sm">
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputSchedule.AcademicYear"
-                          label="Academic Year"
-                          :options="academicYear"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          autofocus
-                          outlined
-                          v-model="inputSchedule.yearLevel"
-                          :options="yearLevel"
-                          label="Year Level"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputSchedule.Semester"
-                          :options="sem"
-                          label="Semester"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputSchedule.Courses"
-                          label="Courses"
-                          transition-show="flip-up"
-                          transition-hide="flip-down"
-                          :options="AllCourse"
-                          option-label="coursesCode"
-                          option-value="coursesID"
-                          map-options
-                          emit-value
-                        />
-                      </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        v-model="inputSchedule.AcademicYear"
+                        label="Academic Year"
+                        :options="academicYear"
+                      />
                     </div>
+                    <div class="col">
+                      <q-select
+                        autofocus
+                        outlined
+                        v-model="inputSchedule.yearLevel"
+                        :options="yearLevel"
+                        label="Year Level"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        v-model="inputSchedule.Semester"
+                        :options="sem"
+                        label="Semester"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        autofocus
+                        outlined
+                        v-model="inputSchedule.Courses"
+                        label="Course"
+                        :options="AllCourse"
+                        option-label="courseCode"
+                        option-value="courseID"
+                        map-options
+                        emit-value
+                      />
+                    </div>
+                  </div>
 
-                    <div class="row q-gutter-sm q-py-sm">
-                      <div class="col">
-                        <q-select
-                          autofocus
-                          outlined
-                          v-model="inputSchedule.SubjectCode"
-                          label="SubjectCode"
-                          :options="AllSubject"
-                          option-label="SubjectCode"
-                          option-value="subjectID"
-                          map-options
-                          emit-value
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputSchedule.sections"
-                          label="Section"
-                          :options="AllSection"
-                          option-label="sectionName"
-                          option-value="sectionID"
-                          map-options
-                          emit-value
-                          lazy-rules
-                          :rules="[(val) => val || 'Select Section']"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputSchedule.room"
-                          :options="AllRoom"
-                          option-label="roomCode"
-                          option-value="roomID"
-                          label="Room"
-                          map-options
-                          emit-value
-                          lazy-rules
-                          :rules="[(val) => val || 'Select Room']"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-select
-                          outlined
-                          v-model="inputSchedule.Teachers"
-                          :options="allTeacher"
-                          option-label="FullName"
-                          option-value="teacherID"
-                          label="Teacher"
-                          map-options
-                          emit-value
-                          lazy-rules
-                          :rules="[(val) => val || 'Select Teacher']"
-                        />
-                      </div>
+                  <div class="row q-gutter-sm q-py-sm">
+                    <div class="col">
+                      <q-select
+                        autofocus
+                        outlined
+                        v-model="inputSchedule.SubjectCode"
+                        label="SubjectCode"
+                        :options="AllSubject"
+                        option-label="SubjectCode"
+                        option-value="subjectID"
+                        map-options
+                        emit-value
+                      />
                     </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        v-model="inputSchedule.sections"
+                        label="Section"
+                        :options="AllSection"
+                        option-label="sectionName"
+                        option-value="sectionID"
+                        map-options
+                        emit-value
+                        lazy-rules
+                        :rules="[(val) => val || 'Select Section']"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        v-model="inputSchedule.room"
+                        :options="AllRoom"
+                        option-label="roomCode"
+                        option-value="roomID"
+                        label="Room"
+                        map-options
+                        emit-value
+                        lazy-rules
+                        :rules="[(val) => val || 'Select Room']"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        outlined
+                        v-model="inputSchedule.Teachers"
+                        :options="allTeacher"
+                        option-label="FullName"
+                        option-value="teacherID"
+                        label="Teacher"
+                        map-options
+                        emit-value
+                        lazy-rules
+                        :rules="[(val) => val || 'Select Teacher']"
+                      />
+                    </div>
+                  </div>
 
                     <q-card-actions align="right">
                       <q-btn
@@ -543,7 +541,7 @@ export default class ManageSchedule extends Vue {
         persistent: true,
       })
       .onOk(async () => {
-        await this.deleteschedule(val);
+        await this.deleteschedule(val.scheduleID as any);
         this.$q.notify({
           type: 'warning',
           message: 'Successfully deleted',
@@ -565,3 +563,29 @@ export default class ManageSchedule extends Vue {
   }
 }
 </script>
+<style lang="sass">
+.my-sticky-header-table
+  /* height or max-height is important */
+  height: 100%
+  max-height: 700px
+  width: 100%
+  max-width: 1500px
+
+
+  .q-table__top,
+  .q-table__bottom,
+thead tr:first-child th
+    /* bg color is important for th; just specify one */
+    background-color: #B3E5FC
+  thead tr th
+    position: sticky
+    z-index: 1
+  thead tr:first-child th
+    top: 0
+
+  /* this is when the loading indicator appears */
+  &.q-table--loading thead tr:last-child th
+    /* height of all previous header rows */
+    top: 48px
+
+</style>

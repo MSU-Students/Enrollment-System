@@ -20,6 +20,8 @@ const actions: ActionTree<ManagementSubjectStateInterface, StateInterface> = {
   async deleteSubject(context, subjectID: number): Promise<any> {
     const result = await subjectService.delete(subjectID);
     context.commit('deleteSubject', result);
+    await context.dispatch('getAllSubjects');
+    return result;
   },
 
   async getAllSubjects(context): Promise<any> {

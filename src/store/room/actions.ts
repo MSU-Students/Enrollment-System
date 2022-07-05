@@ -19,6 +19,8 @@ const actions: ActionTree<roomStateInterface, StateInterface> = {
   async deleteRoom(context, roomID: number): Promise<any> {
     const result = await RoomService.delete(roomID);
     context.commit('deleteRoom', result);
+    await context.dispatch('getAllRoom');
+    return result;
   },
 
   async getAllRoom(context): Promise<any> {

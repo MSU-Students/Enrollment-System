@@ -5,10 +5,10 @@
         <q-img src="~assets/logo.png" style="width: 110px"></q-img>
         <q-space />
         <q-card flat class="bg-transparent">
-          <div class="font1 text-h3 flex flex-center">Registrar Module</div>
-          <div class="font2 text-h6 flex flex-center">
+          <div class="font1 text-h2 flex flex-center">Registrar Module</div>
+          <!-- <div class="font2 text-h6 flex flex-center">
             ______________________________________________________________________________________________
-          </div>
+          </div> -->
         </q-card>
 
         <q-space />
@@ -32,7 +32,7 @@
         <q-list padding>
           <q-item clickable v-ripple to="/Registrar/Enrollment">
             <q-item-section avatar>
-              <q-icon name="dashboard" />
+              <q-icon name="dashboard" color='primary'/>
             </q-item-section>
 
             <q-item-section> Enrollment </q-item-section>
@@ -40,7 +40,7 @@
 
           <q-item clickable v-ripple to="/Registrar/Records&Result">
             <q-item-section avatar>
-              <q-icon name="how_to_reg" />
+              <q-icon name="record" color='primary' />
             </q-item-section>
 
             <q-item-section> Records and Results </q-item-section>
@@ -48,7 +48,7 @@
 
           <q-item clickable v-ripple to="/Registrar/StudentRecords">
             <q-item-section avatar>
-              <q-icon name="how_to_reg" />
+              <q-icon name="people" color='primary'/>
             </q-item-section>
 
             <q-item-section> Student Records </q-item-section>
@@ -58,7 +58,7 @@
 
           <q-item clickable v-ripple to="/">
             <q-item-section avatar>
-              <q-icon name="logout" />
+              <q-icon name="logout" color='red'/>
             </q-item-section>
 
             <q-item-section> Logout </q-item-section>

@@ -1,19 +1,18 @@
 <template>
   <q-page class="q-pa-lg">
-    <div class="text-h4 text-bold">
-      <q-icon name="house" color="light-blue-6" style="font-size: 4rem" />
-      Student Records
-    </div>
-
-    <br />
-
     <q-table
+    class="my-sticky-header-table"
       title="Student Records"
       :rows="AllstudentRecord"
       :columns="columns"
       row-key="name"
       :rows-per-page-options="[0]"
       :filter="filter"
+      :grid="$q.screen.xs"
+      hide-bottom
+      bordered
+      flat
+      dense
     >
       <template v-slot:top-right>
         <div class="q-pa-md q-gutter-sm row">
@@ -21,7 +20,7 @@
             outlined
             rounded
             dense
-            debounce="300"
+            debounce="100"
             v-model="filter"
             placeholder="Search"
           >
@@ -59,20 +58,20 @@
                   <q-card flat class="bg-transparent">
                     <br />
 
-                    <div class="font2 text-h6 flex flex-center">
+                    <div class="font1 text-h8 flex flex-center">
                       Republic of the Philippines
                     </div>
 
-                    <div class="font2 text-h6 flex flex-center">
+                    <div class="font1 text-h6 flex flex-center">
                       Mindanao State University Lanao National College of Arts
                       and Trades
                     </div>
 
-                    <div class="font11 text-h6 flex flex-center">
+                    <div class="font1 text-h8 flex flex-center">
                       Marawi City, Philippines
                     </div>
 
-                    <div class="font1 text-h3 flex flex-center">
+                    <div class="font1 text-h4 flex flex-center">
                       CERTIFICATE OF REGISTRATION
                     </div>
                   </q-card>
@@ -230,3 +229,29 @@ export default class studentRecord extends Vue {
   }
 }
 </script>
+<style lang="sass">
+.my-sticky-header-table
+  /* height or max-height is important */
+  height: 100%
+  max-height: 700px
+  width: 100%
+  max-width: 1500px
+
+
+  .q-table__top,
+  .q-table__bottom,
+thead tr:first-child th
+    /* bg color is important for th; just specify one */
+    background-color: #B3E5FC
+  thead tr th
+    position: sticky
+    z-index: 1
+  thead tr:first-child th
+    top: 0
+
+  /* this is when the loading indicator appears */
+  &.q-table--loading thead tr:last-child th
+    /* height of all previous header rows */
+    top: 48px
+
+</style>

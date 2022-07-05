@@ -1,18 +1,12 @@
 <template>
   <q-page class="q-pa-lg">
-    <div class="text-h4 text-bold">
-      <q-icon name="people" color="light-black-6" style="font-size: 4rem" />
-      Student Enrollment
-    </div>
-
-    <br />
-    <div class="q-pa-md q-gutter-sm row">
+    
+   
       <q-form @submit="searchAction()">
         <q-input
           v-model="search"
           style="max-width: 300px"
           dense
-          filled
           outlined
           bottom-slots
           placeholder="Search for ID Number"
@@ -21,16 +15,17 @@
         >
           <template v-slot:prepend>
             <q-btn flat round size="sm">
-              <q-icon name="bi-search" type="submit" size="xs" />
+              <q-icon name="search" type="submit" size="xs" />
             </q-btn>
           </template>
         </q-input>
       </q-form>
-    </div>
-    <!-- display search         -->
+    
+    <!-- display search -->
+    <div>
     <q-scroll-area style="height: 3rem">
       <q-list v-for="(result, index) in searchResultStudent" :key="index">
-        <div v-if="result.IdNum">
+        <div v-if="result.IdNum == search">
           <q-item
             clickable
             dense
@@ -60,17 +55,17 @@
     <!-- display name -->
 
     <q-card class="q-pa-sm q-gutter-sm q-py-sm">
-      <div class="q-pa-md">
-        <div class="row">
+      <div class="q-pa-sm">
+        <div class="row" >
           <div class="col">
             Name: {{ inputStudentInfo.FName }}
             {{ inputStudentInfo.MName }}
             {{ inputStudentInfo.LName }}
-          </div>
+            </div>
           <div class="col">ID Number: {{ inputStudentInfo.IdNum }}</div>
         </div>
         <div class="row">
-          <div class="col">
+            <div class="col">
             Year:
             {{ inputStudentInfo.incomingYlevel }}
           </div>
@@ -94,6 +89,7 @@
               autofocus
               v-model="courseFilter"
               outlined
+              dense
               label="Course"
               transition-show="flip-up"
               transition-hide="flip-down"
@@ -109,6 +105,7 @@
             <q-select
               autofocus
               outlined
+              dense
               label="Year Level"
               v-model="yearFilter"
               :options="Year"
@@ -119,6 +116,7 @@
             <q-select
               autofocus
               outlined
+              dense
               item-aligned="left"
               label="Semester"
               v-model="semFilter"
@@ -131,6 +129,7 @@
         <div class="row q-gutter-sm q-py-sm">
           <div class="col">
             <q-table
+            class="my-sticky-header-table"
               dense
               title="Subject List and Schedule"
               :rows="filterSubject()"
@@ -139,6 +138,9 @@
               row-key="name"
               wrap-cells
               hide-bottom
+              :grid="$q.screen.xs"
+              bordered
+              flat
             >
               <template v-slot:body-cell-checking="props">
                 <q-td :props="props">
@@ -159,6 +161,7 @@
           </div>
           <div class="col">
             <q-table
+            class="my-sticky-header-table"
               dense
               title="Entered Subject and Schedule"
               :rows="AllEnteredSub"
@@ -167,11 +170,16 @@
               row-key="enteredSubID"
               wrap-cells
               hide-bottom
+              :grid="$q.screen.xs"
+              bordered
+              flat
             />
           </div>
         </div>
       </q-card-section>
     </q-card>
+    </div>
+  
     <q-card-actions align="center">
       <q-btn
         label="Cancel"
@@ -445,7 +453,7 @@ export default class Enrollment extends Vue {
   editEnrollment!: (payload: EnrollmentDto) => Promise<void>;
   deleteEnrollment!: (payload: EnrollmentDto) => Promise<void>;
   addEnteredSubs!: (payload: enteredSub) => Promise<void>;
-  addstudentRecord!: (payload: StudentRecordDto) => Promise<void>;
+  addstudentRecord!: (payload: any) => Promise<void>;
 
   allAdmissionInfo!: IStudentInfo[];
   AllEnrollment!: EnrollmentDto[];
@@ -700,19 +708,27 @@ export default class Enrollment extends Vue {
     this.resetSubject();
   }
 
-  async onConfirmEnrollment() {
+  // eslint-disable-next-line @typescript-eslint/require-await
+  onConfirmEnrollment() {
+    console.log('this.inputStudentRecord', this.inputStudentRecord);
+    console.log('this.inputStudentInfo', {
+      Idnumber: this.inputStudentInfo.admissionID,
+    });
     this.$q
       .dialog({
-        message: 'Confirm to enrool?',
+        message: 'Confirm to enroll?',
         cancel: true,
         persistent: true,
       })
       .onOk(async () => {
-        await this.addstudentRecord(this.inputStudentRecord);
+        await this.addstudentRecord({
+          Idnumber: this.inputStudentInfo.admissionID,
+        });
         this.$q.notify({
           type: 'positive',
           message: 'Successfully enrolled',
         });
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         this.resetStudentRecord;
       });
   }
@@ -770,3 +786,29 @@ export default class Enrollment extends Vue {
   }
 }
 </script>
+<style lang="sass">
+.my-sticky-header-table
+  /* height or max-height is important */
+  height: 100%
+  max-height: 700px
+  width: 100%
+  max-width: 1500px
+
+
+  .q-table__top,
+  .q-table__bottom,
+thead tr:first-child th
+    /* bg color is important for th; just specify one */
+    background-color: #B3E5FC
+  thead tr th
+    position: sticky
+    z-index: 1
+  thead tr:first-child th
+    top: 0
+
+  /* this is when the loading indicator appears */
+  &.q-table--loading thead tr:last-child th
+    /* height of all previous header rows */
+    top: 48px
+
+</style>

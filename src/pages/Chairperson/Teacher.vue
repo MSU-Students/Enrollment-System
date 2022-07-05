@@ -1,23 +1,26 @@
 <template>
-  <q-page class="q-pa-lg">
-    <div class="text-h4 text-bold">
-      <q-icon
-        name="account_circle"
-        color="light-blue-6"
-        style="font-size: 4rem"
-      />
-      Manage Teacher
-    </div>
-
-    <br />
-
+  <q-page class="q-pa-md">
+     <q-btn
+            label="Add Teacher"
+            color="primary"
+            dense
+            flat
+            icon="add"
+            @click="addNewTeacher = true"
+          />
     <q-table
+    class="my-sticky-header-table"
       title="Teacher List"
       :rows="allTeacher"
       :columns="columns"
       row-key="name"
       :rows-per-page-options="[0]"
       :filter="filter"
+      :grid="$q.screen.xs"
+      hide-bottom
+      bordered
+      flat
+      dense
     >
       <template v-slot:top-right>
         <div class="q-pa-md q-gutter-sm row">
@@ -25,7 +28,7 @@
             outlined
             rounded
             dense
-            debounce="300"
+            debounce="100"
             v-model="filter"
             placeholder="Search"
           >
@@ -33,17 +36,9 @@
               <q-icon name="search" />
             </template>
           </q-input>
-          <q-btn
-            label="Add Teacher"
-            color="primary"
-            e
-            dense
-            flat
-            icon="add"
-            @click="addNewTeacher = true"
-          />
+         
           <q-dialog v-model="addNewTeacher" persistent>
-            <q-card style="width: 800px; max-width: 100vw">
+            <q-card style="width: 800px; max-width: 100vw" class="q-pa-sm">
               <q-card-section class="bg-primary row">
                 <div class="text-h6">Add Teacher</div>
                 <q-space />
@@ -135,30 +130,29 @@
                 <q-card-section>
                   <q-form @submit="oneditTeacher" class="q-gutter-md">
                     <div class="row q-gutter-sm q-py-sm">
-                      <div class="col">
-                        <q-input
-                          autofocus
-                          outlined
-                          v-model="inputTeacher.FullName"
-                          label="Full Name"
-                        />
-                      </div>
-
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputTeacher.Degree"
-                          label="Degree"
-                        />
-                      </div>
-                      <div class="col">
-                        <q-input
-                          outlined
-                          v-model="inputTeacher.Specialization"
-                          label="Specialization"
-                        />
-                      </div>
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        outlined
+                        v-model="inputTeacher.FullName"
+                        label="Full Name"
+                      />
                     </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputTeacher.Degree"
+                        label="Degree"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputTeacher.Specialization"
+                        label="Specialization"
+                      />
+                    </div>
+                  </div>
                     <q-card-actions align="right">
                       <q-btn
                         label="Cancel"
@@ -284,7 +278,7 @@ export default class ManageTeacher extends Vue {
         persistent: true,
       })
       .onOk(async () => {
-        await this.deleteTeacher(val);
+        await this.deleteTeacher(val.teacherID as any);
         this.$q.notify({
           type: 'warning',
           message: 'Successfully deleted',
@@ -306,3 +300,29 @@ export default class ManageTeacher extends Vue {
   }
 }
 </script>
+<style lang="sass">
+.my-sticky-header-table
+  /* height or max-height is important */
+  height: 100%
+  max-height: 700px
+  width: 100%
+  max-width: 1500px
+
+
+  .q-table__top,
+  .q-table__bottom,
+thead tr:first-child th
+    /* bg color is important for th; just specify one */
+    background-color: #B3E5FC
+  thead tr th
+    position: sticky
+    z-index: 1
+  thead tr:first-child th
+    top: 0
+
+  /* this is when the loading indicator appears */
+  &.q-table--loading thead tr:last-child th
+    /* height of all previous header rows */
+    top: 48px
+
+</style>

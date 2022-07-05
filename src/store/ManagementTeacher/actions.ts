@@ -20,6 +20,8 @@ const actions: ActionTree<ManagementTeacherStateInterface, StateInterface> = {
   async deleteTeacher(context, teacherID: number): Promise<any> {
     const result = await teacherService.delete(teacherID);
     context.commit('deleteTeacher', result);
+    await context.dispatch('getAllTeacher');
+    return result;
   },
 
   async getAllTeacher(context): Promise<any> {

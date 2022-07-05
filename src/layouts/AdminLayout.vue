@@ -6,17 +6,17 @@
           <q-img src="~assets/logo.png" style="width: 110px"></q-img>
           <q-space />
           <q-card flat class="bg-transparent">
-            <div class="font1 text-h3 flex flex-center">
+            <div class="font1 text-h2 flex flex-center">
               Administration Module
             </div>
-            <div class="font2 text-h6 flex flex-center">
+            <!-- <div class="font2 text-h6 flex flex-center">
               ______________________________________________________________________________________________
-            </div>
+            </div> -->
           </q-card>
 
           <q-space />
 
-          <q-img src="~assets/msulogo.png" style="width: 130px"></q-img>
+          <q-img src="~assets/msulogo.png" style="width: 110px"></q-img>
         </q-toolbar>
       </q-header>
 
@@ -35,14 +35,14 @@
           <q-list padding>
             <q-item clickable v-ripple to="/admin/dashboard">
               <q-item-section avatar>
-                <q-icon name="dashboard" color="blue-2" />
+                <q-icon name="list" color="primary" />
               </q-item-section>
               <q-item-section> Enrollment List </q-item-section>
             </q-item>
             <q-separator />
             <q-item clickable v-ripple to="/admin/ManageAccount">
               <q-item-section avatar>
-                <q-icon name="how_to_reg" color="blue-2" />
+                <q-icon name="addperson" color="primary" />
               </q-item-section>
 
               <q-item-section> Manage Account </q-item-section>
@@ -50,7 +50,7 @@
             <q-separator />
             <q-item clickable v-ripple to="/admin/Course">
               <q-item-section avatar>
-                <q-icon name="room" color="black" />
+                <q-icon name="receipt" color="primary" />
               </q-item-section>
               <q-item-section> Manage Course</q-item-section>
             </q-item>

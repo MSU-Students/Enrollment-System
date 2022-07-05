@@ -1,27 +1,34 @@
 <template>
-  <q-page class="q-pa-lg">
-    <div class="text-h4 text-bold">
-      <q-icon name="house" color="light-blue-6" style="font-size: 4rem" />
-      Manage Course
-    </div>
-
-    <br />
-
+  <q-page class="q-pa-md">
+    <q-btn
+            label="Add Course"
+            color="primary"
+            dense
+            flat
+            icon="add"
+            @click="addNewCourse = true"
+          />
     <q-table
+    class="my-sticky-header-table"
       title="Course List"
       :rows="AllCourse"
       :columns="columns"
       row-key="name"
       :rows-per-page-options="[0]"
       :filter="filter"
+      hide-bottom
+      :grid="$q.screen.xs"
+      bordered
+      flat
+      dense
     >
       <template v-slot:top-right>
-        <div class="q-pa-md q-gutter-sm row">
+        <div class="q-pa-sm q-gutter-sm row">
           <q-input
             outlined
             rounded
             dense
-            debounce="300"
+            debounce="100"
             v-model="filter"
             placeholder="Search"
           >
@@ -29,17 +36,9 @@
               <q-icon name="search" />
             </template>
           </q-input>
-          <q-btn
-            label="Add Course"
-            color="primary"
-            e
-            dense
-            flat
-            icon="add"
-            @click="addNewCourse = true"
-          />
+          
           <q-dialog v-model="addNewCourse" persistent>
-            <q-card style="width: 800px; max-width: 100vw">
+            <q-card style="width: 500px; max-width: 100vw" class="q-pa-sm">
               <q-card-section class="bg-primary row">
                 <div class="text-h6">Add Course</div>
                 <q-space />
@@ -55,38 +54,42 @@
 
               <q-card-section>
                 <q-form @submit="onaddCourse" class="q-gutter-md">
-                  <div class="row">
-                    <div class="col col-md-6">
+                  <div class="row flex flex-center">
+                    <div class="col">
                       <q-input
                         autofocus
-                        class="q-py-md"
+                        stack-label
+                        class="q-py-sm"
                         outlined
                         v-model="inputcourse.courseCode"
                         label="Course"
                       />
                       <q-input
+                      autofocus
+                      stack-label
                         outlined
-                        class="q-py-md"
+                        class="q-py-sm"
                         v-model="inputcourse.courseDescription"
                         label="Description"
                       />
                     </div>
                   </div>
 
-                  <q-card-actions align="right">
+                  <div align="right">
                     <q-btn
+                      flat
                       label="Cancel"
                       color="red-10"
                       v-close-popup
                       @click="resetModel()"
                     />
                     <q-btn
-                      v-close-popup
+                      flat
                       label="Add"
                       color="primary"
                       type="submit"
                     />
-                  </q-card-actions>
+                  </div>
                 </q-form>
               </q-card-section>
             </q-card>
@@ -107,7 +110,7 @@
               @click="openEditDialog(props.row)"
             />
             <q-dialog v-model="updateCourse" persistent>
-              <q-card style="width: 800px; max-width: 100vw">
+              <q-card style="width: 500px; max-width: 100vw" class="q-gutter-sm">
                 <q-card-section class="bg-primary row">
                   <div class="text-h6">Edit Course</div>
                   <q-space />
@@ -122,38 +125,42 @@
                 </q-card-section>
 
                 <q-card-section>
-                  <q-form @submit="oneditCourse" class="q-gutter-md">
-                    <div class="row">
-                      <div class="col col-md-6">
-                        <q-input
-                          autofocus
-                          class="q-py-md"
-                          outlined
-                          v-model="inputcourse.courseCode"
-                          label="Course"
-                        />
-                        <q-input
-                          outlined
-                          class="q-py-md"
-                          v-model="inputcourse.courseDescription"
-                          label="Description"
-                        />
-                      </div>
+                  <q-form @submit="oneditCourse()" class="q-gutter-md">
+                    <div class="row flex flex-center">
+                    <div class="col">
+                      <q-input
+                        autofocus
+                        stack-label
+                        class="q-py-sm"
+                        outlined
+                        v-model="inputcourse.courseCode"
+                        label="Course"
+                      />
+                      <q-input
+                      autofocus
+                      stack-label
+                        outlined
+                        class="q-py-sm"
+                        v-model="inputcourse.courseDescription"
+                        label="Description"
+                      />
                     </div>
-                    <q-card-actions align="right">
+                  </div>
+                    <div align="right">
                       <q-btn
+                        flat
                         label="Cancel"
                         color="red-10"
                         v-close-popup
                         @click="resetModel()"
                       />
                       <q-btn
-                        v-close-popup
+                        flat
                         label="Save"
                         color="primary"
                         type="submit"
                       />
-                    </q-card-actions>
+                    </div>
                   </q-form>
                 </q-card-section>
               </q-card>
@@ -195,9 +202,9 @@ import { CourseDto } from 'src/services/restapi';
   },
 })
 export default class ManageCourse extends Vue {
-  addCourses!: (payload: course) => Promise<void>;
-  editCourse!: (payload: course) => Promise<void>;
-  deleteCourse!: (payload: course) => Promise<void>;
+  addCourses!: (payload: CourseDto) => Promise<void>;
+  editCourse!: (payload: CourseDto) => Promise<void>;
+  deleteCourse!: (payload: CourseDto) => Promise<void>;
   getAllCourse!: () => Promise<void>;
   AllCourse!: course[];
 
@@ -260,7 +267,7 @@ export default class ManageCourse extends Vue {
         persistent: true,
       })
       .onOk(async () => {
-        await this.deleteCourse(val);
+        await this.deleteCourse(val.courseID as any);
         this.$q.notify({
           type: 'warning',
           message: 'Successfully deleted',
@@ -281,3 +288,29 @@ export default class ManageCourse extends Vue {
   }
 }
 </script>
+<style lang="sass">
+.my-sticky-header-table
+  /* height or max-height is important */
+  height: 100%
+  max-height: 700px
+  width: 100%
+  max-width: 1500px
+
+
+  .q-table__top,
+  .q-table__bottom,
+thead tr:first-child th
+    /* bg color is important for th; just specify one */
+    background-color: #B3E5FC
+  thead tr th
+    position: sticky
+    z-index: 1
+  thead tr:first-child th
+    top: 0
+
+  /* this is when the loading indicator appears */
+  &.q-table--loading thead tr:last-child th
+    /* height of all previous header rows */
+    top: 48px
+
+</style>

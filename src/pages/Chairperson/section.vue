@@ -1,19 +1,26 @@
 <template>
-  <q-page class="q-pa-lg">
-    <div class="text-h4 text-bold">
-      <q-icon name="style" color="light-blue-6" style="font-size: 4rem" />
-      Manage Section
-    </div>
-
-    <br />
-
+  <q-page class="q-pa-md">
+          <q-btn
+            label="Add Section"
+            color="primary"
+            dense
+            flat
+            icon="add"
+            @click="addNewSection = true"
+          />
     <q-table
+    class="my-sticky-header-table"
       title="Section List"
       :rows="AllSection"
       :columns="columns"
       row-key="name"
       :rows-per-page-options="[0]"
       :filter="filter"
+      :grid="$q.screen.xs"
+      hide-bottom
+      bordered
+      flat
+      dense
     >
       <template v-slot:top-right>
         <div class="q-pa-md q-gutter-sm row">
@@ -21,7 +28,7 @@
             outlined
             rounded
             dense
-            debounce="300"
+            debounce="100"
             v-model="filter"
             placeholder="Search"
           >
@@ -29,17 +36,9 @@
               <q-icon name="search" />
             </template>
           </q-input>
-          <q-btn
-            label="Add Section"
-            color="primary"
-            e
-            dense
-            flat
-            icon="add"
-            @click="addNewSection = true"
-          />
+          
           <q-dialog v-model="addNewSection" persistent>
-            <q-card style="width: 800px; max-width: 100vw">
+            <q-card style="width: 800px; max-width: 100vw" class="q-pa-sm">
               <q-card-section class="bg-primary row">
                 <div class="text-h6">Add Section</div>
                 <q-space />
@@ -54,11 +53,17 @@
               </q-card-section>
 
               <q-card-section>
-                <q-form class="q-gutter-md">
-                  <div class="row">
+                <q-form>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputSection.sectionName"
+                        label="Section Name"
+                      />
+                    </div>
                     <div class="col">
                       <q-select
-                        class="q-pa-md"
                         autofocus
                         outlined
                         v-model="inputSection.YearLevel"
@@ -66,19 +71,10 @@
                         label="Year Level"
                       />
                     </div>
-                    <div class="col">
-                      <q-input
-                        class="q-pa-md"
-                        outlined
-                        v-model="inputSection.sectionName"
-                        label="Section Name"
-                      />
-                    </div>
                   </div>
-                  <div class="row">
+                  <div class="row q-gutter-md q-py-sm">
                     <div class="col">
                       <q-select
-                        class="q-pa-md"
                         autofocus
                         outlined
                         v-model="inputSection.time1"
@@ -88,7 +84,6 @@
                     </div>
                     <div class="col">
                       <q-select
-                        class="q-pa-md"
                         autofocus
                         outlined
                         v-model="inputSection.time2"
@@ -97,10 +92,9 @@
                       />
                     </div>
                   </div>
-                  <div class="row">
+                  <div class="row q-gutter-md q-py-sm">
                     <div class="col">
                       <q-select
-                        class="q-pa-md"
                         autofocus
                         outlined
                         v-model="inputSection.day1"
@@ -110,7 +104,6 @@
                     </div>
                     <div class="col">
                       <q-select
-                        class="q-pa-md"
                         autofocus
                         outlined
                         v-model="inputSection.day2"
@@ -169,71 +162,65 @@
                 </q-card-section>
 
                 <q-card-section>
-                  <q-form @submit="oneditSection" class="q-gutter-md">
-                    <div class="row q-pa-md">
-                      <div class="col col-md-6">
-                        <q-select
-                          class="q-py-md"
-                          autofocus
-                          outlined
-                          v-model="inputSection.YearLevel"
-                          :options="options"
-                          label="Year Level"
-                        />
-                      </div>
-                      <div class="col col-md-6">
-                        <q-input
-                          class="q-py-md"
-                          outlined
-                          v-model="inputSection.sectionName"
-                          label="Section Name"
-                        />
-                      </div>
+                  <q-form @submit="oneditSection">
+                    <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-input
+                        outlined
+                        v-model="inputSection.sectionName"
+                        label="Section Name"
+                      />
                     </div>
-                    <div class="row q-pa-md">
-                      <div class="col col-md-6">
-                        <q-select
-                          class="q-py-md"
-                          autofocus
-                          outlined
-                          v-model="inputSection.time1"
-                          :options="time"
-                          label="Time"
-                        />
-                      </div>
-                      <div class="col col-md-6">
-                        <q-select
-                          class="q-py-md"
-                          autofocus
-                          outlined
-                          v-model="inputSection.time2"
-                          :options="time"
-                          label="Time"
-                        />
-                      </div>
+                    <div class="col">
+                      <q-select
+                        autofocus
+                        outlined
+                        v-model="inputSection.YearLevel"
+                        :options="options"
+                        label="Year Level"
+                      />
                     </div>
-                    <div class="row q-pa-md">
-                      <div class="col col-md-6">
-                        <q-select
-                          class="q-py-md"
-                          autofocus
-                          outlined
-                          v-model="inputSection.day1"
-                          :options="day"
-                          label="Day"
-                        />
-                      </div>
-                      <div class="col col-md-6">
-                        <q-select
-                          class="q-py-md"
-                          autofocus
-                          outlined
-                          v-model="inputSection.day2"
-                          :options="day"
-                          label="Day"
-                        />
-                      </div>
+                  </div>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-select
+                        autofocus
+                        outlined
+                        v-model="inputSection.time1"
+                        :options="time"
+                        label="Time"
+                      />
                     </div>
+                    <div class="col">
+                      <q-select
+                        autofocus
+                        outlined
+                        v-model="inputSection.time2"
+                        :options="time"
+                        label="Time"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-gutter-md q-py-sm">
+                    <div class="col">
+                      <q-select
+                        autofocus
+                        outlined
+                        v-model="inputSection.day1"
+                        :options="day"
+                        label="Day"
+                      />
+                    </div>
+                    <div class="col">
+                      <q-select
+                        autofocus
+                        outlined
+                        v-model="inputSection.day2"
+                        :options="day"
+                        label="Day"
+                      />
+                    </div>
+                  </div>
                     <q-card-actions align="right">
                       <q-btn
                         label="Cancel"
@@ -400,7 +387,7 @@ export default class ManageSection extends Vue {
         persistent: true,
       })
       .onOk(async () => {
-        await this.deletesection(val);
+        await this.deletesection(val.sectionID as any);
         this.$q.notify({
           type: 'warning',
           message: 'Successfully deleted',
@@ -425,3 +412,29 @@ export default class ManageSection extends Vue {
   }
 }
 </script>
+<style lang="sass">
+.my-sticky-header-table
+  /* height or max-height is important */
+  height: 100%
+  max-height: 700px
+  width: 100%
+  max-width: 1500px
+
+
+  .q-table__top,
+  .q-table__bottom,
+thead tr:first-child th
+    /* bg color is important for th; just specify one */
+    background-color: #B3E5FC
+  thead tr th
+    position: sticky
+    z-index: 1
+  thead tr:first-child th
+    top: 0
+
+  /* this is when the loading indicator appears */
+  &.q-table--loading thead tr:last-child th
+    /* height of all previous header rows */
+    top: 48px
+
+</style>
